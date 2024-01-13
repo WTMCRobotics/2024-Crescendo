@@ -25,5 +25,8 @@
       }
     },
   ],
-  "java.test.defaultConfig": "WPIlibUnitTests"
+  "java.test.defaultConfig": "WPIlibUnitTests",
+  "editor.formatOnSave": true,
+  "prettier.documentSelectors": ["**/*.java"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode"  
 }
