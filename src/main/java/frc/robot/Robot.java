@@ -65,6 +65,31 @@ public class Robot extends TimedRobot {
         System.out.println("Auto selected: " + m_autoSelected);
     }
 
+    /**Things Auton needs to do:
+     *  - Wait
+     *  - Shoot
+     *  - Rotate
+     *  - Move
+     *  - Adjust Turret
+     *
+     * Auton Plans:
+     * Touching Speaker Next To Amp:
+     *  - Wait x amount of time
+     *  - Shoot
+     *  - Go back
+     *  - Turn
+     *  - Go back more
+     *
+     * Touching Speaker In Middle:
+     *  - Wait x amount of time
+     *  - Shoot
+     *  - Go back
+     * Touching Speaker Next To Terminal:
+     *  - Wait x amount of time
+     *  - Shoot
+     *  - Go back
+     */
+
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
