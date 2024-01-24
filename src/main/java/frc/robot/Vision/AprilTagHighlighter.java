@@ -22,7 +22,7 @@ public class AprilTagHighlighter {
     //We got this from here: https://github.com/PhotonVision/photonvision/blob/7f09f9e4f5b4237ef4b9dde7fdcb747115315659/photon-server/src/main/resources/calibration/lifecam480p.json#L10
     //Lower res stuff here: https://github.com/PhotonVision/photonvision/blob/7f09f9e4f5b4237ef4b9dde7fdcb747115315659/photon-server/src/main/resources/calibration/lifecam240p.json#L10
     static final Config aprilTagCameraConfig = new Config(
-        0.17,
+        0.1651,
         699.3778103158814,
         677.7161226393544,
         345.6059345433618,
