@@ -5,8 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.Vision.AprilTagHighlighter;
 
 /**
@@ -17,12 +17,12 @@ import frc.robot.Vision.AprilTagHighlighter;
  */
 public class Robot extends TimedRobot {
 
-    private static final String kDefaultAuto = "Default";
-    private static final String kCustomAuto = "My Auto";
-    private String m_autoSelected;
-    private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
     AprilTagHighlighter aprilTagHighlighter;
+    Spark driveLeftParent = new Spark(Constants.DRIVE_LEFT_PARENT_ID);
+    Spark driveLeftChild = new Spark(Constants.DRIVE_LEFT_CHILD_ID);
+    Spark driveRightParent = new Spark(Constants.DRIVE_RIGHT_PARENT_ID);
+    Spark driveRightChild = new Spark(Constants.DRIVE_RIGHT_CHILD_ID);
+    XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -30,10 +30,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-        m_chooser.addOption("My Auto", kCustomAuto);
-        SmartDashboard.putData("Auto choices", m_chooser);
         aprilTagHighlighter = new AprilTagHighlighter();
+
+        System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
     }
 
     /**
@@ -59,28 +58,24 @@ public class Robot extends TimedRobot {
      * chooser code above as well.
      */
     @Override
-    public void autonomousInit() {
-        m_autoSelected = m_chooser.getSelected();
-        // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-        System.out.println("Auto selected: " + m_autoSelected);
-    }
+    public void autonomousInit() {}
 
     /**Things Auton needs to do:
-     *  - Wait
-     *  - Shoot
-     *  - Rotate
-     *  - Move
-     *  - Adjust Turret
+     *  - TODO auton wait function
+     *  - TODO auton shoot function
+     *  - TODO auton rotate function
+     *  - TODO make it possible to choose auton paths
+     *  - TODO auton adjust height of shooter
      *
-     * Auton Plans:
-     * Touching Speaker Next To Amp:
+     * Auton Paths:
+     * TODO auton path: Touching Speaker Next To Amp:
      *  - Wait x amount of time
      *  - Shoot
      *  - Go back
      *  - Turn
      *  - Go back more
      *
-     * Touching Speaker In Middle:
+     * TODO auton Touching Speaker In Middle:
      *  - Wait x amount of time
      *  - Shoot
      *  - Go back
@@ -92,17 +87,7 @@ public class Robot extends TimedRobot {
 
     /** This function is called periodically during autonomous. */
     @Override
-    public void autonomousPeriodic() {
-        switch (m_autoSelected) {
-            case kCustomAuto:
-                // Put custom auto code here
-                break;
-            case kDefaultAuto:
-            default:
-                // Put default auto code here
-                break;
-        }
-    }
+    public void autonomousPeriodic() {}
 
     /** This function is called once when teleop is enabled. */
     @Override
@@ -110,7 +95,16 @@ public class Robot extends TimedRobot {
 
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        double leftY = driverController.getLeftY();
+        double rightY = driverController.getRightY();
+
+        driveLeftParent.set(leftY);
+        driveRightParent.set(rightY);
+
+        driveLeftChild.set(leftY);
+        driveRightChild.set(rightY);
+    }
 
     /** This function is called once when the robot is disabled. */
     @Override
