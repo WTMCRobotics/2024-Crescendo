@@ -2,6 +2,15 @@ package frc.robot;
 
 public class Constants {
 
+    /*DRIVE TRAIN MOTOR IDs*/
+    public static final int DRIVE_LEFT_PARENT_ID = 0;
+    public static final int DRIVE_LEFT_CHILD_ID = 1;
+    public static final int DRIVE_RIGHT_PARENT_ID = 2;
+    public static final int DRIVE_RIGHT_CHILD_ID = 3;
+
+    /*CONTROLLER PORT IDs*/
+    public static final int DRIVER_CONTROLLER_ID = 0;
+
     /*START OF VISION CONSTANTS */
     public static final int CAMERA_HEIGHT = 480;
     public static final int CAMERA_WIDTH = 640;
