@@ -6,8 +6,13 @@ import edu.wpi.first.apriltag.AprilTagPoseEstimator.Config;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
+import frc.robot.Vision.QuickActions.TurnDirection;
 import frc.robot.Vision.Vision.AprilTagLocation;
+import java.util.HashMap;
+import java.util.Map;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
@@ -19,6 +24,7 @@ public class AprilTagHighlighter {
     Vision robotVision;
     AprilTagPoseEstimator estimator;
     Runnable estimatorAction;
+    Map<Integer, Transform3d> poseEstimations = new HashMap<>();
     //We got this from here: https://github.com/PhotonVision/photonvision/blob/7f09f9e4f5b4237ef4b9dde7fdcb747115315659/photon-server/src/main/resources/calibration/lifecam480p.json#L10
     //Lower res stuff here: https://github.com/PhotonVision/photonvision/blob/7f09f9e4f5b4237ef4b9dde7fdcb747115315659/photon-server/src/main/resources/calibration/lifecam240p.json#L10
     static final Config aprilTagCameraConfig = new Config(
@@ -34,13 +40,14 @@ public class AprilTagHighlighter {
     public AprilTagHighlighter() {
         robotVision = new Vision();
         estimator = new AprilTagPoseEstimator(aprilTagCameraConfig);
-        robotVision.setTargets(AprilTagLocation.UNDER_SPEAKER_CENTER, AprilTagLocation.UNDER_SPEAKER_OFFCENTER);
+        robotVision.setTargets(AprilTagLocation.UNDER_SPEAKER_CENTER);
         robotVision.startVision();
         estimatorAction =
             () -> {
                 for (AprilTagDetection detection : robotVision.getConfidentAprilTags()) {
                     drawAprilTagOutlines(robotVision.getMat(), detection, purple);
                     Transform3d estimation = estimator.estimate(detection);
+                    poseEstimations.put(detection.getId(), estimation);
                     SmartDashboard.putNumber(
                         "Tag " + detection.getId() + " Rotation",
                         Math.toDegrees(estimation.getRotation().getAngle())
@@ -52,6 +59,49 @@ public class AprilTagHighlighter {
                     SmartDashboard.putNumber("Tag " + detection.getId() + " Distance", distance);
                 }
             };
+    }
+
+    boolean sequenceInitiated = false;
+    TurnDirection dir;
+
+    public void doEveryTeleopFrame(XboxController controller) {
+        if (controller.getAButtonPressed()) {
+            // Consider changing this to a better way?
+            if (sequenceInitiated) {
+                sequenceInitiated = false;
+                return;
+            }
+            if (robotVision.getConfidentAprilTags().size() < 1) {
+                return;
+            }
+            int targetTagId = robotVision.getConfidentAprilTags().get(0).getId();
+            Transform3d aprilEstimate = poseEstimations.get(targetTagId);
+            if (aprilEstimate == null) {
+                return;
+            }
+            double rotDeg = Math.toDegrees(aprilEstimate.getRotation().getAngle());
+            dir = rotDeg > 0 ? TurnDirection.RIGHT : TurnDirection.LEFT;
+            QuickActions.turn(dir, 0.2);
+            sequenceInitiated = true;
+        }
+
+        if (sequenceInitiated) {
+            QuickActions.turn(dir, 0.2);
+            if (robotVision.getConfidentAprilTags().size() < 1) {
+                return;
+            }
+            int targetTagId = robotVision.getConfidentAprilTags().get(0).getId();
+            Transform3d aprilEstimate = poseEstimations.get(targetTagId);
+            if (aprilEstimate == null) {
+                return;
+            }
+            double rotDeg = Math.toDegrees(aprilEstimate.getRotation().getAngle());
+            if (Math.abs(rotDeg) < Constants.APRIL_TAG_ROTATION_ZONE) {
+                System.out.println("DONE ROTATING");
+                QuickActions.stopAll();
+                sequenceInitiated = false;
+            }
+        }
     }
 
     public void doEveryFrame() {
