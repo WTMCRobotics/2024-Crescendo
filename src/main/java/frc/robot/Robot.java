@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import frc.robot.Vision.AprilTagHighlighter;
+import frc.robot.Vision.QuickActions;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,10 +22,10 @@ import frc.robot.Vision.AprilTagHighlighter;
 public class Robot extends TimedRobot {
 
     AprilTagHighlighter aprilTagHighlighter;
-    Spark driveLeftParent = new Spark(Constants.DRIVE_LEFT_PARENT_ID);
-    Spark driveLeftChild = new Spark(Constants.DRIVE_LEFT_CHILD_ID);
-    Spark driveRightParent = new Spark(Constants.DRIVE_RIGHT_PARENT_ID);
-    Spark driveRightChild = new Spark(Constants.DRIVE_RIGHT_CHILD_ID);
+    TalonSRX driveLeftParent = new TalonSRX(Constants.DRIVE_LEFT_PARENT_ID);
+    TalonSRX driveLeftChild = new TalonSRX(Constants.DRIVE_LEFT_CHILD_ID);
+    TalonSRX driveRightParent = new TalonSRX(Constants.DRIVE_RIGHT_PARENT_ID);
+    TalonSRX driveRightChild = new TalonSRX(Constants.DRIVE_RIGHT_CHILD_ID);
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
 
     /**
@@ -31,6 +35,9 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         aprilTagHighlighter = new AprilTagHighlighter();
+        driveLeftChild.setInverted(true);
+        driveLeftParent.setInverted(true);
+        QuickActions.setDrivetMotors(driveLeftParent, driveLeftChild, driveRightParent, driveRightChild);
 
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
     }
@@ -99,11 +106,12 @@ public class Robot extends TimedRobot {
         double leftY = driverController.getLeftY();
         double rightY = driverController.getRightY();
 
-        driveLeftParent.set(leftY);
-        driveRightParent.set(rightY);
+        driveLeftParent.set(ControlMode.PercentOutput, leftY);
+        driveRightParent.set(ControlMode.PercentOutput, rightY);
 
-        driveLeftChild.set(leftY);
-        driveRightChild.set(rightY);
+        driveLeftChild.set(ControlMode.PercentOutput, leftY);
+        driveRightChild.set(ControlMode.PercentOutput, rightY);
+        aprilTagHighlighter.doEveryTeleopFrame(driverController);
     }
 
     /** This function is called once when the robot is disabled. */
