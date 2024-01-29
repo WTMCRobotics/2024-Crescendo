@@ -112,6 +112,7 @@ public class Robot extends TimedRobot {
         driveLeftChild.set(ControlMode.PercentOutput, leftY);
         driveRightChild.set(ControlMode.PercentOutput, rightY);
         aprilTagHighlighter.doEveryTeleopFrame(driverController);
+
     }
 
     /** This function is called once when the robot is disabled. */
