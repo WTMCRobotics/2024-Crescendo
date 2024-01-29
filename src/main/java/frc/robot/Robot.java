@@ -6,27 +6,47 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Vision.AprilTagHighlighter;
-import frc.robot.Vision.QuickActions;
+import frc.robot.motor.MotorController;
+import frc.robot.motor.MotorControllerFactory;
+import frc.robot.motor.TalonMotorController;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
+ * each mode, as described in the TimedRo\bot documentation. If you change the name of this class or
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
 
     AprilTagHighlighter aprilTagHighlighter;
-    TalonSRX driveLeftParent = new TalonSRX(Constants.DRIVE_LEFT_PARENT_ID);
-    TalonSRX driveLeftChild = new TalonSRX(Constants.DRIVE_LEFT_CHILD_ID);
-    TalonSRX driveRightParent = new TalonSRX(Constants.DRIVE_RIGHT_PARENT_ID);
-    TalonSRX driveRightChild = new TalonSRX(Constants.DRIVE_RIGHT_CHILD_ID);
+    MotorController driveLeftParent = MotorControllerFactory.create(
+        Constants.DRIVE_LEFT_PARENT_ID,
+        MotorController.Type.Talon
+    );
+    MotorController driveLeftChild = MotorControllerFactory.create(
+        Constants.DRIVE_LEFT_CHILD_ID,
+        MotorController.Type.Talon
+    );
+    MotorController driveRightParent = MotorControllerFactory.create(
+        Constants.DRIVE_RIGHT_PARENT_ID,
+        MotorController.Type.Talon
+    );
+    MotorController driveRightChild = MotorControllerFactory.create(
+        Constants.DRIVE_RIGHT_CHILD_ID,
+        MotorController.Type.Talon
+    );
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
+    static AHRS navX = new AHRS(SPI.Port.kMXP);
+
+    public static AHRS getGyroscope() {
+        return navX;
+    }
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -37,9 +57,14 @@ public class Robot extends TimedRobot {
         aprilTagHighlighter = new AprilTagHighlighter();
         driveLeftChild.setInverted(true);
         driveLeftParent.setInverted(true);
-        QuickActions.setDrivetMotors(driveLeftParent, driveLeftChild, driveRightParent, driveRightChild);
-
+        driveLeftChild.follow(driveLeftParent);
+        driveRightChild.follow(driveRightParent);
+        QuickActions.setDriveMotors(driveLeftParent, driveRightParent);
+        getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
+        SmartDashboard.putNumber("rotationGainsP", 1);
+        SmartDashboard.putNumber("rotationGainsI", 0);
+        SmartDashboard.putNumber("rotationGainsD", 0);
     }
 
     /**
@@ -52,6 +77,10 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         aprilTagHighlighter.doEveryFrame();
+        SmartDashboard.putNumber("Gyro Reading", getGyroscope().getAngle());
+        Constants.ROTATION_GAINS.P = SmartDashboard.getNumber("rotationGainsP", kDefaultPeriod);
+        Constants.ROTATION_GAINS.I = SmartDashboard.getNumber("rotationGainsI", kDefaultPeriod);
+        Constants.ROTATION_GAINS.D = SmartDashboard.getNumber("rotationGainsD", kDefaultPeriod);
     }
 
     /**
@@ -98,7 +127,9 @@ public class Robot extends TimedRobot {
 
     /** This function is called once when teleop is enabled. */
     @Override
-    public void teleopInit() {}
+    public void teleopInit() {
+        aprilTagHighlighter.sequenceInitiated = false;
+    }
 
     /** This function is called periodically during operator control. */
     @Override
@@ -106,11 +137,9 @@ public class Robot extends TimedRobot {
         double leftY = driverController.getLeftY();
         double rightY = driverController.getRightY();
 
-        driveLeftParent.set(ControlMode.PercentOutput, leftY);
-        driveRightParent.set(ControlMode.PercentOutput, rightY);
+        driveLeftParent.set(leftY);
+        driveRightParent.set(rightY);
 
-        driveLeftChild.set(ControlMode.PercentOutput, leftY);
-        driveRightChild.set(ControlMode.PercentOutput, rightY);
         aprilTagHighlighter.doEveryTeleopFrame(driverController);
     }
 
