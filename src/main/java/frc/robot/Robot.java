@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -14,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Vision.AprilTagHighlighter;
 import frc.robot.motor.MotorController;
 import frc.robot.motor.MotorControllerFactory;
-import frc.robot.motor.TalonMotorController;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -55,10 +52,13 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         aprilTagHighlighter = new AprilTagHighlighter();
+
         driveLeftChild.setInverted(true);
         driveLeftParent.setInverted(true);
+
         driveLeftChild.follow(driveLeftParent);
         driveRightChild.follow(driveRightParent);
+
         QuickActions.setDriveMotors(driveLeftParent, driveRightParent);
         getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
@@ -153,7 +153,35 @@ public class Robot extends TimedRobot {
 
     /** This function is called once when test mode is enabled. */
     @Override
-    public void testInit() {}
+    public void testInit() {
+        Thread testThread = new Thread(() -> {
+            try {
+                driveLeftParent.set(-0.5);
+                System.out.println("Left is spinning backwards");
+                SmartDashboard.putString("Test Status", "Left is spinning backwards");
+
+                // wait for 5 seconds
+                Thread.sleep(5000);
+                driveLeftParent.set(0.0);
+
+                driveRightParent.set(-0.5);
+                System.out.println("Left is no longer spinning and Right is spinning backwards");
+                SmartDashboard.putString("Test Status", "Left is no longer spinning and Right is spinning backwards");
+
+                // wait for 5 seconds pt 2 electric boogaloo
+                Thread.sleep(5000);
+                driveRightParent.set(0.0);
+
+                System.out.println("Right is no longer spinning");
+                SmartDashboard.putString("Test Status", "Right is no longer spinning");
+            } catch (InterruptedException e) {
+                // If an error occurs, this code will be ran:
+                e.printStackTrace();
+            }
+        });
+
+        testThread.start();
+    }
 
     /** This function is called periodically during test mode. */
     @Override
