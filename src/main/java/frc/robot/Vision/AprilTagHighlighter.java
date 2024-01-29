@@ -9,7 +9,8 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.Vision.QuickActions.TurnDirection;
+import frc.robot.QuickActions;
+import frc.robot.QuickActions.TurnDirection;
 import frc.robot.Vision.Vision.AprilTagLocation;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,14 +56,26 @@ public class AprilTagHighlighter {
                     SmartDashboard.putNumber("Tag " + detection.getId() + " X", estimation.getX());
                     SmartDashboard.putNumber("Tag " + detection.getId() + " Y", estimation.getY());
                     SmartDashboard.putNumber("Tag " + detection.getId() + " Z", estimation.getZ());
+                    SmartDashboard.putNumber(
+                        "Tag " + detection.getId() + " XRot",
+                        Math.toDegrees(estimation.getRotation().getX())
+                    );
+                    SmartDashboard.putNumber(
+                        "Tag " + detection.getId() + " YROT",
+                        Math.toDegrees(estimation.getRotation().getY())
+                    );
+                    SmartDashboard.putNumber(
+                        "Tag " + detection.getId() + " Zrot",
+                        Math.toDegrees(estimation.getRotation().getZ())
+                    );
                     double distance = estimation.getTranslation().getDistance(new Translation3d());
                     SmartDashboard.putNumber("Tag " + detection.getId() + " Distance", distance);
                 }
             };
     }
 
-    boolean sequenceInitiated = false;
-    TurnDirection dir;
+    public boolean sequenceInitiated = false;
+    AutonRotateAction rotationAction;
 
     public void doEveryTeleopFrame(XboxController controller) {
         if (controller.getAButtonPressed()) {
@@ -71,35 +84,27 @@ public class AprilTagHighlighter {
                 sequenceInitiated = false;
                 return;
             }
-            if (robotVision.getConfidentAprilTags().size() < 1) {
-                return;
-            }
-            int targetTagId = robotVision.getConfidentAprilTags().get(0).getId();
-            Transform3d aprilEstimate = poseEstimations.get(targetTagId);
-            if (aprilEstimate == null) {
-                return;
-            }
-            double rotDeg = Math.toDegrees(aprilEstimate.getRotation().getAngle());
-            dir = rotDeg > 0 ? TurnDirection.RIGHT : TurnDirection.LEFT;
-            QuickActions.turn(dir, 0.2);
+            // if (robotVision.getConfidentAprilTags().size() < 1) {
+            //     return;
+            // }
+            // AprilTagDetection targetTag = robotVision.getConfidentAprilTags().get(0);
+            // int targetTagId = targetTag.getId();
+            // Transform3d aprilEstimate = poseEstimations.get(targetTagId);
+            // if (aprilEstimate == null) {
+            //     return;
+            // }
+            // double rotDeg = Math.toDegrees(aprilEstimate.getRotation().getY());
+            //@ TODO: remove this
+            double rotDeg = 45;
+
+            rotationAction = new AutonRotateAction(rotDeg);
             sequenceInitiated = true;
         }
 
         if (sequenceInitiated) {
-            QuickActions.turn(dir, 0.2);
-            if (robotVision.getConfidentAprilTags().size() < 1) {
-                return;
-            }
-            int targetTagId = robotVision.getConfidentAprilTags().get(0).getId();
-            Transform3d aprilEstimate = poseEstimations.get(targetTagId);
-            if (aprilEstimate == null) {
-                return;
-            }
-            double rotDeg = Math.toDegrees(aprilEstimate.getRotation().getAngle());
-            if (Math.abs(rotDeg) < Constants.APRIL_TAG_ROTATION_ZONE) {
-                System.out.println("DONE ROTATING");
-                QuickActions.stopAll();
+            if (rotationAction.executeAndIsDone()) {
                 sequenceInitiated = false;
+                return;
             }
         }
     }
