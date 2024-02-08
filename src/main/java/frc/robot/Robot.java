@@ -69,6 +69,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("rotationGainsD", Constants.ROTATION_GAINS.D);
 
         SmartDashboard.putNumber("PIDTARGET", 90);
+
+        initializeSmartMotion(driveLeftParent, Constants.NORMAL_ROBOT_GAINS);
+        initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
     }
 
     /**
@@ -82,6 +85,8 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         aprilTagHighlighter.doEveryFrame();
         SmartDashboard.putNumber("Gyro Reading", getGyroscope().getAngle());
+        SmartDashboard.putNumber("Left motor controller encoder", driveLeftParent.getEncoderPosition());
+        SmartDashboard.putNumber("right motor controller encoder", driveRightParent.getEncoderPosition());
         Constants.ROTATION_GAINS.P = SmartDashboard.getNumber("rotationGainsP", kDefaultPeriod);
         Constants.ROTATION_GAINS.I = SmartDashboard.getNumber("rotationGainsI", kDefaultPeriod);
         Constants.ROTATION_GAINS.D = SmartDashboard.getNumber("rotationGainsD", kDefaultPeriod);
@@ -234,4 +239,37 @@ public class Robot extends TimedRobot {
     /** This function is called periodically whilst in simulation. */
     @Override
     public void simulationPeriodic() {}
+
+    public void initializeSmartMotion(MotorController motorController, Gains gains) {
+        /* Factory default hardware to prevent unexpected behavior */
+        motorController.reset();
+
+        /* Configure Sensor Source for Primary PID */
+        motorController.setSensorSource();
+
+        /*
+         * set deadband to super small 0.001 (0.1 %). The default deadband is 0.04 (4 %)
+         */
+        motorController.setNeutralDeadband(0.001);
+
+        /**
+         * Configure Talon SRX Output and Sensor direction accordingly Invert Motor to have green LEDs
+         * when driving Talon Forward / Requesting Positive Output Phase sensor to have positive
+         * increment when driving Talon Forward (Green LED)
+         */
+
+        /* Set relevant frame periods to be at least as fast as periodic rate */
+        motorController.setStatusFramePeriod(10);
+
+        /* Set the peak and nominal outputs */
+        motorController.setOutputLimits(0, 0, gains.PEAK_OUTPUT, -gains.PEAK_OUTPUT);
+
+        /* Set Motion Magic gains in slot0 - see documentation */
+        motorController.setPID(gains);
+
+        /* Set acceleration and vcruise velocity - see documentation */
+        motorController.setMotionSpeed(15000, 400);
+        /* Zero the sensor once on robot boot up */
+        motorController.setEncoderPosition(0);
+    }
 }

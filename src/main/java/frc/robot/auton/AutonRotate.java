@@ -5,7 +5,7 @@ public class AutonRotate extends AutonAction {
     double rotationAngle;
 
     @Override
-    public boolean executeAndIsDone() {
+    public boolean isDone() {
         return false;
     }
 

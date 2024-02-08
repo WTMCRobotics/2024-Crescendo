@@ -21,6 +21,7 @@ public class Constants {
 
     /*PID GAINS *///0.00001, 100
     public static final Gains ROTATION_GAINS = new Gains(0.011, 0.0001, 0.000935, 0, 0, 0.3);
+    public static final Gains NORMAL_ROBOT_GAINS = new Gains(0.75, 0, 0, 0, 0, 1);
 
     /*PHYSICAL ROBOT CONSTANTS */
     public static final double WHEEL_CIRCUMFERENCE_INCHES = 0;
