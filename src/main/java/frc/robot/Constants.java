@@ -3,10 +3,10 @@ package frc.robot;
 public class Constants {
 
     /*DRIVE TRAIN MOTOR IDs*/
-    public static final int DRIVE_LEFT_PARENT_ID = 20;
-    public static final int DRIVE_LEFT_CHILD_ID = 22;
-    public static final int DRIVE_RIGHT_PARENT_ID = 21;
-    public static final int DRIVE_RIGHT_CHILD_ID = 23;
+    public static final int DRIVE_LEFT_PARENT_ID = 4;
+    public static final int DRIVE_LEFT_CHILD_ID = 5;
+    public static final int DRIVE_RIGHT_PARENT_ID = 2;
+    public static final int DRIVE_RIGHT_CHILD_ID = 3;
 
     /*CONTROLLER PORT IDs*/
     public static final int DRIVER_CONTROLLER_ID = 0;
@@ -20,12 +20,12 @@ public class Constants {
     public static final double APRIL_TAG_ROTATION_ZONE = 5;
 
     /*PID GAINS *///0.00001, 100
-    public static final Gains ROTATION_GAINS = new Gains(1, 0.000, 0, 0, 0, 0.3);
+    public static final Gains ROTATION_GAINS = new Gains(0.011, 0.0001, 0.000935, 0, 0, 0.3);
 
-    /*PYSICAL ROBOT CONSTANTS */
+    /*PHYSICAL ROBOT CONSTANTS */
     public static final double WHEEL_CIRCUMFERENCE_INCHES = 0;
 
-    /* Jack helper class thjatshoudl probably have been retired */
+    /* Jack's helper class that should probably have been retired */
     /** Which PID slot to pull gains from */
     public static final int SLOT_IDX = 0;
     /** Which PID loop to pull gains from */

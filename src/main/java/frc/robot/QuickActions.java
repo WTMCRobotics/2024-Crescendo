@@ -4,10 +4,8 @@ import frc.robot.motor.MotorController;
 
 public class QuickActions {
 
-    static MotorController leftParent;
-    static MotorController leftChild;
-    static MotorController rightParent;
-    static MotorController rightChild;
+    public static MotorController leftParent;
+    public static MotorController rightParent;
 
     public static void setDriveMotors(MotorController leftParentMotor, MotorController rightParentMotor) {
         leftParent = leftParentMotor;
