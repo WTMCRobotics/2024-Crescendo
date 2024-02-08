@@ -46,7 +46,7 @@ public class Vision {
         // Get a CvSink. This will capture Mats from the camera
         cvSink = CameraServer.getVideo();
 
-        cvSource = CameraServer.putVideo("Rectangle", Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
+        //cvSource = CameraServer.putVideo("Rectangle", Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
 
         mat = new Mat();
         greyMat = new Mat();
@@ -68,7 +68,7 @@ public class Vision {
 
                     AprilTagDetection[] detectedAprilTags = detector.detect(greyMat);
                     updateConfidence(detectedAprilTags);
-                    cvSource.putFrame(mat);
+                    //cvSource.putFrame(mat);
                 }
             });
         visionThread.setDaemon(true);
