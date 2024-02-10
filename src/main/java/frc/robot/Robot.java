@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.QuickActions.TurnDirection;
 import frc.robot.Vision.AprilTagHighlighter;
 import frc.robot.auton.AutonAction;
 import frc.robot.auton.AutonActionRunner;
@@ -32,7 +33,6 @@ public class Robot extends TimedRobot {
     MotorController driveLeftParent = RobotConfigs.getLeftParent();
     MotorController driveLeftChild = RobotConfigs.getLeftChild();
     MotorController driveRightParent = RobotConfigs.getRightParent();
-
     MotorController driveRightChild = RobotConfigs.getRightChild();
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     static AHRS navX = new AHRS(SPI.Port.kMXP);
