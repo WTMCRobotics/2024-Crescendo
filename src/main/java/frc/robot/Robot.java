@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("PIDTARGET", 90);
 
         initializeSmartMotion(driveLeftParent, Constants.NORMAL_ROBOT_GAINS);
-        initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);\
+        initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
     }
 
     /**
