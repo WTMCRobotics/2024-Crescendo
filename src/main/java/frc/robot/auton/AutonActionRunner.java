@@ -18,7 +18,7 @@ public class AutonActionRunner {
 
     public void onEveryFrame() {
         AutonAction action = queue.getFirst();
-        if (action.executeAndIsDone()) {
+        if (action.isDone()) {
             queue.removeFirst();
             // Maybe remove if causes problems
             onEveryFrame();

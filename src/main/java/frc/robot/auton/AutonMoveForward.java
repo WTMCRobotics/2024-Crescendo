@@ -6,10 +6,9 @@ import frc.robot.Robot;
 public class AutonMoveForward extends AutonAction {
 
     double distance;
-    double speed;
 
     @Override
-    public boolean executeAndIsDone() {
+    public boolean isDone() {
         double distanceTravelled = Robot.getGyroscope().getDisplacementY();
 
         if (distanceTravelled >= distance) {
@@ -22,11 +21,16 @@ public class AutonMoveForward extends AutonAction {
 
     @Override
     public void initiate() {
-        QuickActions.setAll(speed);
+        QuickActions.resetDriveTrainEncoders();
+        QuickActions.leftParent.setDistance(distance);
+        QuickActions.rightParent.setDistance(distance);
     }
 
-    public AutonMoveForward(double distance, double speed) {
+    /**
+     *
+     * @param distance The distance in inches
+     */
+    public AutonMoveForward(double distance) {
         this.distance = distance;
-        this.speed = speed;
     }
 }
