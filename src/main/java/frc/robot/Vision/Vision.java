@@ -38,7 +38,9 @@ public class Vision {
     List<AprilTagDetection> confidentAprilTags = new ArrayList<>();
 
     public Vision() {
-        camera = CameraServer.startAutomaticCapture("Front Cam", 1);
+        // AxisCamera d = CameraServer.startAutomaticCapture("Front Cam", 0);;
+        camera = CameraServer.startAutomaticCapture("Front Cam", 0);
+        camera.setFPS(15);
 
         // Set the resolution
         camera.setResolution(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);

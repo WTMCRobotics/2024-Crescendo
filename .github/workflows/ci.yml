@@ -30,6 +30,8 @@ jobs:
 
     # This Job will try to compile the Java code
     build:
+        name: Build
+
         # This job will run on an Ubuntu Linux computer
         runs-on: ubuntu-latest
 

@@ -5,13 +5,18 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Vision.AprilTagHighlighter;
+import frc.robot.auton.AutonAction;
+import frc.robot.auton.AutonActionRunner;
+import frc.robot.auton.AutonRoutes;
 import frc.robot.motor.MotorController;
-import frc.robot.motor.MotorControllerFactory;
+import java.util.ArrayDeque;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,25 +26,17 @@ import frc.robot.motor.MotorControllerFactory;
  */
 public class Robot extends TimedRobot {
 
+    //hi
+
     AprilTagHighlighter aprilTagHighlighter;
-    MotorController driveLeftParent = MotorControllerFactory.create(
-        Constants.DRIVE_LEFT_PARENT_ID,
-        MotorController.Type.Talon
-    );
-    MotorController driveLeftChild = MotorControllerFactory.create(
-        Constants.DRIVE_LEFT_CHILD_ID,
-        MotorController.Type.Talon
-    );
-    MotorController driveRightParent = MotorControllerFactory.create(
-        Constants.DRIVE_RIGHT_PARENT_ID,
-        MotorController.Type.Talon
-    );
-    MotorController driveRightChild = MotorControllerFactory.create(
-        Constants.DRIVE_RIGHT_CHILD_ID,
-        MotorController.Type.Talon
-    );
+    MotorController driveLeftParent = RobotConfigs.getLeftParent();
+    MotorController driveLeftChild = RobotConfigs.getLeftChild();
+    MotorController driveRightParent = RobotConfigs.getRightParent();
+    MotorController driveRightChild = RobotConfigs.getRightChild();
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     static AHRS navX = new AHRS(SPI.Port.kMXP);
+    AutonActionRunner auton;
+    private final SendableChooser<String> autonRouteChooser = new SendableChooser<>();
 
     public static AHRS getGyroscope() {
         return navX;
@@ -52,19 +49,30 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         aprilTagHighlighter = new AprilTagHighlighter();
+        autonRouteChooser.addOption("move forward", "move forward");
 
-        driveLeftChild.setInverted(true);
-        driveLeftParent.setInverted(true);
+        // driveRightChild.setInverted(true);
 
+        driveRightParent.setInverted(true);
         driveLeftChild.follow(driveLeftParent);
         driveRightChild.follow(driveRightParent);
+
+        driveLeftChild.setBrakeMode(true);
+        driveLeftParent.setBrakeMode(true);
+        driveRightChild.setBrakeMode(true);
+        driveRightParent.setBrakeMode(true);
 
         QuickActions.setDriveMotors(driveLeftParent, driveRightParent);
         getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
-        SmartDashboard.putNumber("rotationGainsP", 1);
-        SmartDashboard.putNumber("rotationGainsI", 0);
-        SmartDashboard.putNumber("rotationGainsD", 0);
+        SmartDashboard.putNumber("rotationGainsP", Constants.ROTATION_GAINS.P);
+        SmartDashboard.putNumber("rotationGainsI", Constants.ROTATION_GAINS.I);
+        SmartDashboard.putNumber("rotationGainsD", Constants.ROTATION_GAINS.D);
+
+        SmartDashboard.putNumber("PIDTARGET", 90);
+
+        initializeSmartMotion(driveLeftParent, Constants.NORMAL_ROBOT_GAINS);
+        initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
     }
 
     /**
@@ -78,6 +86,8 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         aprilTagHighlighter.doEveryFrame();
         SmartDashboard.putNumber("Gyro Reading", getGyroscope().getAngle());
+        SmartDashboard.putNumber("Left motor controller encoder", driveLeftParent.getEncoderPosition());
+        SmartDashboard.putNumber("right motor controller encoder", driveRightParent.getEncoderPosition());
         Constants.ROTATION_GAINS.P = SmartDashboard.getNumber("rotationGainsP", kDefaultPeriod);
         Constants.ROTATION_GAINS.I = SmartDashboard.getNumber("rotationGainsI", kDefaultPeriod);
         Constants.ROTATION_GAINS.D = SmartDashboard.getNumber("rotationGainsD", kDefaultPeriod);
@@ -94,7 +104,32 @@ public class Robot extends TimedRobot {
      * chooser code above as well.
      */
     @Override
-    public void autonomousInit() {}
+    public void autonomousInit() {
+        navX.resetDisplacement();
+        navX.reset();
+        QuickActions.setAll(0.3);
+
+        ArrayDeque<AutonAction> route =
+            switch (autonRouteChooser.getSelected()) {
+                case "move forward" -> AutonRoutes.RUN_INTO_WALL_AND_BREAK_ROBOT;
+                case "move backwards" -> AutonRoutes.RUN_INTO_OTHER_WALL_AND_BREAK_ROBOT_AGAIN;
+                default -> new ArrayDeque<AutonAction>();
+            };
+        auton = new AutonActionRunner(route);
+        auton.initiateAuton();
+        // QuickActions.turn(TurnDirection.RIGHT, 0.3);
+
+        // Thread auto = new Thread(() -> {
+        //     try {
+        //         QuickActions.setAll(-0.3);
+        //         Thread.sleep(2000);
+        //         QuickActions.turn(TurnDirection.RIGHT, 0.3);
+        //     } catch (InterruptedException e) {
+        //         e.printStackTrace();
+        //     }
+        // });
+        // auto.start();
+    }
 
     /**Things Auton needs to do:
      *  - TODO auton wait function
@@ -123,7 +158,9 @@ public class Robot extends TimedRobot {
 
     /** This function is called periodically during autonomous. */
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+        auton.onEveryFrame();
+    }
 
     /** This function is called once when teleop is enabled. */
     @Override
@@ -136,17 +173,23 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double leftY = driverController.getLeftY();
         double rightY = driverController.getRightY();
-
-        driveLeftParent.set(leftY);
-        driveRightParent.set(rightY);
+        // TODO the left wheels were moving despite the controller output being 0, why?
+        if (Math.abs(leftY) > .03) {
+            driveLeftParent.set(-leftY);
+        }
+        if (Math.abs(rightY) > .03) {
+            driveRightParent.set(-rightY);
+        }
+        driverController.setRumble(RumbleType.kBothRumble, 0.1);
 
         aprilTagHighlighter.doEveryTeleopFrame(driverController);
-
     }
 
     /** This function is called once when the robot is disabled. */
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+        driverController.setRumble(RumbleType.kBothRumble, 0.0);
+    }
 
     /** This function is called periodically when disabled. */
     @Override
@@ -195,4 +238,37 @@ public class Robot extends TimedRobot {
     /** This function is called periodically whilst in simulation. */
     @Override
     public void simulationPeriodic() {}
+
+    public void initializeSmartMotion(MotorController motorController, Gains gains) {
+        /* Factory default hardware to prevent unexpected behavior */
+        motorController.reset();
+
+        /* Configure Sensor Source for Primary PID */
+        motorController.setSensorSource();
+
+        /*
+         * set deadband to super small 0.001 (0.1 %). The default deadband is 0.04 (4 %)
+         */
+        motorController.setNeutralDeadband(0.001);
+
+        /**
+         * Configure Talon SRX Output and Sensor direction accordingly Invert Motor to have green LEDs
+         * when driving Talon Forward / Requesting Positive Output Phase sensor to have positive
+         * increment when driving Talon Forward (Green LED)
+         */
+
+        /* Set relevant frame periods to be at least as fast as periodic rate */
+        motorController.setStatusFramePeriod(10);
+
+        /* Set the peak and nominal outputs */
+        motorController.setOutputLimits(0, 0, gains.PEAK_OUTPUT, -gains.PEAK_OUTPUT);
+
+        /* Set Motion Magic gains in slot0 - see documentation */
+        motorController.setPID(gains);
+
+        /* Set acceleration and vcruise velocity - see documentation */
+        motorController.setMotionSpeed(15000, 400);
+        /* Zero the sensor once on robot boot up */
+        motorController.setEncoderPosition(0);
+    }
 }

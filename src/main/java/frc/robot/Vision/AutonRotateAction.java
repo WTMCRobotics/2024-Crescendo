@@ -24,41 +24,38 @@ public class AutonRotateAction {
                 Constants.ROTATION_GAINS.P,
                 Constants.ROTATION_GAINS.I,
                 Constants.ROTATION_GAINS.D,
-                new Constraints(Constants.ROTATION_GAINS.PEAK_OUTPUT, .01)
+                new Constraints(1, 1)
             );
+        rotationPID.setGoal(targetTurnDegrees);
+        rotationPID.reset(0);
+        // rotationPID.setTolerance(0.1, 0.2);
         if (targetTurnDegrees > 0) {
             turnDirection = TurnDirection.RIGHT;
         } else {
             turnDirection = TurnDirection.LEFT;
         }
+        System.out.println("we will be turing " + turnDirection);
         SmartDashboard.putNumber("target degree", targetTurnDegrees);
         gyro.reset();
     }
 
-    private int debounceTime = 0;
-
     public boolean executeAndIsDone() {
-        double calculatedValue = Math.min(
-            Math.max(-rotationPID.calculate(gyro.getAngle(), targetTurnDegrees), -0.4),
-            0.4
-        );
+        double angle = gyro.getAngle() - targetTurnDegrees;
+        double calculatedValue = rotationPID.calculate(angle, targetTurnDegrees);
         SmartDashboard.putNumber("Rotation PID", calculatedValue);
         SmartDashboard.putNumber("Position Error", rotationPID.getPositionError());
         SmartDashboard.putNumber("Velocity Error", rotationPID.getVelocityError());
 
         QuickActions.turn(turnDirection, calculatedValue);
-        double rotation = Math.abs(gyro.getAngle() - targetTurnDegrees);
+        // QuickActions.leftParent.set(calculatedValue);
+        // QuickActions.rightParent.set(-calculatedValue);
 
-        if (rotation < Constants.ROTATION_ERROR_DEGREES) {
-            debounceTime++;
-            if (debounceTime > 3) {
-                System.out.println(
-                    "THE ROTATION IS DONE BECAUSE " + rotation + " is less than " + Constants.ROTATION_ERROR_DEGREES
-                );
-                return true;
-            }
-        } else {
-            debounceTime = 0;
+        if (rotationPID.atGoal()) {
+            double rotation = Math.abs(gyro.getAngle() - targetTurnDegrees);
+            System.out.println(
+                "THE ROTATION IS DONE BECAUSE " + rotation + " is less than " + Constants.ROTATION_ERROR_DEGREES
+            );
+            return true;
         }
         return false;
     }
