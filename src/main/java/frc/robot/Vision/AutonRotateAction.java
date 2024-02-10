@@ -55,7 +55,7 @@ public class AutonRotateAction {
             System.out.println(
                 "THE ROTATION IS DONE BECAUSE " + rotation + " is less than " + Constants.ROTATION_ERROR_DEGREES
             );
-            return true;bounceTime = 0;
+            return true;
         }
         return false;
     }
