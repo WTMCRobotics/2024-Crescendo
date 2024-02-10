@@ -37,7 +37,7 @@ deploy {
             }
         }
     }
-}
+}       
 
 def deployArtifact = deploy.targets.roborio.artifacts.frcJava
 
@@ -98,4 +98,12 @@ wpi.java.configureTestTasks(test)
 // Configure string concat to always inline compile
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
+}
+
+test {
+
+    useJUnitPlatform()
+
+    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+
 }

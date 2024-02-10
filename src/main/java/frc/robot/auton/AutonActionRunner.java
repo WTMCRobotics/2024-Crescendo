@@ -7,9 +7,14 @@ public class AutonActionRunner {
     public ArrayDeque<AutonAction> queue;
 
     public AutonActionRunner(AutonAction... actions) {
+        queue = new ArrayDeque<>();
         for (AutonAction action : actions) {
             queue.add(action);
         }
+    }
+
+    public AutonActionRunner(ArrayDeque<AutonAction> actions) {
+        queue = actions;
     }
 
     public void initiateAuton() {
@@ -20,8 +25,8 @@ public class AutonActionRunner {
         AutonAction action = queue.getFirst();
         if (action.isDone()) {
             queue.removeFirst();
-            // Maybe remove if causes problems
-            onEveryFrame();
+            // // Maybe remove if causes problems
+            // onEveryFrame();
             queue.getFirst().initiate();
         }
     }

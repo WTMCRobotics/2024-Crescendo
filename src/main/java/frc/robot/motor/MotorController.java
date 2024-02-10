@@ -82,7 +82,7 @@ public interface MotorController extends edu.wpi.first.wpilibj.motorcontrol.Moto
     /**
      * Set the status frame period.
      *
-     * @param period The number of milliseconds (?) per period
+     * @param period The number of milliseconds per period
      */
     public void setStatusFramePeriod(int period);
 
@@ -99,10 +99,10 @@ public interface MotorController extends edu.wpi.first.wpilibj.motorcontrol.Moto
     /**
      * Set PID gains for the PID loop.
      *
-     * @param P Percentage gain
+     * @param P Proportional gain
      * @param I Integral gain
      * @param D Derivative gain
-     * @param F F gain
+     * @param F Filtuh gain
      */
     public void setPID(double P, double I, double D, double F);
 
@@ -169,7 +169,9 @@ public interface MotorController extends edu.wpi.first.wpilibj.motorcontrol.Moto
      * Type of motor controller, for MotorControllerFactory
      */
     public static enum Type {
-        Talon, /// Talon SRX motor controller
-        SparkMax, /// Spark MAX motor controller
+        /** Talon SRX motor controller */
+        Talon,
+        /** Spark MAX motor controller */
+        SparkMax,
     }
 }
