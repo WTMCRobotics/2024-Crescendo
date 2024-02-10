@@ -141,7 +141,6 @@ public class Robot extends TimedRobot {
         driveRightParent.set(rightY);
 
         aprilTagHighlighter.doEveryTeleopFrame(driverController);
-
     }
 
     /** This function is called once when the robot is disabled. */
