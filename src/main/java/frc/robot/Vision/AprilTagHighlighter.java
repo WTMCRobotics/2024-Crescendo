@@ -90,11 +90,6 @@ public class AprilTagHighlighter {
                 sequenceInitiated = false;
                 return;
             }
-            // System.out.println("A button pressed size " + robotVision.getConfidentAprilTags().size());
-            // if (robotVision.getConfidentAprilTags().size() < 1) {
-            //     return;
-            // }
-            // System.out.println("A button pressed");
             // AprilTagDetection targetTag = robotVision.getConfidentAprilTags().get(0);
             // int targetTagId = targetTag.getId();
             // Transform3d aprilEstimate = poseEstimations.get(targetTagId);
