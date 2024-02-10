@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.QuickActions;
 import frc.robot.QuickActions.TurnDirection;
+import frc.robot.Robot;
 import frc.robot.Vision.Vision.AprilTagLocation;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class AprilTagHighlighter {
         robotVision.startVision();
         estimatorAction =
             () -> {
+                // poseEstimations.clear();
                 for (AprilTagDetection detection : robotVision.getConfidentAprilTags()) {
                     drawAprilTagOutlines(robotVision.getMat(), detection, purple);
                     Transform3d estimation = estimator.estimate(detection);
@@ -60,6 +62,10 @@ public class AprilTagHighlighter {
                         "Tag " + detection.getId() + " XRot",
                         Math.toDegrees(estimation.getRotation().getX())
                     );
+                    estimation.getTranslation().getX();
+                    double rot = Math.atan(estimation.getTranslation().getY() / estimation.getTranslation().getX());
+
+                    SmartDashboard.putNumber("Tag " + detection.getId() + " Degrees2turn", Math.toDegrees(rot));
                     SmartDashboard.putNumber(
                         "Tag " + detection.getId() + " YROT",
                         Math.toDegrees(estimation.getRotation().getY())
@@ -84,18 +90,16 @@ public class AprilTagHighlighter {
                 sequenceInitiated = false;
                 return;
             }
-            // if (robotVision.getConfidentAprilTags().size() < 1) {
-            //     return;
-            // }
             // AprilTagDetection targetTag = robotVision.getConfidentAprilTags().get(0);
             // int targetTagId = targetTag.getId();
             // Transform3d aprilEstimate = poseEstimations.get(targetTagId);
             // if (aprilEstimate == null) {
             //     return;
             // }
-            // double rotDeg = Math.toDegrees(aprilEstimate.getRotation().getY());
-            //@ TODO: remove this
-            double rotDeg = 45;
+            // double rotDeg = Robot.getGyroscope().getAngle() + Math.toDegrees(aprilEstimate.getRotation().getY());
+            double rotDeg = 90;
+            rotDeg = SmartDashboard.getNumber("PIDTARGET", 90);
+            System.out.println("We want to turn to " + rotDeg);
 
             rotationAction = new AutonRotateAction(rotDeg);
             sequenceInitiated = true;

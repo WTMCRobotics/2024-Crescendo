@@ -3,6 +3,7 @@ package frc.robot.Vision;
 import edu.wpi.first.apriltag.AprilTagDetection;
 import edu.wpi.first.apriltag.AprilTagDetector;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.AxisCamera;
 import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
@@ -38,7 +40,9 @@ public class Vision {
     List<AprilTagDetection> confidentAprilTags = new ArrayList<>();
 
     public Vision() {
-        camera = CameraServer.startAutomaticCapture("Front Cam", 1);
+        // AxisCamera d = CameraServer.startAutomaticCapture("Front Cam", 0);;
+        camera = CameraServer.startAutomaticCapture("Front Cam", 0);
+        camera.setFPS(15);
 
         // Set the resolution
         camera.setResolution(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
