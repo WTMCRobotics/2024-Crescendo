@@ -18,7 +18,7 @@ public class SparkMotorController implements MotorController {
 
     SparkMotorController(int canID) {
         controller = new CANSparkMax(canID, MotorType.kBrushless);
-        encoder = controller.getEncoder(SparkRelativeEncoder.Type.kQuadrature, 42);
+        encoder = controller.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
 
         // number
         // of ticks

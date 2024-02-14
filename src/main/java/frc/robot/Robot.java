@@ -51,10 +51,12 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         aprilTagHighlighter = new AprilTagHighlighter();
         autonRouteChooser.addOption("move forward", "move forward");
+        autonRouteChooser.addOption("move backwards", "move backwards");
+        SmartDashboard.putData(autonRouteChooser);
 
-        // driveRightChild.setInverted(true);
+        driveLeftParent.setInverted(true);
+        driveRightParent.setInverted(false);
 
-        driveRightParent.setInverted(true);
         driveLeftChild.follow(driveLeftParent);
         driveRightChild.follow(driveRightParent);
 
@@ -175,11 +177,12 @@ public class Robot extends TimedRobot {
         double leftY = driverController.getLeftY();
         double rightY = driverController.getRightY();
         // TODO the left wheels were moving despite the controller output being 0, why?
+        QuickActions.stopAll();
         if (Math.abs(leftY) > .03) {
             driveLeftParent.set(-leftY);
         }
         if (Math.abs(rightY) > .03) {
-            driveRightParent.set(-rightY);
+            driveRightParent.set(rightY);
         }
         driverController.setRumble(RumbleType.kBothRumble, 0.1);
 
