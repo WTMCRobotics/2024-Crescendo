@@ -20,7 +20,7 @@ public class AutonMoveForward extends AutonAction {
             isDoneDebounceTime = 0;
         }
 
-        if (isDoneDebounceTime > 5) {
+        if (isDoneDebounceTime > 3) {
             System.out.println("We moved the correct amount of inches!");
             return true;
         }

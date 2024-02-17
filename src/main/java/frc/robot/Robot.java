@@ -65,10 +65,10 @@ public class Robot extends TimedRobot {
 
         System.out.println("is drive righjt parent inverted? " + driveRightParent.getInverted());
 
-        driveLeftChild.setBrakeMode(true);
-        driveLeftParent.setBrakeMode(true);
-        driveRightChild.setBrakeMode(true);
-        driveRightParent.setBrakeMode(true);
+        driveLeftChild.setBrakeMode(false);
+        driveLeftParent.setBrakeMode(false);
+        driveRightChild.setBrakeMode(false);
+        driveRightParent.setBrakeMode(false);
 
         QuickActions.setDriveMotors(driveLeftParent, driveRightParent);
         getGyroscope().reset();
@@ -254,7 +254,7 @@ public class Robot extends TimedRobot {
         /*
          * set deadband to super small 0.001 (0.1 %). The default deadband is 0.04 (4 %)
          */
-        motorController.setNeutralDeadband(0.001);
+        motorController.setNeutralDeadband(0.05);
 
         /**
          * Configure Talon SRX Output and Sensor direction accordingly Invert Motor to have green LEDs
