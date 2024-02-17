@@ -181,7 +181,7 @@ public class Robot extends TimedRobot {
         if (Math.abs(rightY) > .03) {
             driveRightParent.set(rightY);
         }
-        driverController.setRumble(RumbleType.kBothRumble, 0.1);
+        // driverController.setRumble(RumbleType.kBothRumble, 0.1);
         // aprilTagHighlighter.doEveryTeleopFrame(driverController);
     }
 
