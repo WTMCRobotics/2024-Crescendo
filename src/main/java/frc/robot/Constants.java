@@ -12,6 +12,9 @@ public class Constants {
     /*SHOOTER CONFIG*/
     public static final double REV_TIME = 1.0;
 
+    /*DRIVE TRAIN CONFIG */
+    public static final double CONTROLLER_DEADZONE = 0.06;
+
     /*CONTROLLER PORT IDs*/
     public static final int DRIVER_CONTROLLER_ID = 0;
 

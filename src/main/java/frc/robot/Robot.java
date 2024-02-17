@@ -175,10 +175,10 @@ public class Robot extends TimedRobot {
         double rightY = driverController.getRightY();
         // TODO the left wheels were moving despite the controller output being 0, why?
         QuickActions.stopAll();
-        if (Math.abs(leftY) > .03) {
+        if (Math.abs(leftY) > Constants.CONTROLLER_DEADZONE) {
             driveLeftParent.set(leftY);
         }
-        if (Math.abs(rightY) > .03) {
+        if (Math.abs(rightY) > Constants.CONTROLLER_DEADZONE) {
             driveRightParent.set(rightY);
         }
         // driverController.setRumble(RumbleType.kBothRumble, 0.1);
