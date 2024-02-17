@@ -19,6 +19,8 @@ public class SparkMotorController implements MotorController {
     SparkMotorController(int canID) {
         controller = new CANSparkMax(canID, MotorType.kBrushless);
         encoder = controller.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
+        encoder.setPositionConversionFactor(10.7);
+        encoder.setVelocityConversionFactor(10.7);
 
         // number
         // of ticks
@@ -37,6 +39,11 @@ public class SparkMotorController implements MotorController {
         controller.set(speed);
     }
 
+    // idk
+    public SparkPIDController getPID() {
+        return pid;
+    }
+
     @Override
     public void setVelocity(double speed) {
         pid.setReference(speed, CANSparkMax.ControlType.kSmartVelocity);
@@ -44,7 +51,7 @@ public class SparkMotorController implements MotorController {
 
     @Override
     public void setDistance(double inches) {
-        pid.setReference(inches / Constants.WHEEL_CIRCUMFERENCE_INCHES, CANSparkMax.ControlType.kSmartMotion);
+        pid.setReference((inches / Constants.WHEEL_CIRCUMFERENCE_INCHES) * 8.46, CANSparkMax.ControlType.kSmartMotion);
     }
 
     @Override
@@ -63,6 +70,11 @@ public class SparkMotorController implements MotorController {
             "Leader must be the same type of motor controller as the follower"
         );
         controller.follow(((SparkMotorController) leader).controller);
+    }
+
+    @Override
+    public double getBusVoltage() {
+        return controller.getBusVoltage();
     }
 
     @Override

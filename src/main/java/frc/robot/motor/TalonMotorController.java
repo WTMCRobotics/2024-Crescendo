@@ -51,6 +51,11 @@ public class TalonMotorController implements MotorController {
     }
 
     @Override
+    public double getBusVoltage() {
+        return controller.getBusVoltage();
+    }
+
+    @Override
     public void follow(MotorController leader) {
         if (!(leader instanceof TalonMotorController)) throw new IllegalArgumentException(
             "Leader must be the same type of motor controller as the follower"
