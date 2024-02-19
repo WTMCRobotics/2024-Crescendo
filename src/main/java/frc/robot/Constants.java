@@ -6,7 +6,6 @@ public class Constants {
     public static final int DRIVE_LEFT_PARENT_ID = 4;
     public static final int DRIVE_LEFT_CHILD_ID = 8;
     public static final int DRIVE_RIGHT_PARENT_ID = 11;
-    //TODO CHANGE THIS BACK
     public static final int DRIVE_RIGHT_CHILD_ID = 3;
 
     /*SHOOTER CONFIG*/
