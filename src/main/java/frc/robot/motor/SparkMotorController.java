@@ -19,6 +19,8 @@ public class SparkMotorController implements MotorController {
     SparkMotorController(int canID) {
         controller = new CANSparkMax(canID, MotorType.kBrushless);
         encoder = controller.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
+        encoder.setPositionConversionFactor(Constants.DRIVE_GEARBOX_RATIO);
+        encoder.setVelocityConversionFactor(Constants.DRIVE_GEARBOX_RATIO);
 
         // number
         // of ticks
@@ -37,6 +39,11 @@ public class SparkMotorController implements MotorController {
         controller.set(speed);
     }
 
+    // idk
+    public SparkPIDController getPID() {
+        return pid;
+    }
+
     @Override
     public void setVelocity(double speed) {
         pid.setReference(speed, CANSparkMax.ControlType.kSmartVelocity);
@@ -44,7 +51,10 @@ public class SparkMotorController implements MotorController {
 
     @Override
     public void setDistance(double inches) {
-        pid.setReference(inches / Constants.WHEEL_CIRCUMFERENCE_INCHES, CANSparkMax.ControlType.kSmartMotion);
+        pid.setReference(
+            (inches / Constants.WHEEL_CIRCUMFERENCE_INCHES) * Constants.DRIVE_GEARBOX_RATIO,
+            CANSparkMax.ControlType.kSmartMotion
+        );
     }
 
     @Override
@@ -66,13 +76,18 @@ public class SparkMotorController implements MotorController {
     }
 
     @Override
+    public double getBusVoltage() {
+        return controller.getBusVoltage();
+    }
+
+    @Override
     public void setSensorSource() {
         // Do nothing
     }
 
     @Override
     public void setNeutralDeadband(double percent) {
-        // Only used for PWM (?)
+        pid.setSmartMotionAllowedClosedLoopError(percent, 0);
     }
 
     @Override

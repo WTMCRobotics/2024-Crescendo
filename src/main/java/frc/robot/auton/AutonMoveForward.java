@@ -1,18 +1,27 @@
 package frc.robot.auton;
 
 import frc.robot.QuickActions;
-import frc.robot.Robot;
 
 public class AutonMoveForward extends AutonAction {
 
     double distance;
+    double isDoneDebounceTime = 0;
 
     @Override
     public boolean isDone() {
-        double distanceTravelled = Robot.getGyroscope().getDisplacementY();
+        QuickActions.leftParent.setDistance(distance);
+        QuickActions.rightParent.setDistance(distance);
+        System.out.println(
+            QuickActions.leftParent.get() + " veL: " + QuickActions.leftParent.getActiveTrajectoryVelocity()
+        );
+        if (getMaxTrajectoryVelocity() < 0.05) {
+            isDoneDebounceTime += 0.02;
+        } else {
+            isDoneDebounceTime = 0;
+        }
 
-        if (distanceTravelled >= distance) {
-            QuickActions.stopAll();
+        if (isDoneDebounceTime > 3) {
+            System.out.println("We moved the correct amount of inches!");
             return true;
         }
 
@@ -22,8 +31,13 @@ public class AutonMoveForward extends AutonAction {
     @Override
     public void initiate() {
         QuickActions.resetDriveTrainEncoders();
-        QuickActions.leftParent.setDistance(distance);
-        QuickActions.rightParent.setDistance(distance);
+    }
+
+    private double getMaxTrajectoryVelocity() {
+        return Math.max(
+            QuickActions.leftParent.getActiveTrajectoryVelocity(),
+            QuickActions.rightParent.getActiveTrajectoryVelocity()
+        );
     }
 
     /**

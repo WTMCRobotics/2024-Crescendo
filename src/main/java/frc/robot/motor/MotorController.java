@@ -87,6 +87,12 @@ public interface MotorController extends edu.wpi.first.wpilibj.motorcontrol.Moto
     public void setStatusFramePeriod(int period);
 
     /**
+     * @return The voltage fed into the motor controller. (In volts?)
+     */
+
+    public double getBusVoltage();
+
+    /**
      * Set the output limits for the controller. All numbers range from -1.0 to 1.0.
      *
      * @param nominalForward Desired base forward output

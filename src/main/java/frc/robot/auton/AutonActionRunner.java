@@ -22,11 +22,16 @@ public class AutonActionRunner {
     }
 
     public void onEveryFrame() {
+        if (queue.isEmpty()) {
+            return;
+        }
         AutonAction action = queue.getFirst();
         if (action.isDone()) {
             queue.removeFirst();
-            // // Maybe remove if causes problems
-            // onEveryFrame();
+            if (queue.isEmpty()) {
+                System.out.println("We have finished Auton!");
+                return;
+            }
             queue.getFirst().initiate();
         }
     }
