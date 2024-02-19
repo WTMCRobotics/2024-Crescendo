@@ -4,8 +4,8 @@ public class Constants {
 
     /*DRIVE TRAIN MOTOR IDs*/
     public static final int DRIVE_LEFT_PARENT_ID = 4;
-    public static final int DRIVE_LEFT_CHILD_ID = 5;
-    public static final int DRIVE_RIGHT_PARENT_ID = 2;
+    public static final int DRIVE_LEFT_CHILD_ID = 8;
+    public static final int DRIVE_RIGHT_PARENT_ID = 11;
     public static final int DRIVE_RIGHT_CHILD_ID = 3;
 
     /*CONTROLLER PORT IDs*/
