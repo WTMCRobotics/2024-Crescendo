@@ -1,36 +1,60 @@
 package frc.robot.auton;
 
-import frc.robot.Vision.AutonRotateAction;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import java.util.ArrayDeque;
 import java.util.List;
 
 public class AutonRoutes {
 
-    public static ArrayDeque<AutonAction> RUN_INTO_WALL_AND_BREAK_ROBOT = new ArrayDeque<>(
-        List.of(new AutonMoveForward(36))
-    );
-    public static ArrayDeque<AutonAction> RUN_INTO_OTHER_WALL_AND_BREAK_ROBOT_AGAIN = new ArrayDeque<>(
-        List.of(new AutonMoveForward(-36))
-    );
-
-    public static ArrayDeque<AutonAction> SHOOT_AND_RUN_INTO_OTHER_WALL_AND_BREAK_ROBOT = new ArrayDeque<AutonAction>(
-        List.of(new AutonShoot(), new AutonMoveForward(-36), new AutonRotate(90))
-    );
-
-    public static ArrayDeque<AutonAction> SHOOT_AND_RUN_INTO_OTHER_WALL_AND_BREAK_ROBOT = new ArrayDeque<AutonAction>(
-        List.of(new AutonShoot(), new AutonParallelAction(new AutonIntake(), new AutonMoveForward(-36)))
-    );
-
-    public static ArrayDeque<AutonAction> SHOOT_AND_RUN_INTO_OTHER_WALL_AND_BREAK_ROBOT = new ArrayDeque<AutonAction>(
-        List.of(new AutonShoot(), new AutonMoveForward(-36), new AutonRotate(90))
-    );
-
-    public static ArrayDeque<AutonAction> SHOOT_AND_RUN_INTO_OTHER_WALL_AND_BREAK_ROBOT = new ArrayDeque<AutonAction>(
+    public static final ArrayDeque<AutonAction> SHOOT_AND_RUN_INTO_OTHER_WALL_AND_BREAK_ROBOT = new ArrayDeque<
+        AutonAction
+    >(
         List.of(
             new AutonParallelAction(
                 new AutonSequentialAction(new AutonWait(1.5), new AutonIntake()),
-                new AutonMoveForward(-36)
+                new AutonMoveInches(-36)
             )
         )
     );
+
+    public static final ArrayDeque<AutonAction> GO_BACKWARD_OUT_OF_STARTING_ZONE = new ArrayDeque<AutonAction>(
+        (List.of(new AutonMoveInches(-84)))
+    );
+
+    public static final ArrayDeque<AutonAction> GO_FORWARD_OUT_OF_STARTING_ZONE = new ArrayDeque<AutonAction>(
+        List.of(new AutonMoveInches(84))
+    );
+
+    public static final ArrayDeque<AutonAction> SHOOT_AND_BACK_UP = new ArrayDeque<AutonAction>(
+        List.of(new AutonShoot(), new AutonMoveInches(-84))
+    );
+
+    public static ArrayDeque<AutonAction> BACKUP_TURN_BACKUP;
+
+    private static final ArrayDeque<AutonAction> BLUE_BACKUP_TURN_BACKUP = new ArrayDeque<AutonAction>(
+        List.of(new AutonMoveInches(-24), new AutonRotate(-135), new AutonMoveInches(36))
+    );
+
+    private static final ArrayDeque<AutonAction> RED_BACKUP_TURN_BACKUP = new ArrayDeque<AutonAction>(
+        List.of(new AutonMoveInches(-24), new AutonRotate(135), new AutonMoveInches(36))
+    );
+
+    static {
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+            BACKUP_TURN_BACKUP = RED_BACKUP_TURN_BACKUP;
+        } else {
+            BACKUP_TURN_BACKUP = BLUE_BACKUP_TURN_BACKUP;
+        }
+    }
+
+    public static final ArrayDeque<AutonAction> SHOOT_BACKUP_INTAKE_FORWARD_SHOOT = new ArrayDeque<AutonAction>(
+        List.of(
+            new AutonShoot(),
+            new AutonParallelAction(new AutonIntake(), new AutonMoveInches(-84)),
+            new AutonMoveInches(84),
+            new AutonShoot()
+        )
+    );
+    public static final ArrayDeque<AutonAction> BOOM = new ArrayDeque<AutonAction>(List.of(new explodeDaBomb()));
 }

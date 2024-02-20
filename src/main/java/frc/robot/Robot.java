@@ -128,8 +128,14 @@ public class Robot extends TimedRobot {
 
         ArrayDeque<AutonAction> route =
             switch (autonRouteChooser.getSelected()) {
-                case "move forward" -> new ArrayDeque<>(AutonRoutes.RUN_INTO_WALL_AND_BREAK_ROBOT);
-                case "move backwards" -> new ArrayDeque<>(AutonRoutes.RUN_INTO_OTHER_WALL_AND_BREAK_ROBOT_AGAIN);
+                case "move forward" -> new ArrayDeque<>(AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
+                case "move backwards" -> new ArrayDeque<>(AutonRoutes.GO_BACKWARD_OUT_OF_STARTING_ZONE);
+                case "shoot and back up" -> new ArrayDeque<>(AutonRoutes.SHOOT_AND_BACK_UP);
+                case "backup turn backup" -> new ArrayDeque<>(AutonRoutes.BACKUP_TURN_BACKUP);
+                case "shoot backup intake forward shoot" -> new ArrayDeque<>(
+                    AutonRoutes.SHOOT_BACKUP_INTAKE_FORWARD_SHOOT
+                );
+                case "explode hidden bomb" -> new ArrayDeque<>(AutonRoutes.BOOM);
                 default -> new ArrayDeque<AutonAction>();
             };
         System.out.println("selected auton: " + route);
