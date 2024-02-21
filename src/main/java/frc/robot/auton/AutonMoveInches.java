@@ -1,6 +1,7 @@
 package frc.robot.auton;
 
 import frc.robot.QuickActions;
+import frc.robot.Robot;
 
 public class AutonMoveInches extends AutonAction {
 
@@ -9,10 +10,12 @@ public class AutonMoveInches extends AutonAction {
 
     @Override
     public boolean isDone() {
-        QuickActions.leftParent.setDistance(distance);
-        QuickActions.rightParent.setDistance(distance);
+        Robot.motors.getDriveLeftParent().setDistance(distance);
+        Robot.motors.getDriveRightParent().setDistance(distance);
         System.out.println(
-            QuickActions.leftParent.get() + " veL: " + QuickActions.leftParent.getActiveTrajectoryVelocity()
+            Robot.motors.getDriveLeftParent().get() +
+            " veL: " +
+            Robot.motors.getDriveLeftParent().getActiveTrajectoryVelocity()
         );
         if (getMaxTrajectoryVelocity() < 0.05) {
             isDoneDebounceTime += 0.02;
@@ -35,8 +38,8 @@ public class AutonMoveInches extends AutonAction {
 
     private double getMaxTrajectoryVelocity() {
         return Math.max(
-            QuickActions.leftParent.getActiveTrajectoryVelocity(),
-            QuickActions.rightParent.getActiveTrajectoryVelocity()
+            Robot.motors.getDriveLeftParent().getActiveTrajectoryVelocity(),
+            Robot.motors.getDriveRightParent().getActiveTrajectoryVelocity()
         );
     }
 

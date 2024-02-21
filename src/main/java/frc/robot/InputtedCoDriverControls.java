@@ -13,9 +13,9 @@ public class InputtedCoDriverControls {
 
     public static void onEveryFrame() {
         if (controller.getAButton()) {
-            Robot.feederMotor.set(30);
+            Robot.motors.getFeeder().set(30);
         } else {
-            Robot.feederMotor.set(0);
+            Robot.motors.getFeeder().set(0);
         }
         if (controller.getXButtonPressed()) {
             shootIntoSpeaker();
@@ -25,7 +25,7 @@ public class InputtedCoDriverControls {
                 shoot = null;
             }
         }
-        doIntake();
+        doShooterIntake();
         if (controller.getBackButton()) {
             // doClimb();
         }
@@ -42,13 +42,13 @@ public class InputtedCoDriverControls {
         throw new UnsupportedOperationException("Unimplemented method 'doClimb'");
     }
 
-    private static void doIntake() {
+    private static void doShooterIntake() {
         if (controller.getPOV() == 0) {
-            Robot.rightShooterMotor.set(0.3);
-            Robot.leftShooterMotor.set(-0.3);
+            Robot.motors.getRightFlywheel().set(0.3);
+            Robot.motors.getLeftFlywheel().set(-0.3);
         } else if (controller.getPOV() == 180) {
-            Robot.rightShooterMotor.set(0);
-            Robot.leftShooterMotor.set(0);
+            Robot.motors.getRightFlywheel().set(0);
+            Robot.motors.getLeftFlywheel().set(0);
         }
     }
 

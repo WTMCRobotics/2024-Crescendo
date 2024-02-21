@@ -31,13 +31,16 @@ public class Robot extends TimedRobot {
     // hello!!!!!!!
 
     AprilTagHighlighter aprilTagHighlighter;
+
+    public static RobotMotors motors;
+
     MotorController driveLeftParent = RobotConfigs.getLeftParent();
     MotorController driveLeftChild = RobotConfigs.getLeftChild();
     MotorController driveRightParent = RobotConfigs.getRightParent();
     MotorController driveRightChild = RobotConfigs.getRightChild();
-    public static MotorController leftShooterMotor = MotorControllerFactory.create(6, MotorController.Type.SparkMax);
-    public static MotorController rightShooterMotor = MotorControllerFactory.create(7, MotorController.Type.SparkMax);
-    public static MotorController feederMotor = MotorControllerFactory.create(9, MotorController.Type.SparkMax);
+    MotorController leftFlywheel = MotorControllerFactory.create(6, MotorController.Type.SparkMax);
+    MotorController rightFlywheel = MotorControllerFactory.create(7, MotorController.Type.SparkMax);
+    MotorController feederMotor = MotorControllerFactory.create(9, MotorController.Type.SparkMax);
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     XboxController coDriverController = new XboxController(1);
     static AHRS navX = new AHRS(SPI.Port.kMXP);
@@ -77,7 +80,15 @@ public class Robot extends TimedRobot {
         driveRightChild.setBrakeMode(false);
         driveRightParent.setBrakeMode(false);
 
-        QuickActions.setDriveMotors(driveLeftParent, driveRightParent);
+        motors =
+            new RobotMotors()
+                .driveLeftParent(driveLeftParent)
+                .driveLeftChild(driveLeftChild)
+                .driveRightParent(driveRightParent)
+                .driveRightChild(driveRightChild)
+                .feeder(feederMotor)
+                .leftFlywheel(leftFlywheel)
+                .rightFlywheel(rightFlywheel);
         getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
         SmartDashboard.putNumber("rotationGainsP", Constants.ROTATION_GAINS.P);
