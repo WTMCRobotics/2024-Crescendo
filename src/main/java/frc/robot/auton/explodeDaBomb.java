@@ -1,6 +1,6 @@
 package frc.robot.auton;
 
-public class ExplodeDaBomb extends AutonAction {
+public class explodeDaBomb extends AutonAction {
 
     static int timer = 5;
 

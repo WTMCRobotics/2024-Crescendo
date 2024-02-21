@@ -56,5 +56,5 @@ public class AutonRoutes {
             new AutonShoot()
         )
     );
-    public static final ArrayDeque<AutonAction> BOOM = new ArrayDeque<AutonAction>(List.of(new ExplodeDaBomb()));
+    public static final ArrayDeque<AutonAction> BOOM = new ArrayDeque<AutonAction>(List.of(new explodeDaBomb()));
 }
