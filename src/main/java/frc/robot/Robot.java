@@ -31,13 +31,16 @@ public class Robot extends TimedRobot {
     // hello!!!!!!!
 
     AprilTagHighlighter aprilTagHighlighter;
+
+    public static RobotMotors motors;
+
     MotorController driveLeftParent = RobotConfigs.getLeftParent();
     MotorController driveLeftChild = RobotConfigs.getLeftChild();
     MotorController driveRightParent = RobotConfigs.getRightParent();
     MotorController driveRightChild = RobotConfigs.getRightChild();
-    public static MotorController leftShooterMotor = MotorControllerFactory.create(6, MotorController.Type.SparkMax);
-    public static MotorController rightShooterMotor = MotorControllerFactory.create(7, MotorController.Type.SparkMax);
-    public static MotorController feederMotor = MotorControllerFactory.create(9, MotorController.Type.SparkMax);
+    MotorController leftFlywheel = MotorControllerFactory.create(6, MotorController.Type.SparkMax);
+    MotorController rightFlywheel = MotorControllerFactory.create(7, MotorController.Type.SparkMax);
+    MotorController feederMotor = MotorControllerFactory.create(9, MotorController.Type.SparkMax);
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     XboxController coDriverController = new XboxController(1);
     static AHRS navX = new AHRS(SPI.Port.kMXP);
@@ -77,7 +80,15 @@ public class Robot extends TimedRobot {
         driveRightChild.setBrakeMode(false);
         driveRightParent.setBrakeMode(false);
 
-        QuickActions.setDriveMotors(driveLeftParent, driveRightParent);
+        motors =
+            new RobotMotors()
+                .driveLeftParent(driveLeftParent)
+                .driveLeftChild(driveLeftChild)
+                .driveRightParent(driveRightParent)
+                .driveRightChild(driveRightChild)
+                .feeder(feederMotor)
+                .leftFlywheel(leftFlywheel)
+                .rightFlywheel(rightFlywheel);
         getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
         SmartDashboard.putNumber("rotationGainsP", Constants.ROTATION_GAINS.P);
@@ -176,11 +187,7 @@ public class Robot extends TimedRobot {
 
     /** This function is called once when teleop is enabled. */
     @Override
-    public void teleopInit() {
-        // aprilTagHighlighter.sequenceInitiated = false;
-        System.out.println("FLP inverted??????:" + driveLeftParent.getInverted());
-        System.out.println("FrP inverted??????:" + driveRightParent.getInverted());
-    }
+    public void teleopInit() {}
 
     /** This function is called periodically during operator control. */
     @Override
@@ -188,7 +195,6 @@ public class Robot extends TimedRobot {
         // TODO: make slow mode
         double leftY = driverController.getLeftY();
         double rightY = driverController.getRightY();
-        // TODO the left wheels were moving despite the controller output being 0, why?
         QuickActions.stopAll();
         if (Math.abs(leftY) > Constants.CONTROLLER_DEADZONE) {
             driveLeftParent.set(leftY);
@@ -196,7 +202,6 @@ public class Robot extends TimedRobot {
         if (Math.abs(rightY) > Constants.CONTROLLER_DEADZONE) {
             driveRightParent.set(rightY);
         }
-        // driverController.setRumble(RumbleType.kBothRumble, 0.1);
         // aprilTagHighlighter.doEveryTeleopFrame(driverController);
         InputtedCoDriverControls.onEveryFrame();
     }

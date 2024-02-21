@@ -1,52 +1,40 @@
-// yoinky yoinky ahahahaha this code is mine now yippee!!1!
-
 package frc.robot;
-
-import frc.robot.motor.MotorController;
 
 public class QuickActions {
 
-    public static MotorController leftParent;
-    public static MotorController rightParent;
-
-    public static void setDriveMotors(MotorController leftParentMotor, MotorController rightParentMotor) {
-        leftParent = leftParentMotor;
-        rightParent = rightParentMotor;
-    }
-
     public static void setAll(double percent) {
-        leftParent.set(percent);
-        rightParent.set(percent);
+        Robot.motors.getDriveLeftParent().set(percent);
+        Robot.motors.getDriveRightParent().set(percent);
     }
 
     public static void stopAll() {
-        leftParent.set(0.0);
-        rightParent.set(0.0);
+        Robot.motors.getDriveLeftParent().set(0.0);
+        Robot.motors.getDriveRightParent().set(0.0);
     }
 
     public static void turn(TurnDirection direction, double percent) {
         if (direction == TurnDirection.LEFT) {
-            leftParent.set(-percent);
-            rightParent.set(percent);
+            Robot.motors.getDriveLeftParent().set(-percent);
+            Robot.motors.getDriveRightParent().set(percent);
         } else if (direction == TurnDirection.RIGHT) {
-            leftParent.set(percent);
-            rightParent.set(-percent);
+            Robot.motors.getDriveLeftParent().set(percent);
+            Robot.motors.getDriveRightParent().set(-percent);
         }
     }
 
     public static void turnVelocity(TurnDirection direction, double percent) {
         if (direction == TurnDirection.LEFT) {
-            leftParent.setVelocity(-percent);
-            rightParent.setVelocity(percent);
+            Robot.motors.getDriveLeftParent().setVelocity(-percent);
+            Robot.motors.getDriveRightParent().setVelocity(percent);
         } else if (direction == TurnDirection.RIGHT) {
-            leftParent.setVelocity(percent);
-            rightParent.setVelocity(-percent);
+            Robot.motors.getDriveLeftParent().setVelocity(percent);
+            Robot.motors.getDriveRightParent().setVelocity(-percent);
         }
     }
 
     public static void resetDriveTrainEncoders() {
-        leftParent.setEncoderPosition(0.0);
-        rightParent.setEncoderPosition(0.0);
+        Robot.motors.getDriveLeftParent().setEncoderPosition(0.0);
+        Robot.motors.getDriveRightParent().setEncoderPosition(0.0);
     }
 
     public enum TurnDirection {
