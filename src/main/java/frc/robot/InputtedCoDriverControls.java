@@ -38,7 +38,7 @@ public class InputtedCoDriverControls {
         throw new UnsupportedOperationException("Unimplemented method 'extendArms'");
     }
 
-    private static void doClimb() {
+    private static void retractArms() {
         throw new UnsupportedOperationException("Unimplemented method 'doClimb'");
     }
 

@@ -187,11 +187,7 @@ public class Robot extends TimedRobot {
 
     /** This function is called once when teleop is enabled. */
     @Override
-    public void teleopInit() {
-        // aprilTagHighlighter.sequenceInitiated = false;
-        System.out.println("FLP inverted??????:" + driveLeftParent.getInverted());
-        System.out.println("FrP inverted??????:" + driveRightParent.getInverted());
-    }
+    public void teleopInit() {}
 
     /** This function is called periodically during operator control. */
     @Override
@@ -199,7 +195,6 @@ public class Robot extends TimedRobot {
         // TODO: make slow mode
         double leftY = driverController.getLeftY();
         double rightY = driverController.getRightY();
-        // TODO the left wheels were moving despite the controller output being 0, why?
         QuickActions.stopAll();
         if (Math.abs(leftY) > Constants.CONTROLLER_DEADZONE) {
             driveLeftParent.set(leftY);
@@ -207,7 +202,6 @@ public class Robot extends TimedRobot {
         if (Math.abs(rightY) > Constants.CONTROLLER_DEADZONE) {
             driveRightParent.set(rightY);
         }
-        // driverController.setRumble(RumbleType.kBothRumble, 0.1);
         // aprilTagHighlighter.doEveryTeleopFrame(driverController);
         InputtedCoDriverControls.onEveryFrame();
     }
