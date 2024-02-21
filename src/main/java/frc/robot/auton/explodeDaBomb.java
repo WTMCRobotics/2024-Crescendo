@@ -1,8 +1,7 @@
 package frc.robot.auton;
 
-public class explodeDaBomb extends AutonAction {
+public class ExplodeDaBomb extends AutonAction {
 
-    double rotationAngle;
     static int timer = 5;
 
     @Override
