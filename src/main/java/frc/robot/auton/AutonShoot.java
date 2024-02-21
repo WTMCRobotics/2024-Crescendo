@@ -2,15 +2,16 @@ package frc.robot.auton;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.motor.MotorController;
 
 //TODO : this
 public class AutonShoot extends AutonAction {
 
-    private MotorController leftShooterMotor;
-    private MotorController rightShooterMotor;
+    private MotorController leftShooterMotor = Robot.leftShooterMotor;
+    private MotorController rightShooterMotor = Robot.rightShooterMotor;
 
-    private MotorController shooterFeederMotor;
+    private MotorController shooterFeederMotor = Robot.feederMotor;
 
     private double revFinishedTime;
 
@@ -19,14 +20,19 @@ public class AutonShoot extends AutonAction {
         if (Timer.getFPGATimestamp() >= revFinishedTime) {
             shooterFeederMotor.set(0.2);
         }
-
-        return true;
+        if (Timer.getFPGATimestamp() >= revFinishedTime + 1.0) {
+            shooterFeederMotor.set(0);
+            leftShooterMotor.set(0);
+            rightShooterMotor.set(0);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void initiate() {
         leftShooterMotor.set(1.0);
-        rightShooterMotor.set(1.0);
+        rightShooterMotor.set(-1.0);
         revFinishedTime = Timer.getFPGATimestamp() + Constants.REV_TIME;
     }
 }

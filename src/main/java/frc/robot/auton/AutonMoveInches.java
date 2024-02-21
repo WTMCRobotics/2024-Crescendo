@@ -2,7 +2,7 @@ package frc.robot.auton;
 
 import frc.robot.QuickActions;
 
-public class AutonMoveForward extends AutonAction {
+public class AutonMoveInches extends AutonAction {
 
     double distance;
     double isDoneDebounceTime = 0;
@@ -44,7 +44,7 @@ public class AutonMoveForward extends AutonAction {
      *
      * @param distance The distance in inches
      */
-    public AutonMoveForward(double distance) {
+    public AutonMoveInches(double distance) {
         this.distance = distance;
     }
 }

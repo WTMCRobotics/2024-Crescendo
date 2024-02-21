@@ -16,6 +16,7 @@ import frc.robot.auton.AutonAction;
 import frc.robot.auton.AutonActionRunner;
 import frc.robot.auton.AutonRoutes;
 import frc.robot.motor.MotorController;
+import frc.robot.motor.MotorControllerFactory;
 import java.util.ArrayDeque;
 
 /**
@@ -34,7 +35,11 @@ public class Robot extends TimedRobot {
     MotorController driveLeftChild = RobotConfigs.getLeftChild();
     MotorController driveRightParent = RobotConfigs.getRightParent();
     MotorController driveRightChild = RobotConfigs.getRightChild();
+    public static MotorController leftShooterMotor = MotorControllerFactory.create(6, MotorController.Type.SparkMax);
+    public static MotorController rightShooterMotor = MotorControllerFactory.create(7, MotorController.Type.SparkMax);
+    public static MotorController feederMotor = MotorControllerFactory.create(9, MotorController.Type.SparkMax);
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
+    XboxController coDriverController = new XboxController(1);
     static AHRS navX = new AHRS(SPI.Port.kMXP);
     AutonActionRunner auton;
     private final SendableChooser<String> autonRouteChooser = new SendableChooser<>();
@@ -63,6 +68,8 @@ public class Robot extends TimedRobot {
         driveLeftParent.setInverted(true);
         driveRightParent.setInverted(false);
 
+        feederMotor.setInverted(true);
+
         System.out.println("is drive righjt parent inverted? " + driveRightParent.getInverted());
 
         driveLeftChild.setBrakeMode(false);
@@ -80,6 +87,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("PIDTARGET", 90);
 
         System.out.println("is drive righjt parent inverted at end?? " + driveRightParent.getInverted());
+
+        InputtedCoDriverControls.setCoDriverController(coDriverController);
     }
 
     /**
@@ -119,8 +128,14 @@ public class Robot extends TimedRobot {
 
         ArrayDeque<AutonAction> route =
             switch (autonRouteChooser.getSelected()) {
-                case "move forward" -> new ArrayDeque<>(AutonRoutes.RUN_INTO_WALL_AND_BREAK_ROBOT);
-                case "move backwards" -> new ArrayDeque<>(AutonRoutes.RUN_INTO_OTHER_WALL_AND_BREAK_ROBOT_AGAIN);
+                case "move forward" -> new ArrayDeque<>(AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
+                case "move backwards" -> new ArrayDeque<>(AutonRoutes.GO_BACKWARD_OUT_OF_STARTING_ZONE);
+                case "shoot and back up" -> new ArrayDeque<>(AutonRoutes.SHOOT_AND_BACK_UP);
+                case "backup turn backup" -> new ArrayDeque<>(AutonRoutes.BACKUP_TURN_BACKUP);
+                case "shoot backup intake forward shoot" -> new ArrayDeque<>(
+                    AutonRoutes.SHOOT_BACKUP_INTAKE_FORWARD_SHOOT
+                );
+                case "explode hidden bomb" -> new ArrayDeque<>(AutonRoutes.BOOM);
                 default -> new ArrayDeque<AutonAction>();
             };
         System.out.println("selected auton: " + route);
@@ -183,6 +198,7 @@ public class Robot extends TimedRobot {
         }
         // driverController.setRumble(RumbleType.kBothRumble, 0.1);
         // aprilTagHighlighter.doEveryTeleopFrame(driverController);
+        InputtedCoDriverControls.onEveryFrame();
     }
 
     /** This function is called once when the robot is disabled. */
