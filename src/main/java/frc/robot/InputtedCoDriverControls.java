@@ -20,11 +20,6 @@ public class InputtedCoDriverControls {
         if (controller.getXButtonPressed()) {
             shootIntoSpeaker();
         }
-        if (shoot != null) {
-            if (shoot.isDone() == true) {
-                shoot = null;
-            }
-        }
         doShooterIntake();
         if (controller.getBackButton()) {
             // doClimb();
@@ -52,11 +47,8 @@ public class InputtedCoDriverControls {
         }
     }
 
-    static AutonShoot shoot = null;
-
     private static void shootIntoSpeaker() {
-        shoot = new AutonShoot();
-        shoot.initiate();
+        Robot.getTeleopActionRunner().addActionToRun(new AutonShoot());
     }
 
     private static void dropIntoAmp() {

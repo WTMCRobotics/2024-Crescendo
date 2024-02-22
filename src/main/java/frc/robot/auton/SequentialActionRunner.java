@@ -2,18 +2,18 @@ package frc.robot.auton;
 
 import java.util.ArrayDeque;
 
-public class AutonActionRunner {
+public class SequentialActionRunner {
 
     public ArrayDeque<AutonAction> queue;
 
-    public AutonActionRunner(AutonAction... actions) {
+    public SequentialActionRunner(AutonAction... actions) {
         queue = new ArrayDeque<>();
         for (AutonAction action : actions) {
             queue.add(action);
         }
     }
 
-    public AutonActionRunner(ArrayDeque<AutonAction> actions) {
+    public SequentialActionRunner(ArrayDeque<AutonAction> actions) {
         queue = actions;
     }
 
