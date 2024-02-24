@@ -29,7 +29,6 @@ public class InputtedCoDriverControls {
         if (controller.getBackButton()) {
             retractArms();
         }
-        
     }
 
     private static void extendArms() {

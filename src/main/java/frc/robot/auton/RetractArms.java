@@ -5,11 +5,12 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class RetractArms extends AutonAction {
+
     private double extensionTime;
 
     @Override
     public boolean isDone() {
-   if (Timer.getFPGATimestamp() >= extensionTime) {
+        if (Timer.getFPGATimestamp() >= extensionTime) {
             Robot.motors.getLeftClimb().set(0);
             Robot.motors.getRightClimb().set(0);
             return true;
@@ -22,5 +23,5 @@ public class RetractArms extends AutonAction {
         Robot.motors.getLeftClimb().set(-0.25);
         Robot.motors.getRightClimb().set(-0.25);
         extensionTime = Timer.getFPGATimestamp() + Constants.ARM_RETRACTION_TIME;
-    }    
+    }
 }
