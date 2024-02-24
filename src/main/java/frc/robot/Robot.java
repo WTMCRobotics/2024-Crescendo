@@ -13,8 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Vision.AprilTagHighlighter;
 import frc.robot.auton.AutonAction;
-import frc.robot.auton.AutonActionRunner;
 import frc.robot.auton.AutonRoutes;
+import frc.robot.auton.ParallelActionRunner;
+import frc.robot.auton.SequentialActionRunner;
 import frc.robot.motor.MotorController;
 import frc.robot.motor.MotorControllerFactory;
 import java.util.ArrayDeque;
@@ -44,7 +45,13 @@ public class Robot extends TimedRobot {
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     XboxController coDriverController = new XboxController(1);
     static AHRS navX = new AHRS(SPI.Port.kMXP);
-    AutonActionRunner auton;
+    SequentialActionRunner auton;
+    static ParallelActionRunner teleopActionRunner = new ParallelActionRunner();
+
+    public static ParallelActionRunner getTeleopActionRunner() {
+        return teleopActionRunner;
+    }
+
     private final SendableChooser<String> autonRouteChooser = new SendableChooser<>();
 
     public static AHRS getGyroscope() {
@@ -150,7 +157,7 @@ public class Robot extends TimedRobot {
                 default -> new ArrayDeque<AutonAction>();
             };
         System.out.println("selected auton: " + route);
-        auton = new AutonActionRunner(route);
+        auton = new SequentialActionRunner(route);
         auton.initiateAuton();
     }
 
@@ -192,6 +199,7 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+        teleopActionRunner.onEveryFrame();
         // TODO: make slow mode
         double leftY = driverController.getLeftY();
         double rightY = driverController.getRightY();
