@@ -11,6 +11,10 @@ public class Constants {
     /*SHOOTER CONFIG*/
     public static final double REV_TIME = 1.0;
 
+    /*CLIMB CONFIG */
+    public static final double ARM_EXTENSION_TIME = 3;
+    public static final double ARM_RETRACTION_TIME = 3;
+
     /*DRIVE TRAIN CONFIG */
     public static final double CONTROLLER_DEADZONE = 0.06;
 
