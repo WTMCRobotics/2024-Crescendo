@@ -8,6 +8,11 @@ public class Constants {
     public static final int DRIVE_RIGHT_PARENT_ID = 11;
     public static final int DRIVE_RIGHT_CHILD_ID = 3;
 
+    /*CLIMB MOTOR IDS */
+    
+    public static final int LEFT_CLIMB_ID = 31;
+    public static final int RIGHT_CLIMB_ID = 21;
+
     /*SHOOTER CONFIG*/
     public static final double REV_TIME = 1.0;
 

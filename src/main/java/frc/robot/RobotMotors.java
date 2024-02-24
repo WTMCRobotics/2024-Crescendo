@@ -92,13 +92,13 @@ public class RobotMotors {
         return this;
     }
 
-    public RobotMotors leftClimbMotor(MotorController leftClimbMotor, String arg) {
-        this.leftClimb = leftClimbMotor;
+    public RobotMotors leftClimb(MotorController leftClimb) {
+        this.leftClimb = leftClimb;
         return this;
     }
 
-    public RobotMotors rightClimbMotor(MotorController rightClimbMotor) {
-        this.rightClimb = rightClimbMotor;
+    public RobotMotors rightClimb(MotorController rightClimb) {
+        this.rightClimb = rightClimb;
         return this;
     }
 }

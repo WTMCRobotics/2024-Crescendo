@@ -42,6 +42,8 @@ public class Robot extends TimedRobot {
     MotorController leftFlywheel = MotorControllerFactory.create(6, MotorController.Type.SparkMax);
     MotorController rightFlywheel = MotorControllerFactory.create(7, MotorController.Type.SparkMax);
     MotorController feederMotor = MotorControllerFactory.create(9, MotorController.Type.SparkMax);
+    MotorController leftClimb = MotorControllerFactory.create(Constants.LEFT_CLIMB_ID, MotorController.Type.Talon);
+    MotorController rightClimb = MotorControllerFactory.create(Constants.RIGHT_CLIMB_ID, MotorController.Type.Talon);
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     XboxController coDriverController = new XboxController(1);
     static AHRS navX = new AHRS(SPI.Port.kMXP);
@@ -95,7 +97,9 @@ public class Robot extends TimedRobot {
                 .driveRightChild(driveRightChild)
                 .feeder(feederMotor)
                 .leftFlywheel(leftFlywheel)
-                .rightFlywheel(rightFlywheel);
+                .rightFlywheel(rightFlywheel)
+                .leftClimb(leftClimb)
+                .rightClimb(rightClimb);
         getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
         SmartDashboard.putNumber("rotationGainsP", Constants.ROTATION_GAINS.P);
