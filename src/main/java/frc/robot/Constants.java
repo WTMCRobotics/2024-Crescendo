@@ -19,7 +19,8 @@ public class Constants {
     /*CLIMB CONFIG */
     public static final double ARM_EXTENSION_TIME = 3;
     public static final double ARM_RETRACTION_TIME = 3;
-
+    public static final double ARM_EXTENSION_SPEED = .25;
+    public static final double ARM_RETRACTION_SPEED = .25;
     /*DRIVE TRAIN CONFIG */
     public static final double CONTROLLER_DEADZONE = 0.06;
 

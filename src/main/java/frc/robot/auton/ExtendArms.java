@@ -20,8 +20,8 @@ public class ExtendArms extends AutonAction {
 
     @Override
     public void initiate() {
-        Robot.motors.getLeftClimb().set(0.25);
-        Robot.motors.getRightClimb().set(0.25);
+        Robot.motors.getLeftClimb().set(Constants.ARM_EXTENSION_SPEED);
+        Robot.motors.getRightClimb().set(Constants.ARM_EXTENSION_SPEED);
         extensionTime = Timer.getFPGATimestamp() + Constants.ARM_EXTENSION_TIME;
     }
 }
