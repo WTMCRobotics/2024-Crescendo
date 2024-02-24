@@ -14,12 +14,17 @@ public class Constants {
     public static final int RIGHT_CLIMB_ID = 21;
 
     /*SHOOTER CONFIG*/
+    /**the amount of time we let the wheels rev up when shooting in seconds */
     public static final double REV_TIME = 1.0;
 
     /*CLIMB CONFIG */
+    /**the time we give the arms to extend in seconds */
     public static final double ARM_EXTENSION_TIME = 3;
+    /**the time we give the arms to retract in seconds */
     public static final double ARM_RETRACTION_TIME = 3;
+    /**the % of max power we give to the arm motors while extending */
     public static final double ARM_EXTENSION_SPEED = .25;
+    /**the % of max power we give to the arm motors while retracting */
     public static final double ARM_RETRACTION_SPEED = .25;
     /*DRIVE TRAIN CONFIG */
     public static final double CONTROLLER_DEADZONE = 0.06;
