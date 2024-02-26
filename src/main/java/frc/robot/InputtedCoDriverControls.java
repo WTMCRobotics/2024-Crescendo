@@ -23,12 +23,20 @@ public class InputtedCoDriverControls {
             shootIntoSpeaker();
         }
         doShooterIntake();
+        if (controller.getYButton()) {
+            doFloorIntake();
+        }
         if (controller.getStartButton()) {
             extendArms();
         }
         if (controller.getBackButton()) {
             retractArms();
         }
+    }
+
+    private static void doFloorIntake() {
+        Robot.motors.getIntake().set(.5);
+        //Robot.motors.getFeeder().set(.5);
     }
 
     private static void extendArms() {
