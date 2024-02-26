@@ -35,6 +35,8 @@ public class Constants {
     public static final int CAMERA_WIDTH = 640;
     public static final int CAMERA_BIT_CORRECTION_AMOUNT = 0;
     /**This is the amount of frames in a row that an april tag needs in frame to be to be considered confidently an april tag */
+    public static final int APRIL_TAG_CONFIDENCE_FRAMES = 3;
+    public static final double APRIL_TAG_ROTATION_ZONE = 5;
 
     /*PID GAINS *///0.00001, 100
     public static final Gains ROTATION_GAINS = new Gains(0.011, 0.0001, 0.000935, 0, 0, 0.3);
@@ -55,8 +57,6 @@ public class Constants {
     public static final int TIMEOUT_MS = 30;
     public static final double ENCODER_ROTATION = 4096.0;
     /* ROTATION PID CONSTANTS */
-    public static final int APRIL_TAG_CONFIDENCE_FRAMES = 3;
-    public static final double APRIL_TAG_ROTATION_ZONE = 5;
 
     public static final double ROTATION_ERROR_DEGREES = 5.;
 }
