@@ -18,7 +18,7 @@ public class RetractArms extends AutonAction {
 
     @Override
     public void initiate() {
-        Robot.motors.getLeftClimb().set(Constants.ARM_RETRACTION_SPEED);
-        Robot.motors.getRightClimb().set(Constants.ARM_RETRACTION_SPEED);
+        Robot.motors.getLeftClimb().set(Constants.CLIMB_RETRACTION_SPEED);
+        Robot.motors.getRightClimb().set(Constants.CLIMB_RETRACTION_SPEED);
     }
 }

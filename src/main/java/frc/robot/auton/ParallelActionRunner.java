@@ -25,8 +25,7 @@ public class ParallelActionRunner {
 
     // This method is important if you have code that could add two of the same action with opposite goals.
     // That would mean they would fight each other and never finish, which is bad news bears if you ask me.
-    public void removeActionsOfType(AutonAction action) {
-        Class<?> clazz = action.getClass();
+    public void removeActionsOfType(Class<?> clazz) {
         Iterator<AutonAction> it = actions.iterator();
         while (it.hasNext()) {
             AutonAction auction = it.next();
@@ -34,5 +33,9 @@ public class ParallelActionRunner {
                 actions.remove(auction);
             }
         }
+    }
+
+    public void removeActionsOfType(AutonAction action) {
+        removeActionsOfType(action.getClass());
     }
 }

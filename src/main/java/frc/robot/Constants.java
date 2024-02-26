@@ -21,9 +21,9 @@ public class Constants {
     public static final double CLIMB_EXTENDED_ENCODER_POSITION = 5;
     public static final double CLIMB_RETRACTED_ENCODER_POSITION = 0.5;
     /**the % of max power we give to the arm motors while extending */
-    public static final double ARM_EXTENSION_SPEED = .25;
+    public static final double CLIMB_EXTENSION_SPEED = .25;
     /**the % of max power we give to the arm motors while retracting */
-    public static final double ARM_RETRACTION_SPEED = .25;
+    public static final double CLIMB_RETRACTION_SPEED = -.25;
     /*DRIVE TRAIN CONFIG */
     public static final double CONTROLLER_DEADZONE = 0.06;
 

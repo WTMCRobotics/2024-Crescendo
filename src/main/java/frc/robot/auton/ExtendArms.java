@@ -18,7 +18,7 @@ public class ExtendArms extends AutonAction {
 
     @Override
     public void initiate() {
-        Robot.motors.getLeftClimb().set(Constants.ARM_EXTENSION_SPEED);
-        Robot.motors.getRightClimb().set(Constants.ARM_EXTENSION_SPEED);
+        Robot.motors.getLeftClimb().set(Constants.CLIMB_EXTENSION_SPEED);
+        Robot.motors.getRightClimb().set(Constants.CLIMB_EXTENSION_SPEED);
     }
 }
