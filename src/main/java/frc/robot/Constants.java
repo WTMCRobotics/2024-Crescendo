@@ -18,10 +18,8 @@ public class Constants {
     public static final double REV_TIME = 1.0;
 
     /*CLIMB CONFIG */
-    /**the time we give the arms to extend in seconds */
-    public static final double ARM_EXTENSION_TIME = 3;
-    /**the time we give the arms to retract in seconds */
-    public static final double ARM_RETRACTION_TIME = 3;
+    public static final double CLIMB_EXTENDED_ENCODER_POSITION = 5;
+    public static final double CLIMB_RETRACTED_ENCODER_POSITION = 0.5;
     /**the % of max power we give to the arm motors while extending */
     public static final double ARM_EXTENSION_SPEED = .25;
     /**the % of max power we give to the arm motors while retracting */
@@ -37,8 +35,6 @@ public class Constants {
     public static final int CAMERA_WIDTH = 640;
     public static final int CAMERA_BIT_CORRECTION_AMOUNT = 0;
     /**This is the amount of frames in a row that an april tag needs in frame to be to be considered confidently an april tag */
-    public static final int APRIL_TAG_CONFIDENCE_FRAMES = 3;
-    public static final double APRIL_TAG_ROTATION_ZONE = 5;
 
     /*PID GAINS *///0.00001, 100
     public static final Gains ROTATION_GAINS = new Gains(0.011, 0.0001, 0.000935, 0, 0, 0.3);
@@ -58,7 +54,9 @@ public class Constants {
     /** amount of time in ms to wait for confirmation */
     public static final int TIMEOUT_MS = 30;
     public static final double ENCODER_ROTATION = 4096.0;
-
     /* ROTATION PID CONSTANTS */
+    public static final int APRIL_TAG_CONFIDENCE_FRAMES = 3;
+    public static final double APRIL_TAG_ROTATION_ZONE = 5;
+
     public static final double ROTATION_ERROR_DEGREES = 5.;
 }
