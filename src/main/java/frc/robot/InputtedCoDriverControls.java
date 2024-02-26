@@ -2,6 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.auton.AutonShoot;
+import frc.robot.auton.ExtendArms;
+import frc.robot.auton.RetractArms;
 
 public class InputtedCoDriverControls {
 
@@ -21,20 +23,20 @@ public class InputtedCoDriverControls {
             shootIntoSpeaker();
         }
         doShooterIntake();
-        if (controller.getBackButton()) {
-            // doClimb();
-        }
         if (controller.getStartButton()) {
-            // extendArms();
+            extendArms();
+        }
+        if (controller.getBackButton()) {
+            retractArms();
         }
     }
 
     private static void extendArms() {
-        throw new UnsupportedOperationException("Unimplemented method 'extendArms'");
+        Robot.getTeleopActionRunner().addActionToRun(new ExtendArms());
     }
 
     private static void retractArms() {
-        throw new UnsupportedOperationException("Unimplemented method 'doClimb'");
+        Robot.getTeleopActionRunner().addActionToRun(new RetractArms());
     }
 
     private static void doShooterIntake() {
