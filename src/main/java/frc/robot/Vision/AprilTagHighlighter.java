@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Vision.Vision.AprilTagLocation;
+import frc.robot.auton.AutonRotate;
 import java.util.HashMap;
 import java.util.Map;
 import org.opencv.core.Mat;
@@ -63,11 +64,11 @@ public class AprilTagHighlighter {
 
                     SmartDashboard.putNumber("Tag " + detection.getId() + " Degrees2turn", Math.toDegrees(rot));
                     SmartDashboard.putNumber(
-                        "Tag " + detection.getId() + " YROT",
+                        "Tag " + detection.getId() + " Y ROT",
                         Math.toDegrees(estimation.getRotation().getY())
                     );
                     SmartDashboard.putNumber(
-                        "Tag " + detection.getId() + " Zrot",
+                        "Tag " + detection.getId() + " Z rot",
                         Math.toDegrees(estimation.getRotation().getZ())
                     );
                     double distance = estimation.getTranslation().getDistance(new Translation3d());
@@ -77,7 +78,7 @@ public class AprilTagHighlighter {
     }
 
     public boolean sequenceInitiated = false;
-    AutonRotateAction rotationAction;
+    AutonRotate rotationAction;
 
     public void doEveryTeleopFrame(XboxController controller) {
         if (controller.getAButtonPressed()) {
@@ -94,15 +95,15 @@ public class AprilTagHighlighter {
             // }
             // double rotDeg = Robot.getGyroscope().getAngle() + Math.toDegrees(aprilEstimate.getRotation().getY());
             double rotDeg = 90;
-            rotDeg = SmartDashboard.getNumber("PIDTARGET", 90);
+            rotDeg = SmartDashboard.getNumber("PID TARGET", 90);
             System.out.println("We want to turn to " + rotDeg);
 
-            rotationAction = new AutonRotateAction(rotDeg);
+            rotationAction = new AutonRotate(rotDeg);
             sequenceInitiated = true;
         }
 
         if (sequenceInitiated) {
-            if (rotationAction.executeAndIsDone()) {
+            if (rotationAction.isDone()) {
                 sequenceInitiated = false;
                 return;
             }

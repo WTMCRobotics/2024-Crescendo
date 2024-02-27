@@ -7,17 +7,6 @@ import java.util.List;
 
 public class AutonRoutes {
 
-    public static final ArrayDeque<AutonAction> SHOOT_AND_RUN_INTO_OTHER_WALL_AND_BREAK_ROBOT = new ArrayDeque<
-        AutonAction
-    >(
-        List.of(
-            new AutonParallelAction(
-                new AutonSequentialAction(new AutonWait(1.5), new AutonIntake()),
-                new AutonMoveInches(-36)
-            )
-        )
-    );
-
     public static final ArrayDeque<AutonAction> GO_BACKWARD_OUT_OF_STARTING_ZONE = new ArrayDeque<AutonAction>(
         (List.of(new AutonMoveInches(-84)))
     );

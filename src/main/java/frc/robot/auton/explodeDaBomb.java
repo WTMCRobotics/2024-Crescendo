@@ -12,7 +12,7 @@ public class explodeDaBomb extends AutonAction {
         } else if (timer == 1) {
             System.out.println("i warned you");
         } else if (timer == 2) {
-            System.out.println("we arent joking");
+            System.out.println("we aren't joking");
         } else if (timer == 3) {
             System.out.println("id run if i where you");
         } else if (timer == 4) {
@@ -27,5 +27,10 @@ public class explodeDaBomb extends AutonAction {
     @Override
     public void initiate() {
         System.out.println("the robot is exploding");
+    }
+
+    @Override
+    public void shutdown() {
+        System.out.println("Bomb has been defused; counter-terrorists win");
     }
 }

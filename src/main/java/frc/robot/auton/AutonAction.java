@@ -7,4 +7,6 @@ public abstract class AutonAction {
     public abstract boolean isDone();
 
     public abstract void initiate();
+
+    public abstract void shutdown();
 }

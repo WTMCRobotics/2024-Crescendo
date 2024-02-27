@@ -18,7 +18,7 @@ public class AutonSequentialAction extends AutonAction {
     @Override
     public boolean isDone() {
         if (actionList.getFirst().isDone()) {
-            actionList.removeFirst();
+            actionList.poll().shutdown();
         }
 
         if (actionList.isEmpty()) {
@@ -29,4 +29,11 @@ public class AutonSequentialAction extends AutonAction {
 
     @Override
     public void initiate() {}
+
+    @Override
+    public void shutdown() {
+        if (actionList.size() > 0) {
+            actionList.getFirst().shutdown();
+        }
+    }
 }

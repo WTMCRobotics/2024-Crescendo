@@ -29,4 +29,7 @@ public class AutonWait extends AutonAction {
     public void initiate() {
         targetedTime = Timer.getFPGATimestamp() + delay;
     }
+
+    @Override
+    public void shutdown() {}
 }
