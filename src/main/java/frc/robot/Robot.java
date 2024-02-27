@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("rotationGainsI", Constants.ROTATION_GAINS.I);
         SmartDashboard.putNumber("rotationGainsD", Constants.ROTATION_GAINS.D);
 
-        SmartDashboard.putNumber("PIDnTARGET", 90);
+        SmartDashboard.putNumber("PID TARGET", 90);
 
         System.out.println("is drive right parent inverted at end?? " + driveRightParent.getInverted());
 
