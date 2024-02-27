@@ -83,6 +83,7 @@ public class Robot extends TimedRobot {
         driveRightParent.setInverted(false);
 
         feederMotor.setInverted(true);
+        feederMotor.setBrakeMode(false);
 
         System.out.println("is drive right parent inverted? " + driveRightParent.getInverted());
 
