@@ -108,7 +108,7 @@ public interface MotorController extends edu.wpi.first.wpilibj.motorcontrol.Moto
      * @param P Proportional gain
      * @param I Integral gain
      * @param D Derivative gain
-     * @param F Filtuh gain
+     * @param F Filter gain
      */
     public void setPID(double P, double I, double D, double F);
 

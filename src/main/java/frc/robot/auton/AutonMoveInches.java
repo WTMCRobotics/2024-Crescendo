@@ -50,4 +50,9 @@ public class AutonMoveInches extends AutonAction {
     public AutonMoveInches(double distance) {
         this.distance = distance;
     }
+
+    @Override
+    public void shutdown() {
+        QuickActions.stopAll();
+    }
 }

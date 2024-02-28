@@ -131,7 +131,7 @@ public class Vision {
         targetTags.clear();
         for (AprilTagLocation tag : targetTag) {
             targetTags.add(tag.getId());
-            System.out.println("Targetting tag ID " + tag.getId());
+            System.out.println("Targeting tag ID " + tag.getId());
         }
     }
 

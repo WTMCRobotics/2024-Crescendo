@@ -1,6 +1,5 @@
 package frc.robot.auton;
 
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
@@ -20,5 +19,11 @@ public class RetractArms extends AutonAction {
     public void initiate() {
         Robot.motors.getLeftClimb().set(Constants.CLIMB_RETRACTION_SPEED);
         Robot.motors.getRightClimb().set(Constants.CLIMB_RETRACTION_SPEED);
+    }
+
+    @Override
+    public void shutdown() {
+        Robot.motors.getLeftClimb().set(0);
+        Robot.motors.getRightClimb().set(0);
     }
 }

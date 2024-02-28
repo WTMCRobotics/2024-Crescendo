@@ -10,4 +10,10 @@ public class AutonIntake extends AutonAction {
 
     @Override
     public void initiate() {}
+
+    @Override
+    public void shutdown() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'shutDown'");
+    }
 }

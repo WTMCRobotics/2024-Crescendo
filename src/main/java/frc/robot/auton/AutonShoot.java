@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
-//TODO : this
 public class AutonShoot extends AutonAction {
 
     private double revFinishedTime;
@@ -16,9 +15,6 @@ public class AutonShoot extends AutonAction {
             Robot.motors.getIntake().set(.2);
         }
         if (Timer.getFPGATimestamp() >= revFinishedTime + 1.0) {
-            Robot.motors.getFeeder().set(0);
-            Robot.motors.getLeftFlywheel().set(0);
-            Robot.motors.getRightFlywheel().set(0);
             return true;
         }
         return false;
@@ -29,5 +25,12 @@ public class AutonShoot extends AutonAction {
         Robot.motors.getLeftFlywheel().set(1.0);
         Robot.motors.getRightFlywheel().set(-1.0);
         revFinishedTime = Timer.getFPGATimestamp() + Constants.REV_TIME;
+    }
+
+    @Override
+    public void shutdown() {
+        Robot.motors.getFeeder().set(0);
+        Robot.motors.getLeftFlywheel().set(0);
+        Robot.motors.getRightFlywheel().set(0);
     }
 }

@@ -27,7 +27,7 @@ public class SequentialActionRunner {
         }
         AutonAction action = queue.getFirst();
         if (action.isDone()) {
-            queue.removeFirst();
+            queue.poll().shutdown();
             if (queue.isEmpty()) {
                 System.out.println("We have finished Auton!");
                 return;
