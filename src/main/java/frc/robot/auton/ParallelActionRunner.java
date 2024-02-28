@@ -19,9 +19,7 @@ public class ParallelActionRunner {
             AutonAction action = it.next();
             if (action.isDone()) {
                 action.shutdown();
-                actions.remove(i);
-                i--;
-
+                actions.remove(action);
             }
         }
     }

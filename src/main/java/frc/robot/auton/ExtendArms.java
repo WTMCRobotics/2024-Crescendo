@@ -1,6 +1,5 @@
 package frc.robot.auton;
 
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
