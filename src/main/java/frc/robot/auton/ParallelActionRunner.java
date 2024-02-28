@@ -1,6 +1,7 @@
 package frc.robot.auton;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ParallelActionRunner {
@@ -13,13 +14,31 @@ public class ParallelActionRunner {
     }
 
     public void onEveryFrame() {
-        for (int i = 0; i < actions.size(); i++) {
-            AutonAction action = actions.get(i);
+        Iterator<AutonAction> it = actions.iterator();
+        while (it.hasNext()) {
+            AutonAction action = it.next();
             if (action.isDone()) {
                 action.shutdown();
                 actions.remove(i);
                 i--;
+
             }
         }
+    }
+
+    // This method is important if you have code that could add two of the same action with opposite goals.
+    // That would mean they would fight each other and never finish, which is bad news bears if you ask me.
+    public void removeActionsOfType(Class<?> clazz) {
+        Iterator<AutonAction> it = actions.iterator();
+        while (it.hasNext()) {
+            AutonAction auction = it.next();
+            if (auction.getClass().equals(clazz)) {
+                actions.remove(auction);
+            }
+        }
+    }
+
+    public void removeActionsOfType(AutonAction action) {
+        removeActionsOfType(action.getClass());
     }
 }
