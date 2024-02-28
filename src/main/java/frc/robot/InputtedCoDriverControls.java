@@ -14,6 +14,8 @@ public class InputtedCoDriverControls {
     }
 
     public static void onEveryFrame() {
+        Robot.motors.getLeftClimb().stopMotor();
+        Robot.motors.getRightClimb().stopMotor();
         if (controller.getAButton()) {
             Robot.motors.getFeeder().set(30);
         } else {
@@ -27,10 +29,14 @@ public class InputtedCoDriverControls {
             doFloorIntake();
         }
         if (controller.getStartButton()) {
-            extendArms();
+            //extendArms();
+            Robot.motors.getLeftClimb().set(Constants.CLIMB_EXTENSION_SPEED);
+            Robot.motors.getRightClimb().set(Constants.CLIMB_EXTENSION_SPEED);
         }
         if (controller.getBackButton()) {
-            retractArms();
+            //retractArms();
+            Robot.motors.getLeftClimb().set(Constants.CLIMB_RETRACTION_SPEED);
+            Robot.motors.getRightClimb().set(Constants.CLIMB_RETRACTION_SPEED);
         }
     }
 
@@ -41,10 +47,12 @@ public class InputtedCoDriverControls {
 
     private static void extendArms() {
         Robot.getTeleopActionRunner().addActionToRun(new ExtendArms());
+        Robot.getTeleopActionRunner().removeActionsOfType(RetractArms.class);
     }
 
     private static void retractArms() {
         Robot.getTeleopActionRunner().addActionToRun(new RetractArms());
+        Robot.getTeleopActionRunner().removeActionsOfType(ExtendArms.class);
     }
 
     private static void doShooterIntake() {
