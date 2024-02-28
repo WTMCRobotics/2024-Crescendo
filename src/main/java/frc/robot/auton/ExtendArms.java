@@ -6,11 +6,9 @@ import frc.robot.Robot;
 
 public class ExtendArms extends AutonAction {
 
-    private double extensionTime;
-
     @Override
     public boolean isDone() {
-        if (Timer.getFPGATimestamp() >= extensionTime) {
+        if (Robot.motors.getLeftClimb().getEncoderPosition() > Constants.CLIMB_EXTENDED_ENCODER_POSITION) {
             Robot.motors.getLeftClimb().set(0);
             Robot.motors.getRightClimb().set(0);
             return true;
@@ -20,8 +18,7 @@ public class ExtendArms extends AutonAction {
 
     @Override
     public void initiate() {
-        Robot.motors.getLeftClimb().set(Constants.ARM_EXTENSION_SPEED);
-        Robot.motors.getRightClimb().set(Constants.ARM_EXTENSION_SPEED);
-        extensionTime = Timer.getFPGATimestamp() + Constants.ARM_EXTENSION_TIME;
+        Robot.motors.getLeftClimb().set(Constants.CLIMB_EXTENSION_SPEED);
+        Robot.motors.getRightClimb().set(Constants.CLIMB_EXTENSION_SPEED);
     }
 }
