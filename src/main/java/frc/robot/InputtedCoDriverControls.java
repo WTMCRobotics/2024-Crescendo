@@ -14,20 +14,20 @@ public class InputtedCoDriverControls {
     }
 
     public static void onEveryFrame() {
-        Robot.motors.getLeftClimb().stopMotor();
-        Robot.motors.getRightClimb().stopMotor();
+        Robot.motors.getFeeder().stopMotor();
         if (controller.getAButton()) {
             Robot.motors.getFeeder().set(30);
-        } else {
-            Robot.motors.getFeeder().set(0);
         }
         if (controller.getXButtonPressed()) {
             shootIntoSpeaker();
         }
         doShooterIntake();
+        Robot.motors.getIntake().stopMotor();
         if (controller.getYButton()) {
             doFloorIntake();
         }
+        Robot.motors.getLeftClimb().stopMotor();
+        Robot.motors.getRightClimb().stopMotor();
         if (controller.getStartButton()) {
             //extendArms();
             Robot.motors.getLeftClimb().set(Constants.CLIMB_EXTENSION_SPEED);
