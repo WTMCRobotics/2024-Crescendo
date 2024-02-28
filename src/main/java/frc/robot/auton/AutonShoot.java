@@ -13,6 +13,7 @@ public class AutonShoot extends AutonAction {
     public boolean isDone() {
         if (Timer.getFPGATimestamp() >= revFinishedTime) {
             Robot.motors.getFeeder().set(0.2);
+            Robot.motors.getIntake().set(.2);
         }
         if (Timer.getFPGATimestamp() >= revFinishedTime + 1.0) {
             Robot.motors.getFeeder().set(0);

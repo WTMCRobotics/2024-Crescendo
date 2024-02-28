@@ -13,6 +13,11 @@ public class RobotMotors {
     MotorController rightFlywheel;
     MotorController leftClimb;
     MotorController rightClimb;
+    MotorController intake;
+
+    public MotorController getIntake() {
+        return intake;
+    }
 
     public MotorController getDriveLeftParent() {
         return driveLeftParent;
@@ -87,8 +92,8 @@ public class RobotMotors {
         return this;
     }
 
-    public RobotMotors intakeMotor(MotorController intakeMotor) {
-        this.feeder = intakeMotor;
+    public RobotMotors intake(MotorController intake) {
+        this.intake = intake;
         return this;
     }
 

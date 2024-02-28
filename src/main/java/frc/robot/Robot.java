@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -44,6 +45,7 @@ public class Robot extends TimedRobot {
     MotorController feederMotor = MotorControllerFactory.create(9, MotorController.Type.SparkMax);
     MotorController leftClimb = MotorControllerFactory.create(Constants.LEFT_CLIMB_ID, MotorController.Type.Talon);
     MotorController rightClimb = MotorControllerFactory.create(Constants.RIGHT_CLIMB_ID, MotorController.Type.Talon);
+    MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMax);
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     XboxController coDriverController = new XboxController(1);
     static AHRS navX = new AHRS(SPI.Port.kMXP);
@@ -81,8 +83,9 @@ public class Robot extends TimedRobot {
         driveRightParent.setInverted(false);
 
         feederMotor.setInverted(true);
+        feederMotor.setBrakeMode(false);
 
-        System.out.println("is drive righjt parent inverted? " + driveRightParent.getInverted());
+        System.out.println("is drive right parent inverted? " + driveRightParent.getInverted());
 
         driveLeftChild.setBrakeMode(false);
         driveLeftParent.setBrakeMode(false);
@@ -99,7 +102,8 @@ public class Robot extends TimedRobot {
                 .leftFlywheel(leftFlywheel)
                 .rightFlywheel(rightFlywheel)
                 .leftClimb(leftClimb)
-                .rightClimb(rightClimb);
+                .rightClimb(rightClimb)
+                .intake(intake);
         getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
         SmartDashboard.putNumber("rotationGainsP", Constants.ROTATION_GAINS.P);
@@ -108,7 +112,7 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putNumber("PIDTARGET", 90);
 
-        System.out.println("is drive righjt parent inverted at end?? " + driveRightParent.getInverted());
+        System.out.println("is drive right parent inverted at end?? " + driveRightParent.getInverted());
 
         InputtedCoDriverControls.setCoDriverController(coDriverController);
     }

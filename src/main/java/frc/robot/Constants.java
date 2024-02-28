@@ -7,6 +7,7 @@ public class Constants {
     public static final int DRIVE_LEFT_CHILD_ID = 8;
     public static final int DRIVE_RIGHT_PARENT_ID = 11;
     public static final int DRIVE_RIGHT_CHILD_ID = 3;
+    public static final int INTAKE_ID = 6101;
 
     /*CLIMB MOTOR IDS */
 
