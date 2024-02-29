@@ -21,7 +21,6 @@ public class InputtedCoDriverControls {
         if (controller.getXButtonPressed()) {
             shootIntoSpeaker();
         }
-        doShooterIntake();
         Robot.motors.getIntake().stopMotor();
         if (controller.getYButton()) {
             doFloorIntake();
@@ -53,16 +52,6 @@ public class InputtedCoDriverControls {
     private static void retractArms() {
         Robot.getTeleopActionRunner().addActionToRun(new RetractArms());
         Robot.getTeleopActionRunner().removeActionsOfType(ExtendArms.class);
-    }
-
-    private static void doShooterIntake() {
-        if (controller.getPOV() == 0) {
-            Robot.motors.getRightFlywheel().set(0.3);
-            Robot.motors.getLeftFlywheel().set(-0.3);
-        } else if (controller.getPOV() == 180) {
-            Robot.motors.getRightFlywheel().set(0);
-            Robot.motors.getLeftFlywheel().set(0);
-        }
     }
 
     private static void shootIntoSpeaker() {

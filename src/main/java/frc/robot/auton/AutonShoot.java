@@ -14,17 +14,15 @@ public class AutonShoot extends AutonAction {
             Robot.motors.getFeeder().set(0.2);
             Robot.motors.getIntake().set(.2);
         }
-        if (Timer.getFPGATimestamp() >= revFinishedTime + 1.0) {
-            return true;
-        }
-        return false;
+
+        return Timer.getFPGATimestamp() >= revFinishedTime + 1.0;
     }
 
     @Override
     public void initiate() {
         Robot.motors.getLeftFlywheel().set(1.0);
         Robot.motors.getRightFlywheel().set(-1.0);
-        revFinishedTime = Timer.getFPGATimestamp() + Constants.REV_TIME;
+        revFinishedTime = Timer.getFPGATimestamp() + Constants.SHOOTER_FLYWHEEL_STARTUP_TIME;
     }
 
     @Override
