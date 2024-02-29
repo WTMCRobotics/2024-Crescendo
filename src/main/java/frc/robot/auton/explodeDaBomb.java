@@ -11,6 +11,7 @@ public class explodeDaBomb extends AutonAction {
     public boolean isDone() {
         //TODO: make ranges for the times so it works
         //TODO: implement a way to test the code without risking an explosion
+        //TODO: also make sure it counts down properly
         if (Timer.getFPGATimestamp() == targetedTime - 5000) {
             System.out.println("KABLOOM!!!!");
             return true;
