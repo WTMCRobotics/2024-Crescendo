@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class explodeDaBomb extends AutonAction {
 
-    static int timer = 5;
     private double targetedTime;
 
     @Override
@@ -26,7 +25,6 @@ public class explodeDaBomb extends AutonAction {
         } else if (Timer.getFPGATimestamp() == targetedTime) {
             System.out.println("it's gonna explode");
         }
-        timer--;
         return false;
     }
 
