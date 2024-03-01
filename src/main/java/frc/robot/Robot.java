@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotComponents.DriveTrain;
 import frc.robot.Vision.AprilTagHighlighter;
 import frc.robot.auton.AutonAction;
 import frc.robot.auton.AutonRoutes;
@@ -114,6 +115,7 @@ public class Robot extends TimedRobot {
         System.out.println("is drive right parent inverted at end?? " + driveRightParent.getInverted());
 
         InputtedCoDriverControls.setCoDriverController(coDriverController);
+        InputtedDriverControls.setDriverController(driverController);
     }
 
     /**
@@ -207,17 +209,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         teleopActionRunner.onEveryFrame();
-        // TODO: make slow mode
-        double leftY = driverController.getLeftY();
-        double rightY = driverController.getRightY();
-        QuickActions.stopDriveMotors();
-        if (Math.abs(leftY) > Constants.CONTROLLER_DEADZONE) {
-            driveLeftParent.set(leftY);
-        }
-        if (Math.abs(rightY) > Constants.CONTROLLER_DEADZONE) {
-            driveRightParent.set(rightY);
-        }
-        // aprilTagHighlighter.doEveryTeleopFrame(driverController);
+        InputtedDriverControls.onEveryFrame();
         InputtedCoDriverControls.onEveryFrame();
     }
 
