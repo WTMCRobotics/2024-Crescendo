@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.RobotComponents.DriveTrain;
 
 public class InputtedDriverControls {
 
@@ -11,6 +12,7 @@ public class InputtedDriverControls {
     }
 
     public static void onEveryFrame() {
+        DriveTrain.driveTank(controller.getLeftY(), controller.getRightY());
         if (controller.getBButtonPressed()) {
             stopAtFeedingDistance();
         }
@@ -20,11 +22,6 @@ public class InputtedDriverControls {
         if (controller.getXButtonPressed()) {
             stopAtShootingDistance();
         }
-        driveTank(controller.getLeftY(), controller.getRightY());
-    }
-
-    private static void driveTank(double leftY, double rightY) {
-        throw new UnsupportedOperationException("Unimplemented method 'driveTank'");
     }
 
     private static void stopAtShootingDistance() {
