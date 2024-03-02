@@ -11,14 +11,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Vision.AprilTagHighlighter;
 import frc.robot.auton.AutonAction;
 import frc.robot.auton.AutonRoutes;
 import frc.robot.auton.ParallelActionRunner;
 import frc.robot.auton.SequentialActionRunner;
 import frc.robot.motor.MotorController;
 import frc.robot.motor.MotorControllerFactory;
-import frc.robot.robotcomponents.DriveTrain;
 import frc.robot.vision.AprilTagHighlighter;
 import java.util.ArrayDeque;
 
