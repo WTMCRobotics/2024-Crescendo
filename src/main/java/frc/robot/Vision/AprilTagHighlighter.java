@@ -1,4 +1,4 @@
-package frc.robot.Vision;
+package frc.robot.vision;
 
 import edu.wpi.first.apriltag.AprilTagDetection;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
@@ -8,8 +8,8 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Vision.Vision.AprilTagLocation;
 import frc.robot.auton.AutonRotate;
+import frc.robot.vision.Vision.AprilTagLocation;
 import java.util.HashMap;
 import java.util.Map;
 import org.opencv.core.Mat;

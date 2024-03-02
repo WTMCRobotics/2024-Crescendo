@@ -62,5 +62,5 @@ public class Constants {
     /* ROTATION PID CONSTANTS */
 
     public static final double ROTATION_ERROR_DEGREES = 5.;
-    public static final double SHOOTING_VELOCITY = 4000;
+    public static final double SHOOTING_VELOCITY_RPM = 4000;
 }

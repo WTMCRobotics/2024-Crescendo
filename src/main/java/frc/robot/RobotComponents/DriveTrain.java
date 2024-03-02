@@ -1,4 +1,4 @@
-package frc.robot.RobotComponents;
+package frc.robot.robotcomponents;
 
 import frc.robot.Constants;
 import frc.robot.QuickActions;
