@@ -1,9 +1,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.RobotComponents.Climber;
-import frc.robot.RobotComponents.Intake;
-import frc.robot.RobotComponents.Shooter;
+import frc.robot.robotcomponents.Climber;
+import frc.robot.robotcomponents.Intake;
+import frc.robot.robotcomponents.Shooter;
 
 public class InputtedCoDriverControls {
 

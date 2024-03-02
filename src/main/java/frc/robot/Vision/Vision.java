@@ -1,4 +1,4 @@
-package frc.robot.Vision;
+package frc.robot.vision;
 
 import edu.wpi.first.apriltag.AprilTagDetection;
 import edu.wpi.first.apriltag.AprilTagDetector;

@@ -1,7 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.RobotComponents.DriveTrain;
+import frc.robot.robotcomponents.DriveTrain;
 
 public class InputtedDriverControls {
 
