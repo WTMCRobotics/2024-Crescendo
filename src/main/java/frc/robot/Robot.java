@@ -5,7 +5,6 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -211,7 +210,7 @@ public class Robot extends TimedRobot {
         // TODO: make slow mode
         double leftY = driverController.getLeftY();
         double rightY = driverController.getRightY();
-        QuickActions.stopAll();
+        QuickActions.stopDriveMotors();
         if (Math.abs(leftY) > Constants.CONTROLLER_DEADZONE) {
             driveLeftParent.set(leftY);
         }

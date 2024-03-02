@@ -64,6 +64,6 @@ public class AutonRotate extends AutonAction {
 
     @Override
     public void shutdown() {
-        QuickActions.stopAll();
+        QuickActions.stopDriveMotors();
     }
 }
