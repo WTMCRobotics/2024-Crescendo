@@ -12,6 +12,14 @@ public class QuickActions {
         Robot.motors.getDriveRightParent().set(0.0);
     }
 
+    public static void turn(double percent) {
+        if (percent > 0) {
+            turn(TurnDirection.RIGHT, percent);
+        } else {
+            turn(TurnDirection.LEFT, percent);
+        }
+    }
+
     public static void turn(TurnDirection direction, double percent) {
         if (direction == TurnDirection.LEFT) {
             Robot.motors.getDriveLeftParent().set(-percent);
