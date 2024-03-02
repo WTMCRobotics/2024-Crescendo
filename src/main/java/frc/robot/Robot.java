@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Vision.AprilTagHighlighter;
 import frc.robot.auton.AutonAction;
 import frc.robot.auton.AutonRoutes;
 import frc.robot.auton.ParallelActionRunner;
@@ -85,7 +86,7 @@ public class Robot extends TimedRobot {
         feederMotor.setInverted(true);
         feederMotor.setBrakeMode(false);
 
-        System.out.println("is drive right parent inverted? " + driveRightParent.getInverted());
+        System.out.println("Is drive right parent inverted? " + driveRightParent.getInverted());
 
         driveLeftChild.setBrakeMode(false);
         driveLeftParent.setBrakeMode(false);
@@ -112,7 +113,7 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putNumber("PID TARGET", 90);
 
-        System.out.println("is drive right parent inverted at end?? " + driveRightParent.getInverted());
+        System.out.println("Is drive right parent inverted at end?? " + driveRightParent.getInverted());
 
         InputtedCoDriverControls.setCoDriverController(coDriverController);
         InputtedDriverControls.setDriverController(driverController);
@@ -165,7 +166,7 @@ public class Robot extends TimedRobot {
                 case "explode hidden bomb" -> new ArrayDeque<>(AutonRoutes.BOOM);
                 default -> new ArrayDeque<AutonAction>();
             };
-        System.out.println("selected auton: " + route);
+        System.out.println("Selected auton route: " + route);
         auton = new SequentialActionRunner(route);
         auton.initiateAuton();
     }

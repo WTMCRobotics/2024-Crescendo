@@ -1,32 +1,37 @@
 package frc.robot.auton;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class explodeDaBomb extends AutonAction {
 
-    static int timer = 5;
+    private double targetedTime;
 
     @Override
     public boolean isDone() {
-        if (timer == 0) {
+        //TODO: make ranges for the times so it works
+        //TODO: implement a way to test the code without risking an explosion
+        //TODO: also make sure it counts down properly
+        if (Timer.getFPGATimestamp() == targetedTime - 5000) {
             System.out.println("KABLOOM!!!!");
             return true;
-        } else if (timer == 1) {
+        } else if (Timer.getFPGATimestamp() == targetedTime - 4000) {
             System.out.println("i warned you");
-        } else if (timer == 2) {
+        } else if (Timer.getFPGATimestamp() == targetedTime - 3000) {
             System.out.println("we aren't joking");
-        } else if (timer == 3) {
+        } else if (Timer.getFPGATimestamp() == targetedTime - 2000) {
             System.out.println("id run if i where you");
-        } else if (timer == 4) {
+        } else if (Timer.getFPGATimestamp() == targetedTime - 1000) {
             System.out.println("it's really gonna go boom");
-        } else if (timer == 5) {
+        } else if (Timer.getFPGATimestamp() == targetedTime) {
             System.out.println("it's gonna explode");
         }
-        timer--;
         return false;
     }
 
     @Override
     public void initiate() {
         System.out.println("the robot is exploding");
+        targetedTime = Timer.getFPGATimestamp() + 5000;
     }
 
     @Override
