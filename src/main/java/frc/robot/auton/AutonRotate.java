@@ -33,7 +33,7 @@ public class AutonRotate extends AutonAction {
         } else {
             turnDirection = TurnDirection.LEFT;
         }
-        System.out.println("we will be turing " + turnDirection);
+        System.out.println("We will be turning " + turnDirection);
         SmartDashboard.putNumber("target degree", targetTurnDegrees);
     }
 
