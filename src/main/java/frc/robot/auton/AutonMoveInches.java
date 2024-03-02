@@ -53,6 +53,6 @@ public class AutonMoveInches extends AutonAction {
 
     @Override
     public void shutdown() {
-        QuickActions.stopAll();
+        QuickActions.stopDriveMotors();
     }
 }

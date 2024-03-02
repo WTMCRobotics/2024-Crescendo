@@ -16,7 +16,9 @@ public class Constants {
 
     /*SHOOTER CONFIG*/
     /**the amount of time we let the wheels rev up when shooting in seconds */
-    public static final double REV_TIME = 1.0;
+    public static final double SHOOTER_FLYWHEEL_STARTUP_TIME = 1.0;
+    /*The amount of seconds that the feeder should wait before turning off after shooting */
+    public static final double FEEDER_MOTOR_SHUTOFF_TIME = 0;
 
     /*CLIMB CONFIG */
     public static final double CLIMB_EXTENDED_ENCODER_POSITION = 5;
@@ -60,4 +62,5 @@ public class Constants {
     /* ROTATION PID CONSTANTS */
 
     public static final double ROTATION_ERROR_DEGREES = 5.;
+    public static final double SHOOTING_VELOCITY = 4000;
 }
