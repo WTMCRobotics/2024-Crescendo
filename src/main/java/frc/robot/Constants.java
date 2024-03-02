@@ -34,6 +34,8 @@ public class Constants {
 
     /*INTAKE CONFIG */
     public static final double INTAKE_SPEED = 0;
+    //TODO this
+    public static final int INTAKE_BEAM_BREAK_ID = 9;
 
     /*DRIVE TRAIN CONFIG */
     public static final double CONTROLLER_DEADZONE = 0.06;
