@@ -17,7 +17,7 @@ import frc.robot.auton.ParallelActionRunner;
 import frc.robot.auton.SequentialActionRunner;
 import frc.robot.motor.MotorController;
 import frc.robot.motor.MotorControllerFactory;
-import frc.robot.vision.AprilTagHighlighter;
+// import frc.robot.vision.AprilTagHighlighter;
 import java.util.ArrayDeque;
 
 /**
@@ -31,29 +31,20 @@ public class Robot extends TimedRobot {
     //hi
     // hello!!!!!!!
 
-    AprilTagHighlighter aprilTagHighlighter;
+    // AprilTagHighlighter aprilTagHighlighter;
 
     public static RobotMotors motors;
 
-    MotorController driveLeftParent = RobotConfigs.getLeftParent();
-    MotorController driveLeftChild = RobotConfigs.getLeftChild();
-    MotorController driveRightParent = RobotConfigs.getRightParent();
-    MotorController driveRightChild = RobotConfigs.getRightChild();
-    MotorController leftFlywheel = MotorControllerFactory.create(
-        Constants.SHOOTER_LEFT_FLYWHEEL_ID,
-        MotorController.Type.SparkMax
-    );
-    MotorController rightFlywheel = MotorControllerFactory.create(
-        Constants.SHOOTER_RIGHT_FLYWHEEL_ID,
-        MotorController.Type.SparkMax
-    );
-    MotorController feederMotor = MotorControllerFactory.create(
-        Constants.SHOOTER_FEEDER_ID,
-        MotorController.Type.SparkMax
-    );
-    MotorController leftClimb = MotorControllerFactory.create(Constants.LEFT_CLIMB_ID, MotorController.Type.Talon);
-    MotorController rightClimb = MotorControllerFactory.create(Constants.RIGHT_CLIMB_ID, MotorController.Type.Talon);
-    MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMax);
+    MotorController driveLeftParent;
+    MotorController driveLeftChild;
+    MotorController driveRightParent;
+    MotorController driveRightChild;
+    MotorController leftFlywheel;
+    MotorController rightFlywheel;
+    MotorController feederMotor;
+    MotorController leftClimb;
+    MotorController rightClimb;
+    // MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMaxBrushless);
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     XboxController coDriverController = new XboxController(Constants.CODRIVER_CONTROLLER_ID);
     static AHRS navX = new AHRS(SPI.Port.kMXP);
@@ -76,6 +67,23 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        driveLeftParent =
+            MotorControllerFactory.create(Constants.DRIVE_LEFT_PARENT_ID, MotorController.Type.SparkMaxBrushless);
+        driveLeftChild =
+            MotorControllerFactory.create(Constants.DRIVE_LEFT_CHILD_ID, MotorController.Type.SparkMaxBrushless);
+        driveRightParent =
+            MotorControllerFactory.create(Constants.DRIVE_RIGHT_PARENT_ID, MotorController.Type.SparkMaxBrushless);
+        driveRightChild =
+            MotorControllerFactory.create(Constants.DRIVE_RIGHT_CHILD_ID, MotorController.Type.SparkMaxBrushless);
+        leftFlywheel =
+            MotorControllerFactory.create(Constants.SHOOTER_LEFT_FLYWHEEL_ID, MotorController.Type.SparkMaxBrushless);
+        rightFlywheel =
+            MotorControllerFactory.create(Constants.SHOOTER_RIGHT_FLYWHEEL_ID, MotorController.Type.SparkMaxBrushless);
+        feederMotor =
+            MotorControllerFactory.create(Constants.SHOOTER_FEEDER_ID, MotorController.Type.SparkMaxBrushless);
+        leftClimb = MotorControllerFactory.create(Constants.LEFT_CLIMB_ID, MotorController.Type.SparkMaxBrushed);
+        rightClimb = MotorControllerFactory.create(Constants.RIGHT_CLIMB_ID, MotorController.Type.SparkMaxBrushed);
+
         initializeSmartMotion(driveLeftParent, Constants.NORMAL_ROBOT_GAINS);
         initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
 
@@ -91,14 +99,25 @@ public class Robot extends TimedRobot {
         driveRightParent.setInverted(false);
 
         feederMotor.setInverted(true);
+        //This false is required
         feederMotor.setBrakeMode(false);
 
+        rightFlywheel.setInverted(true);
+        leftFlywheel.setInverted(false);
+
         System.out.println("Is drive right parent inverted? " + driveRightParent.getInverted());
+
+        System.out.println(
+            "Do we have cool navX? " + getGyroscope().isAltitudeValid() + " temp: " + getGyroscope().getTempC()
+        );
 
         driveLeftChild.setBrakeMode(false);
         driveLeftParent.setBrakeMode(false);
         driveRightChild.setBrakeMode(false);
         driveRightParent.setBrakeMode(false);
+
+        leftClimb.setBrakeMode(true);
+        rightClimb.setBrakeMode(true);
 
         motors =
             new RobotMotors()
@@ -110,8 +129,8 @@ public class Robot extends TimedRobot {
                 .leftFlywheel(leftFlywheel)
                 .rightFlywheel(rightFlywheel)
                 .leftClimb(leftClimb)
-                .rightClimb(rightClimb)
-                .intake(intake);
+                .rightClimb(rightClimb);
+        // .intake(intake);
         getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
         SmartDashboard.putNumber("rotationGainsP", Constants.ROTATION_GAINS.P);

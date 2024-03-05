@@ -8,8 +8,8 @@ import frc.robot.auton.AutonShooterFeed;
 public class Shooter {
 
     public static void startShooterMotors() {
-        Robot.motors.getLeftFlywheel().setVelocity(Constants.SHOOTING_VELOCITY_RPM);
-        Robot.motors.getRightFlywheel().setVelocity(Constants.SHOOTING_VELOCITY_RPM);
+        Robot.motors.getLeftFlywheel().set(Constants.SHOOTER_LEFT_FLYWHEEL_FLY_SPEED);
+        Robot.motors.getRightFlywheel().set(Constants.SHOOTER_RIGHT_FLYWHEEL_FLY_SPEED);
     }
 
     public static void stopShooterMotors() {

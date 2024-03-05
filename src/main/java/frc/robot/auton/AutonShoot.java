@@ -12,7 +12,7 @@ public class AutonShoot extends AutonAction {
     public boolean isDone() {
         if (Timer.getFPGATimestamp() >= revFinishedTime) {
             Robot.motors.getFeeder().set(0.2);
-            Robot.motors.getIntake().set(.2);
+            //Robot.motors.getIntake().set(.2);
         }
 
         return Timer.getFPGATimestamp() >= revFinishedTime + 1.0;
@@ -21,7 +21,7 @@ public class AutonShoot extends AutonAction {
     @Override
     public void initiate() {
         Robot.motors.getLeftFlywheel().set(1.0);
-        Robot.motors.getRightFlywheel().set(-1.0);
+        Robot.motors.getRightFlywheel().set(1.0);
         revFinishedTime = Timer.getFPGATimestamp() + Constants.SHOOTER_FLYWHEEL_STARTUP_TIME;
     }
 
