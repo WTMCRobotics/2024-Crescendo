@@ -35,7 +35,6 @@ public class Robot extends TimedRobot {
 
     public static RobotMotors motors;
 
-
     MotorController driveLeftParent;
     MotorController driveLeftChild;
     MotorController driveRightParent;

@@ -43,7 +43,6 @@ public class Constants {
 
     public static final int INTAKE_BEAM_BREAK_ID = 9;
 
-
     /*DRIVE TRAIN CONFIG */
     public static final double CONTROLLER_DEADZONE = 0.06;
 
@@ -81,7 +80,6 @@ public class Constants {
     public static final int TIMEOUT_MS = 30;
 
     public static final int ENCODER_ROTATION = 4096;
-
 
     /*OTHER CONFIG */
     public static final double MOTOR_BACKTRACK_SPEED_PERCENT = -0.5;
