@@ -19,6 +19,8 @@ public class InputtedCoDriverControls {
         }
         if (controller.getXButton()) {
             Shooter.startShooterMotors();
+        } else if (controller.getBButton()) {
+            Shooter.autoShootIntoSpeaker();
         } else {
             Shooter.stopShooterMotors();
         }
@@ -37,7 +39,7 @@ public class InputtedCoDriverControls {
             Climber.stopClimbMotors();
         }
 
-        if (controller.getAButtonPressed()) {
+        if (controller.getAButton()) {
             Intake.backtrack();
             Shooter.backtrack();
         } else if (controller.getAButtonReleased()) {
