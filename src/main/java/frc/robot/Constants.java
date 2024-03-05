@@ -54,6 +54,8 @@ public class Constants {
 
     /*PID GAINS *///0.00001, 100
     public static final Gains ROTATION_GAINS = new Gains(0.011, 0.0001, 0.000935, 0, 0, 0.3);
+    public static final double ROTATION_DEGREE_TOLERANCE = 3;
+    public static final double ROTATION_DEGREE_PER_SECOND_TOLERANCE = 30;
     public static final Gains NORMAL_ROBOT_GAINS = new Gains(0.0005, 0.0, 0, 0, 0, 1.);
     public static final double ROTATION_ERROR_DEGREES = 5.0;
 
