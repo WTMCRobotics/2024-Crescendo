@@ -39,14 +39,23 @@ public class Robot extends TimedRobot {
     MotorController driveLeftChild = RobotConfigs.getLeftChild();
     MotorController driveRightParent = RobotConfigs.getRightParent();
     MotorController driveRightChild = RobotConfigs.getRightChild();
-    MotorController leftFlywheel = MotorControllerFactory.create(6, MotorController.Type.SparkMax);
-    MotorController rightFlywheel = MotorControllerFactory.create(7, MotorController.Type.SparkMax);
-    MotorController feederMotor = MotorControllerFactory.create(9, MotorController.Type.SparkMax);
+    MotorController leftFlywheel = MotorControllerFactory.create(
+        Constants.SHOOTER_LEFT_FLYWHEEL_ID,
+        MotorController.Type.SparkMax
+    );
+    MotorController rightFlywheel = MotorControllerFactory.create(
+        Constants.SHOOTER_RIGHT_FLYWHEEL_ID,
+        MotorController.Type.SparkMax
+    );
+    MotorController feederMotor = MotorControllerFactory.create(
+        Constants.SHOOTER_FEEDER_ID,
+        MotorController.Type.SparkMax
+    );
     MotorController leftClimb = MotorControllerFactory.create(Constants.LEFT_CLIMB_ID, MotorController.Type.Talon);
     MotorController rightClimb = MotorControllerFactory.create(Constants.RIGHT_CLIMB_ID, MotorController.Type.Talon);
     MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMax);
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
-    XboxController coDriverController = new XboxController(1);
+    XboxController coDriverController = new XboxController(Constants.CODRIVER_CONTROLLER_ID);
     static AHRS navX = new AHRS(SPI.Port.kMXP);
     SequentialActionRunner auton;
     static ParallelActionRunner teleopActionRunner = new ParallelActionRunner();

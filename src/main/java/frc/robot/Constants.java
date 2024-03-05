@@ -7,6 +7,9 @@ public class Constants {
     public static final int DRIVE_LEFT_CHILD_ID = 8;
     public static final int DRIVE_RIGHT_PARENT_ID = 11;
     public static final int DRIVE_RIGHT_CHILD_ID = 3;
+    public static final int SHOOTER_LEFT_FLYWHEEL_ID = 6;
+    public static final int SHOOTER_RIGHT_FLYWHEEL_ID = 7;
+    public static final int SHOOTER_FEEDER_ID = 9;
     public static final int INTAKE_ID = 6101;
 
     /*CLIMB MOTOR IDS */
@@ -19,6 +22,7 @@ public class Constants {
     public static final double SHOOTER_FLYWHEEL_STARTUP_TIME = 1.0;
     /*The amount of seconds that the feeder should wait before turning off after shooting */
     public static final double FEEDER_MOTOR_SHUTOFF_TIME = 0;
+    public static final double SHOOTING_VELOCITY_RPM = 4000;
 
     /*CLIMB CONFIG */
     public static final double CLIMB_EXTENDED_ENCODER_POSITION = 5;
@@ -27,11 +31,16 @@ public class Constants {
     public static final double CLIMB_EXTENSION_SPEED = .25;
     /**the % of max power we give to the arm motors while retracting */
     public static final double CLIMB_RETRACTION_SPEED = -.25;
+
+    /*INTAKE CONFIG */
+    public static final double INTAKE_SPEED = 0;
+
     /*DRIVE TRAIN CONFIG */
     public static final double CONTROLLER_DEADZONE = 0.06;
 
     /*CONTROLLER PORT IDs*/
     public static final int DRIVER_CONTROLLER_ID = 0;
+    public static final int CODRIVER_CONTROLLER_ID = 1;
 
     /*START OF VISION CONSTANTS */
     public static final int CAMERA_HEIGHT = 480;
@@ -46,6 +55,7 @@ public class Constants {
     public static final double ROTATION_DEGREE_TOLERANCE = 3;
     public static final double ROTATION_DEGREE_PER_SECOND_TOLERANCE = 30;
     public static final Gains NORMAL_ROBOT_GAINS = new Gains(0.0005, 0.0, 0, 0, 0, 1.);
+    public static final double ROTATION_ERROR_DEGREES = 5.0;
 
     /*PHYSICAL ROBOT CONSTANTS */
     public static final double WHEEL_CIRCUMFERENCE_INCHES = 8 * Math.PI;
@@ -61,8 +71,7 @@ public class Constants {
     /** amount of time in ms to wait for confirmation */
     public static final int TIMEOUT_MS = 30;
     public static final double ENCODER_ROTATION = 4096.0;
-    /* ROTATION PID CONSTANTS */
 
-    public static final double ROTATION_ERROR_DEGREES = 5.;
-    public static final double SHOOTING_VELOCITY_RPM = 4000;
+    /*OTHER CONFIG */
+    public static final double MOTOR_BACKTRACK_SPEED_PERCENT = -0.5;
 }
