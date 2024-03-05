@@ -8,13 +8,13 @@ import frc.robot.auton.RetractArms;
 public class Climber {
 
     private static void extendArms() {
-        Robot.getTeleopActionRunner().addActionToRun(new ExtendArms());
         Robot.getTeleopActionRunner().removeActionsOfType(RetractArms.class);
+        Robot.getTeleopActionRunner().addActionToRun(new ExtendArms());
     }
 
     private static void retractArms() {
-        Robot.getTeleopActionRunner().addActionToRun(new RetractArms());
         Robot.getTeleopActionRunner().removeActionsOfType(ExtendArms.class);
+        Robot.getTeleopActionRunner().addActionToRun(new RetractArms());
     }
 
     public static void manualExtendArms() {
