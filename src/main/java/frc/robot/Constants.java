@@ -6,10 +6,12 @@ public class Constants {
     public static final int DRIVE_LEFT_PARENT_ID = 4;
     public static final int DRIVE_LEFT_CHILD_ID = 8;
     public static final int DRIVE_RIGHT_PARENT_ID = 11;
+
     public static final int DRIVE_RIGHT_CHILD_ID = 14;
     public static final int SHOOTER_LEFT_FLYWHEEL_ID = 9;
     public static final int SHOOTER_RIGHT_FLYWHEEL_ID = 7;
     public static final int SHOOTER_FEEDER_ID = 10;
+
     public static final int INTAKE_ID = 6101;
 
     /*CLIMB MOTOR IDS */
@@ -23,7 +25,9 @@ public class Constants {
     public static final double SHOOTER_LEFT_FLYWHEEL_FLY_SPEED = 1.0;
     public static final double SHOOTER_RIGHT_FLYWHEEL_FLY_SPEED = 1.0;
     /*The amount of seconds that the feeder should wait before turning off after shooting */
+
     public static final double FEEDER_MOTOR_SHUTOFF_TIME = 1.5;
+
     public static final double SHOOTING_VELOCITY_RPM = 4000;
 
     /*CLIMB CONFIG */
@@ -36,6 +40,9 @@ public class Constants {
 
     /*INTAKE CONFIG */
     public static final double INTAKE_SPEED = 0;
+
+    public static final int INTAKE_BEAM_BREAK_ID = 9;
+
 
     /*DRIVE TRAIN CONFIG */
     public static final double CONTROLLER_DEADZONE = 0.06;
@@ -54,6 +61,8 @@ public class Constants {
 
     /*PID GAINS *///0.00001, 100
     public static final Gains ROTATION_GAINS = new Gains(0.011, 0.0001, 0.000935, 0, 0, 0.3);
+    public static final double ROTATION_DEGREE_TOLERANCE = 3;
+    public static final double ROTATION_DEGREE_PER_SECOND_TOLERANCE = 30;
     public static final Gains NORMAL_ROBOT_GAINS = new Gains(0.0005, 0.0, 0, 0, 0, 1.);
     public static final double ROTATION_ERROR_DEGREES = 5.0;
 
@@ -70,7 +79,9 @@ public class Constants {
     public static final int PID_LOOP_IDX = 0;
     /** amount of time in ms to wait for confirmation */
     public static final int TIMEOUT_MS = 30;
+
     public static final int ENCODER_ROTATION = 4096;
+
 
     /*OTHER CONFIG */
     public static final double MOTOR_BACKTRACK_SPEED_PERCENT = -0.5;

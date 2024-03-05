@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
 
     public static RobotMotors motors;
 
+
     MotorController driveLeftParent;
     MotorController driveLeftChild;
     MotorController driveRightParent;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
     MotorController leftClimb;
     MotorController rightClimb;
     // MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMaxBrushless);
+
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     XboxController coDriverController = new XboxController(Constants.CODRIVER_CONTROLLER_ID);
     static AHRS navX = new AHRS(SPI.Port.kMXP);

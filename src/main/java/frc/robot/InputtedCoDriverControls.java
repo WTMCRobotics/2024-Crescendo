@@ -40,6 +40,7 @@ public class InputtedCoDriverControls {
         }
 
         if (controller.getAButton()) {
+
             Intake.backtrack();
             Shooter.backtrack();
         } else if (controller.getAButtonReleased()) {

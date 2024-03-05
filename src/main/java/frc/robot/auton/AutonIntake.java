@@ -1,19 +1,25 @@
 package frc.robot.auton;
 
-// TODO this
+import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.Constants;
+import frc.robot.Robot;
+
 public class AutonIntake extends AutonAction {
+
+    static DigitalInput beamBreakSensor = new DigitalInput(Constants.INTAKE_BEAM_BREAK_ID);
 
     @Override
     public boolean isDone() {
-        return true;
+        return beamBreakSensor.get();
     }
 
     @Override
-    public void initiate() {}
+    public void initiate() {
+        Robot.motors.getIntake().set(Constants.INTAKE_SPEED);
+    }
 
     @Override
     public void shutdown() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'shutDown'");
+        Robot.motors.getIntake().stopMotor();
     }
 }
