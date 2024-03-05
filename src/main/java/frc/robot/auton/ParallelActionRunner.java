@@ -31,6 +31,7 @@ public class ParallelActionRunner {
         while (it.hasNext()) {
             AutonAction auction = it.next();
             if (auction.getClass().equals(clazz)) {
+                auction.shutdown();
                 actions.remove(auction);
             }
         }
