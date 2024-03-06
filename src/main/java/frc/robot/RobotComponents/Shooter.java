@@ -32,6 +32,7 @@ public class Shooter {
     }
 
     public static void autoShootIntoSpeaker() {
+        Robot.getTeleopActionRunner().removeActionsOfType(AutonShoot.class);
         Robot.getTeleopActionRunner().addActionToRun(new AutonShoot());
     }
 }
