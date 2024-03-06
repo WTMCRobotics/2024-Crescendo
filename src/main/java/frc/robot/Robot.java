@@ -66,7 +66,6 @@ public class Robot extends TimedRobot {
     MotorController leftClimb = MotorControllerFactory.create(
         Constants.LEFT_CLIMB_ID,
         MotorController.Type.SparkMaxBrushed
-
     );
     MotorController rightClimb = MotorControllerFactory.create(
         Constants.RIGHT_CLIMB_ID,
@@ -113,7 +112,6 @@ public class Robot extends TimedRobot {
         autonRouteChooser.addOption("Test new rotation PID", AutonRoutes.TEST_ROTATION_WITH_PID_COMMAND);
         autonRouteChooser.addOption("Test SmartMotion movement", AutonRoutes.TEST_SMART_MOTION_MOVEMENT);
         autonRouteChooser.addOption("Test Manual PID movement", AutonRoutes.TEST_PID_MOVEMENT);
-
 
         SmartDashboard.putData("Auton Routes", autonRouteChooser);
 
