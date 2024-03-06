@@ -17,24 +17,7 @@ public class AutonRotate extends AutonAction {
     private AHRS gyro;
 
     public AutonRotate(double targetTurnDegrees) {
-        this.gyro = Robot.getGyroscope();
         this.targetTurnDegrees = targetTurnDegrees;
-        rotationPID =
-            new ProfiledPIDController(
-                Constants.ROTATION_GAINS.P,
-                Constants.ROTATION_GAINS.I,
-                Constants.ROTATION_GAINS.D,
-                new Constraints(1, 1)
-            );
-        rotationPID.setGoal(targetTurnDegrees);
-        rotationPID.reset(0);
-        if (targetTurnDegrees > 0) {
-            turnDirection = TurnDirection.RIGHT;
-        } else {
-            turnDirection = TurnDirection.LEFT;
-        }
-        System.out.println("We will be turning " + turnDirection);
-        SmartDashboard.putNumber("target degree", targetTurnDegrees);
     }
 
     @Override
@@ -59,6 +42,23 @@ public class AutonRotate extends AutonAction {
 
     @Override
     public void initiate() {
+        this.gyro = Robot.getGyroscope();
+        rotationPID =
+            new ProfiledPIDController(
+                Constants.ROTATION_GAINS.P,
+                Constants.ROTATION_GAINS.I,
+                Constants.ROTATION_GAINS.D,
+                new Constraints(1, 1)
+            );
+        rotationPID.setGoal(targetTurnDegrees);
+        rotationPID.reset(0);
+        if (targetTurnDegrees > 0) {
+            turnDirection = TurnDirection.RIGHT;
+        } else {
+            turnDirection = TurnDirection.LEFT;
+        }
+        System.out.println("We will be turning " + turnDirection);
+        SmartDashboard.putNumber("target degree", targetTurnDegrees);
         gyro.reset();
     }
 
