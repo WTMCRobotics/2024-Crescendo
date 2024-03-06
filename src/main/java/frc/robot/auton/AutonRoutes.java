@@ -46,4 +46,18 @@ public class AutonRoutes {
         )
     );
     public static final ArrayDeque<AutonAction> BOOM = new ArrayDeque<AutonAction>(List.of(new explodeDaBomb()));
+
+    public static ArrayDeque<AutonAction> TEST_ROTATION_WITH_PID_COMMAND = new ArrayDeque<AutonAction>(
+        List.of(new AutonRotateWithPIDCommand(90))
+    );
+
+    public static ArrayDeque<AutonAction> TEST_ROTATION = new ArrayDeque<AutonAction>(List.of(new AutonRotate(90)));
+
+    public static ArrayDeque<AutonAction> TEST_SMART_MOTION_MOVEMENT = new ArrayDeque<AutonAction>(
+        List.of(new AutonMoveInches(60))
+    );
+
+    public static ArrayDeque<AutonAction> TEST_PID_MOVEMENT = new ArrayDeque<AutonAction>(
+        List.of(new AutonMoveInchesWithPIDCommand(60))
+    );
 }
