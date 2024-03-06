@@ -17,17 +17,19 @@ public class InputtedCoDriverControls {
         if (controller.getYButtonPressed()) {
             Shooter.startFeedMotors();
         }
-        if (controller.getXButton()) {
+        if (controller.getXButtonPressed()) {
             Shooter.startShooterMotors();
-        } else if (controller.getBButton()) {
+        } else if (controller.getBButtonPressed()) {
             Shooter.autoShootIntoSpeaker();
-        } else {
+        }
+        if (controller.getXButtonReleased()) {
             Shooter.stopShooterMotors();
         }
 
-        if (controller.getLeftBumper()) {
+        if (controller.getLeftBumperPressed()) {
             Intake.startFloorIntake();
-        } else {
+        }
+        if (controller.getLeftBumperReleased()) {
             Intake.stopFloorIntake();
         }
 
@@ -39,7 +41,7 @@ public class InputtedCoDriverControls {
             Climber.stopClimbMotors();
         }
 
-        if (controller.getAButton()) {
+        if (controller.getAButtonPressed()) {
             Intake.backtrack();
             Shooter.backtrack();
         } else if (controller.getAButtonReleased()) {
