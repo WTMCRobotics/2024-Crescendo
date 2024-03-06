@@ -89,9 +89,14 @@ public class Robot extends TimedRobot {
         initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
 
         // aprilTagHighlighter = new AprilTagHighlighter();
-        autonRouteChooser.addOption("move forward", "move forward");
-        autonRouteChooser.addOption("move backwards", "move backwards");
-        SmartDashboard.putData(autonRouteChooser);
+        autonRouteChooser.setDefaultOption("move forward", "moveforward");
+        autonRouteChooser.addOption("move forward", "moveforward");
+        autonRouteChooser.addOption("move backwards", "movebackwards");
+        autonRouteChooser.addOption("explode hidden bomb", "explodehiddenbomb");
+        autonRouteChooser.addOption("shoot backup intake forward shoot", "shootbackupintakeforwardshoot");
+        autonRouteChooser.addOption("backup turn backup", "backupturnbackup");
+        autonRouteChooser.addOption("shoot and back up", "shootandbackup");
+        SmartDashboard.putData("Auton Routes", autonRouteChooser);
 
         driveLeftChild.follow(driveLeftParent);
         driveRightChild.follow(driveRightParent);
@@ -112,10 +117,10 @@ public class Robot extends TimedRobot {
             "Do we have cool navX? " + getGyroscope().isAltitudeValid() + " temp: " + getGyroscope().getTempC()
         );
 
-        driveLeftChild.setBrakeMode(false);
-        driveLeftParent.setBrakeMode(false);
-        driveRightChild.setBrakeMode(false);
-        driveRightParent.setBrakeMode(false);
+        driveLeftChild.setBrakeMode(true);
+        driveLeftParent.setBrakeMode(true);
+        driveRightChild.setBrakeMode(true);
+        driveRightParent.setBrakeMode(true);
 
         leftClimb.setBrakeMode(true);
         rightClimb.setBrakeMode(true);
@@ -183,14 +188,12 @@ public class Robot extends TimedRobot {
 
         ArrayDeque<AutonAction> route =
             switch (autonRouteChooser.getSelected()) {
-                case "move forward" -> new ArrayDeque<>(AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
-                case "move backwards" -> new ArrayDeque<>(AutonRoutes.GO_BACKWARD_OUT_OF_STARTING_ZONE);
-                case "shoot and back up" -> new ArrayDeque<>(AutonRoutes.SHOOT_AND_BACK_UP);
-                case "backup turn backup" -> new ArrayDeque<>(AutonRoutes.BACKUP_TURN_BACKUP);
-                case "shoot backup intake forward shoot" -> new ArrayDeque<>(
-                    AutonRoutes.SHOOT_BACKUP_INTAKE_FORWARD_SHOOT
-                );
-                case "explode hidden bomb" -> new ArrayDeque<>(AutonRoutes.BOOM);
+                case "moveforward" -> new ArrayDeque<>(AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
+                case "movebackwards" -> new ArrayDeque<>(AutonRoutes.GO_BACKWARD_OUT_OF_STARTING_ZONE);
+                case "shootandbackup" -> new ArrayDeque<>(AutonRoutes.SHOOT_AND_BACK_UP);
+                case "backupturnbackup" -> new ArrayDeque<>(AutonRoutes.BACKUP_TURN_BACKUP);
+                case "shootbackupintakeforwardshoot" -> new ArrayDeque<>(AutonRoutes.SHOOT_BACKUP_INTAKE_FORWARD_SHOOT);
+                case "explodehiddenbomb" -> new ArrayDeque<>(AutonRoutes.BOOM);
                 default -> new ArrayDeque<AutonAction>();
             };
         System.out.println("Selected auton route: " + route);
@@ -319,7 +322,7 @@ public class Robot extends TimedRobot {
          */
 
         /* Set relevant frame periods to be at least as fast as periodic rate */
-        motorController.setStatusFramePeriod(10);
+        // motorController.setStatusFramePeriod(10);
 
         /* Set the peak and nominal outputs */
         // motorController.setOutputLimits(0, 0, gains.PEAK_OUTPUT, -gains.PEAK_OUTPUT);
