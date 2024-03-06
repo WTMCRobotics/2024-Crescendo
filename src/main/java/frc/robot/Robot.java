@@ -35,15 +35,42 @@ public class Robot extends TimedRobot {
 
     public static RobotMotors motors;
 
-    MotorController driveLeftParent;
-    MotorController driveLeftChild;
-    MotorController driveRightParent;
-    MotorController driveRightChild;
-    MotorController leftFlywheel;
-    MotorController rightFlywheel;
-    MotorController feederMotor;
-    MotorController leftClimb;
-    MotorController rightClimb;
+    MotorController driveLeftParent = MotorControllerFactory.create(
+        Constants.DRIVE_LEFT_PARENT_ID,
+        MotorController.Type.SparkMaxBrushless
+    );
+    MotorController driveLeftChild = MotorControllerFactory.create(
+        Constants.DRIVE_LEFT_CHILD_ID,
+        MotorController.Type.SparkMaxBrushless
+    );
+    MotorController driveRightParent = MotorControllerFactory.create(
+        Constants.DRIVE_RIGHT_PARENT_ID,
+        MotorController.Type.SparkMaxBrushless
+    );
+    MotorController driveRightChild = MotorControllerFactory.create(
+        Constants.DRIVE_RIGHT_CHILD_ID,
+        MotorController.Type.SparkMaxBrushless
+    );
+    MotorController leftFlywheel = MotorControllerFactory.create(
+        Constants.SHOOTER_LEFT_FLYWHEEL_ID,
+        MotorController.Type.SparkMaxBrushless
+    );
+    MotorController rightFlywheel = MotorControllerFactory.create(
+        Constants.SHOOTER_RIGHT_FLYWHEEL_ID,
+        MotorController.Type.SparkMaxBrushless
+    );
+    MotorController feederMotor = MotorControllerFactory.create(
+        Constants.SHOOTER_FEEDER_ID,
+        MotorController.Type.SparkMaxBrushless
+    );
+    MotorController leftClimb = MotorControllerFactory.create(
+        Constants.LEFT_CLIMB_ID,
+        MotorController.Type.SparkMaxBrushed
+    );
+    MotorController rightClimb = MotorControllerFactory.create(
+        Constants.RIGHT_CLIMB_ID,
+        MotorController.Type.SparkMaxBrushed
+    );
     // MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMaxBrushless);
 
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
@@ -68,23 +95,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        driveLeftParent =
-            MotorControllerFactory.create(Constants.DRIVE_LEFT_PARENT_ID, MotorController.Type.SparkMaxBrushless);
-        driveLeftChild =
-            MotorControllerFactory.create(Constants.DRIVE_LEFT_CHILD_ID, MotorController.Type.SparkMaxBrushless);
-        driveRightParent =
-            MotorControllerFactory.create(Constants.DRIVE_RIGHT_PARENT_ID, MotorController.Type.SparkMaxBrushless);
-        driveRightChild =
-            MotorControllerFactory.create(Constants.DRIVE_RIGHT_CHILD_ID, MotorController.Type.SparkMaxBrushless);
-        leftFlywheel =
-            MotorControllerFactory.create(Constants.SHOOTER_LEFT_FLYWHEEL_ID, MotorController.Type.SparkMaxBrushless);
-        rightFlywheel =
-            MotorControllerFactory.create(Constants.SHOOTER_RIGHT_FLYWHEEL_ID, MotorController.Type.SparkMaxBrushless);
-        feederMotor =
-            MotorControllerFactory.create(Constants.SHOOTER_FEEDER_ID, MotorController.Type.SparkMaxBrushless);
-        leftClimb = MotorControllerFactory.create(Constants.LEFT_CLIMB_ID, MotorController.Type.SparkMaxBrushed);
-        rightClimb = MotorControllerFactory.create(Constants.RIGHT_CLIMB_ID, MotorController.Type.SparkMaxBrushed);
-
         initializeSmartMotion(driveLeftParent, Constants.NORMAL_ROBOT_GAINS);
         initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
 
