@@ -17,7 +17,7 @@ import frc.robot.auton.ParallelActionRunner;
 import frc.robot.auton.SequentialActionRunner;
 import frc.robot.motor.MotorController;
 import frc.robot.motor.MotorControllerFactory;
-import frc.robot.vision.AprilTagHighlighter;
+// import frc.robot.vision.AprilTagHighlighter;
 import java.util.ArrayDeque;
 
 /**
@@ -31,29 +31,48 @@ public class Robot extends TimedRobot {
     //hi
     // hello!!!!!!!
 
-    AprilTagHighlighter aprilTagHighlighter;
+    // AprilTagHighlighter aprilTagHighlighter;
 
     public static RobotMotors motors;
 
-    MotorController driveLeftParent = RobotConfigs.getLeftParent();
-    MotorController driveLeftChild = RobotConfigs.getLeftChild();
-    MotorController driveRightParent = RobotConfigs.getRightParent();
-    MotorController driveRightChild = RobotConfigs.getRightChild();
+    MotorController driveLeftParent = MotorControllerFactory.create(
+        Constants.DRIVE_LEFT_PARENT_ID,
+        MotorController.Type.SparkMaxBrushless
+    );
+    MotorController driveLeftChild = MotorControllerFactory.create(
+        Constants.DRIVE_LEFT_CHILD_ID,
+        MotorController.Type.SparkMaxBrushless
+    );
+    MotorController driveRightParent = MotorControllerFactory.create(
+        Constants.DRIVE_RIGHT_PARENT_ID,
+        MotorController.Type.SparkMaxBrushless
+    );
+    MotorController driveRightChild = MotorControllerFactory.create(
+        Constants.DRIVE_RIGHT_CHILD_ID,
+        MotorController.Type.SparkMaxBrushless
+    );
     MotorController leftFlywheel = MotorControllerFactory.create(
         Constants.SHOOTER_LEFT_FLYWHEEL_ID,
-        MotorController.Type.SparkMax
+        MotorController.Type.SparkMaxBrushless
     );
     MotorController rightFlywheel = MotorControllerFactory.create(
         Constants.SHOOTER_RIGHT_FLYWHEEL_ID,
-        MotorController.Type.SparkMax
+        MotorController.Type.SparkMaxBrushless
     );
     MotorController feederMotor = MotorControllerFactory.create(
         Constants.SHOOTER_FEEDER_ID,
-        MotorController.Type.SparkMax
+        MotorController.Type.SparkMaxBrushless
     );
-    MotorController leftClimb = MotorControllerFactory.create(Constants.LEFT_CLIMB_ID, MotorController.Type.Talon);
-    MotorController rightClimb = MotorControllerFactory.create(Constants.RIGHT_CLIMB_ID, MotorController.Type.Talon);
-    MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMax);
+    MotorController leftClimb = MotorControllerFactory.create(
+        Constants.LEFT_CLIMB_ID,
+        MotorController.Type.SparkMaxBrushed
+    );
+    MotorController rightClimb = MotorControllerFactory.create(
+        Constants.RIGHT_CLIMB_ID,
+        MotorController.Type.SparkMaxBrushed
+    );
+    // MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMaxBrushless);
+
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     XboxController coDriverController = new XboxController(Constants.CODRIVER_CONTROLLER_ID);
     static AHRS navX = new AHRS(SPI.Port.kMXP);
@@ -80,9 +99,14 @@ public class Robot extends TimedRobot {
         initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
 
         // aprilTagHighlighter = new AprilTagHighlighter();
-        autonRouteChooser.addOption("move forward", "move forward");
-        autonRouteChooser.addOption("move backwards", "move backwards");
-        SmartDashboard.putData(autonRouteChooser);
+        autonRouteChooser.setDefaultOption("move forward", "moveforward");
+        autonRouteChooser.addOption("move forward", "moveforward");
+        autonRouteChooser.addOption("move backwards", "movebackwards");
+        autonRouteChooser.addOption("explode hidden bomb", "explodehiddenbomb");
+        autonRouteChooser.addOption("shoot backup intake forward shoot", "shootbackupintakeforwardshoot");
+        autonRouteChooser.addOption("backup turn backup", "backupturnbackup");
+        autonRouteChooser.addOption("shoot and back up", "shootandbackup");
+        SmartDashboard.putData("Auton Routes", autonRouteChooser);
 
         driveLeftChild.follow(driveLeftParent);
         driveRightChild.follow(driveRightParent);
@@ -91,14 +115,25 @@ public class Robot extends TimedRobot {
         driveRightParent.setInverted(false);
 
         feederMotor.setInverted(true);
+        //This false is required
         feederMotor.setBrakeMode(false);
+
+        rightFlywheel.setInverted(true);
+        leftFlywheel.setInverted(false);
 
         System.out.println("Is drive right parent inverted? " + driveRightParent.getInverted());
 
-        driveLeftChild.setBrakeMode(false);
-        driveLeftParent.setBrakeMode(false);
-        driveRightChild.setBrakeMode(false);
-        driveRightParent.setBrakeMode(false);
+        System.out.println(
+            "Do we have cool navX? " + getGyroscope().isAltitudeValid() + " temp: " + getGyroscope().getTempC()
+        );
+
+        driveLeftChild.setBrakeMode(true);
+        driveLeftParent.setBrakeMode(true);
+        driveRightChild.setBrakeMode(true);
+        driveRightParent.setBrakeMode(true);
+
+        leftClimb.setBrakeMode(true);
+        rightClimb.setBrakeMode(true);
 
         motors =
             new RobotMotors()
@@ -110,8 +145,8 @@ public class Robot extends TimedRobot {
                 .leftFlywheel(leftFlywheel)
                 .rightFlywheel(rightFlywheel)
                 .leftClimb(leftClimb)
-                .rightClimb(rightClimb)
-                .intake(intake);
+                .rightClimb(rightClimb);
+        // .intake(intake);
         getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
         SmartDashboard.putNumber("rotationGainsP", Constants.ROTATION_GAINS.P);
@@ -163,14 +198,12 @@ public class Robot extends TimedRobot {
 
         ArrayDeque<AutonAction> route =
             switch (autonRouteChooser.getSelected()) {
-                case "move forward" -> new ArrayDeque<>(AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
-                case "move backwards" -> new ArrayDeque<>(AutonRoutes.GO_BACKWARD_OUT_OF_STARTING_ZONE);
-                case "shoot and back up" -> new ArrayDeque<>(AutonRoutes.SHOOT_AND_BACK_UP);
-                case "backup turn backup" -> new ArrayDeque<>(AutonRoutes.BACKUP_TURN_BACKUP);
-                case "shoot backup intake forward shoot" -> new ArrayDeque<>(
-                    AutonRoutes.SHOOT_BACKUP_INTAKE_FORWARD_SHOOT
-                );
-                case "explode hidden bomb" -> new ArrayDeque<>(AutonRoutes.BOOM);
+                case "moveforward" -> new ArrayDeque<>(AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
+                case "movebackwards" -> new ArrayDeque<>(AutonRoutes.GO_BACKWARD_OUT_OF_STARTING_ZONE);
+                case "shootandbackup" -> new ArrayDeque<>(AutonRoutes.SHOOT_AND_BACK_UP);
+                case "backupturnbackup" -> new ArrayDeque<>(AutonRoutes.BACKUP_TURN_BACKUP);
+                case "shootbackupintakeforwardshoot" -> new ArrayDeque<>(AutonRoutes.SHOOT_BACKUP_INTAKE_FORWARD_SHOOT);
+                case "explodehiddenbomb" -> new ArrayDeque<>(AutonRoutes.BOOM);
                 default -> new ArrayDeque<AutonAction>();
             };
         System.out.println("Selected auton route: " + route);
@@ -299,7 +332,7 @@ public class Robot extends TimedRobot {
          */
 
         /* Set relevant frame periods to be at least as fast as periodic rate */
-        motorController.setStatusFramePeriod(10);
+        // motorController.setStatusFramePeriod(10);
 
         /* Set the peak and nominal outputs */
         // motorController.setOutputLimits(0, 0, gains.PEAK_OUTPUT, -gains.PEAK_OUTPUT);

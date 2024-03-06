@@ -178,6 +178,8 @@ public interface MotorController extends edu.wpi.first.wpilibj.motorcontrol.Moto
         /** Talon SRX motor controller */
         Talon,
         /** Spark MAX motor controller */
-        SparkMax,
+        SparkMaxBrushless,
+
+        SparkMaxBrushed,
     }
 }

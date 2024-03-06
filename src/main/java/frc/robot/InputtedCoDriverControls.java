@@ -17,15 +17,19 @@ public class InputtedCoDriverControls {
         if (controller.getYButtonPressed()) {
             Shooter.startFeedMotors();
         }
-        if (controller.getXButton()) {
+        if (controller.getXButtonPressed()) {
             Shooter.startShooterMotors();
-        } else {
+        } else if (controller.getBButtonPressed()) {
+            Shooter.autoShootIntoSpeaker();
+        }
+        if (controller.getXButtonReleased()) {
             Shooter.stopShooterMotors();
         }
 
-        if (controller.getLeftBumper()) {
+        if (controller.getLeftBumperPressed()) {
             Intake.startFloorIntake();
-        } else {
+        }
+        if (controller.getLeftBumperReleased()) {
             Intake.stopFloorIntake();
         }
 

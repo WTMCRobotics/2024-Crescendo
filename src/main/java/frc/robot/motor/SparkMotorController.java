@@ -16,9 +16,13 @@ public class SparkMotorController implements MotorController {
     RelativeEncoder encoder;
     SparkPIDController pid;
 
-    SparkMotorController(int canID) {
-        controller = new CANSparkMax(canID, MotorType.kBrushless);
-        encoder = controller.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
+    SparkMotorController(int canID, MotorType type) {
+        controller = new CANSparkMax(canID, type);
+        if (type == MotorType.kBrushless) {
+            encoder = controller.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
+        } else {
+            encoder = controller.getEncoder(SparkRelativeEncoder.Type.kQuadrature, Constants.ENCODER_ROTATION);
+        }
         encoder.setPositionConversionFactor(Constants.DRIVE_GEARBOX_RATIO);
         encoder.setVelocityConversionFactor(Constants.DRIVE_GEARBOX_RATIO);
 
