@@ -31,15 +31,9 @@ public class InputtedDriverControls {
         }
     }
 
-    private static void stopAtShootingDistance() {
-        throw new UnsupportedOperationException("Unimplemented method 'stopAtShootingDistance'");
-    }
+    private static void stopAtShootingDistance() {}
 
-    private static void stopAtAmpShootingDistance() {
-        throw new UnsupportedOperationException("Unimplemented method 'stopAtAmpShootingDistance'");
-    }
+    private static void stopAtAmpShootingDistance() {}
 
-    private static void stopAtFeedingDistance() {
-        throw new UnsupportedOperationException("Unimplemented method 'stopAtFeedingDistance'");
-    }
+    private static void stopAtFeedingDistance() {}
 }
