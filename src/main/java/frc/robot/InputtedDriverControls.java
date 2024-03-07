@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.robotcomponents.DriveTrain;
+import frc.robot.robotcomponents.Intake;
 
 public class InputtedDriverControls {
 
@@ -21,6 +22,12 @@ public class InputtedDriverControls {
         }
         if (controller.getXButtonPressed()) {
             stopAtShootingDistance();
+        }
+        if (controller.getLeftBumper()) {
+            Intake.startFloorIntake();
+        }
+        if (controller.getLeftBumperReleased()) {
+            Intake.stopFloorIntake();
         }
     }
 
