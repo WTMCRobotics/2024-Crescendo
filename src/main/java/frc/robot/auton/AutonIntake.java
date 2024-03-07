@@ -15,11 +15,11 @@ public class AutonIntake extends AutonAction {
 
     @Override
     public void initiate() {
-        Robot.motors.getIntake().set(Constants.INTAKE_SPEED);
+        // Robot.motors.getIntake().set(Constants.INTAKE_SPEED);
     }
 
     @Override
     public void shutdown() {
-        Robot.motors.getIntake().stopMotor();
+        // Robot.motors.getIntake().stopMotor();
     }
 }
