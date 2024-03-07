@@ -5,6 +5,9 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -17,6 +20,7 @@ import frc.robot.auton.ParallelActionRunner;
 import frc.robot.auton.SequentialActionRunner;
 import frc.robot.motor.MotorController;
 import frc.robot.motor.MotorControllerFactory;
+import frc.robot.vision.Vision;
 // import frc.robot.vision.AprilTagHighlighter;
 import java.util.ArrayDeque;
 
@@ -71,7 +75,7 @@ public class Robot extends TimedRobot {
         Constants.RIGHT_CLIMB_ID,
         MotorController.Type.SparkMaxBrushed
     );
-    MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMaxBrushed);
+    // MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMaxBrushed);
     MotorController hoodAdjuster = null;
     // = MotorControllerFactory.create(
     //     Constants.SHOOTER_HOOD_ADJUSTERER_ID,
@@ -100,6 +104,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        Vision vision = new Vision();
         initializeSmartMotion(driveLeftParent, Constants.NORMAL_ROBOT_GAINS);
         initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
 
@@ -112,10 +117,10 @@ public class Robot extends TimedRobot {
         autonRouteChooser.addOption("backup turn backup", AutonRoutes.BACKUP_TURN_BACKUP);
         autonRouteChooser.addOption("shoot and back up", AutonRoutes.SHOOT_AND_BACK_UP);
 
-        // autonRouteChooser.addOption("Test old rotation PID", AutonRoutes.TEST_ROTATION);
-        // autonRouteChooser.addOption("Test new rotation PID", AutonRoutes.TEST_ROTATION_WITH_PID_COMMAND);
-        // autonRouteChooser.addOption("Test SmartMotion movement", AutonRoutes.TEST_SMART_MOTION_MOVEMENT);
-        // autonRouteChooser.addOption("Test Manual PID movement", AutonRoutes.TEST_PID_MOVEMENT);
+        autonRouteChooser.addOption("Test old rotation PID", AutonRoutes.TEST_ROTATION);
+        autonRouteChooser.addOption("Test new rotation PID", AutonRoutes.TEST_ROTATION_WITH_PID_COMMAND);
+        autonRouteChooser.addOption("Test SmartMotion movement", AutonRoutes.TEST_SMART_MOTION_MOVEMENT);
+        autonRouteChooser.addOption("Test Manual PID movement", AutonRoutes.TEST_PID_MOVEMENT);
 
         SmartDashboard.putData("Auton Routes", autonRouteChooser);
 
@@ -157,7 +162,7 @@ public class Robot extends TimedRobot {
                 .rightFlywheel(rightFlywheel)
                 .leftClimb(leftClimb)
                 .rightClimb(rightClimb)
-                .intake(intake)
+                // .intake(intake)
                 .hoodAdjuster(hoodAdjuster);
         getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
@@ -168,6 +173,15 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("PID TARGET", 90);
 
         System.out.println("Is drive right parent inverted at end?? " + driveRightParent.getInverted());
+
+        UsbCamera camera = CameraServer.startAutomaticCapture("Front Cam", 0);
+        camera.setFPS(15);
+
+        // Set the resolution
+        camera.setResolution(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
+
+        // Get a CvSink. This will capture Mats from the camera
+        CvSink cvSink = CameraServer.getVideo();
 
         InputtedCoDriverControls.setCoDriverController(coDriverController);
         InputtedDriverControls.setDriverController(driverController);
