@@ -24,15 +24,19 @@ public class ParallelActionRunner {
         }
     }
 
-    // This method is important if you have code that could add two of the same action with opposite goals.
-    // That would mean they would fight each other and never finish, which is bad news bears if you ask me.
+    /**This method is important if you have code that could add two of the same action with opposite goals.
+     *That would mean they would fight each other and never finish, which is bad news bears if you ask me.
+     * @param clazzez A singular class or a array of classes*/
+
     public void removeActionsOfType(Class<?>... clazzez) {
         Iterator<AutonAction> it = actions.iterator();
         while (it.hasNext()) {
             AutonAction auction = it.next();
             for (Class<?> clazz : clazzez) {
                 if (auction.getClass().equals(clazz)) {
-                    actions.remove(auction);
+                    System.out.println("Removing " + clazz.getName() + " from parallel action queue");
+                    auction.shutdown();
+                    it.remove();
                 }
             }
         }
