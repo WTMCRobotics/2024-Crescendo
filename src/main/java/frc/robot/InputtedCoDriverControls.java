@@ -21,22 +21,22 @@ public class InputtedCoDriverControls {
     static boolean hasGoneUp = false;
 
     public static void onEveryFrame() {
-        if (controller.getYButtonPressed()) {
+        if (controller.getXButtonPressed()) {
             Shooter.startFeedMotors();
         }
-        if (controller.getXButtonPressed()) {
+        if (controller.getLeftBumperPressed()) {
             Shooter.startShooterMotors();
-        } else if (controller.getBButtonPressed()) {
+        } else if (controller.getYButtonPressed()) {
             Shooter.autoShootIntoSpeaker();
         }
-        if (controller.getXButtonReleased()) {
+        if (controller.getLeftBumperReleased()) {
             Shooter.stopShooterMotors();
         }
 
-        if (controller.getLeftBumper()) {
+        if (controller.getBButton()) {
             Intake.startFloorIntake();
         }
-        if (controller.getLeftBumperReleased()) {
+        if (controller.getBButtonReleased()) {
             Intake.stopFloorIntake();
         }
 
@@ -49,6 +49,11 @@ public class InputtedCoDriverControls {
             Climber.stopClimbMotors();
         }
 
+        if (Double.compare(controller.getLeftTriggerAxis(), 0.90) == 0) {
+            Shooter.moveHoodToIntakePosition();
+        } else if (controller.getLeftTriggerAxis() >= 0.29 && controller.getLeftTriggerAxis() <= 0.71) {
+            Shooter.moveHoodToShootingPosition();
+        }
         if (controller.getAButtonPressed()) {
             Intake.backtrack();
             Shooter.backtrack();

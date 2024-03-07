@@ -10,8 +10,9 @@ public class Constants {
     public static final int SHOOTER_LEFT_FLYWHEEL_ID = 9;
     public static final int SHOOTER_RIGHT_FLYWHEEL_ID = 7;
     public static final int SHOOTER_FEEDER_ID = 10;
+    public static final int SHOOTER_HOOD_ADJUSTERER_ID = 13;
 
-    public static final int INTAKE_ID = 6101;
+    public static final int INTAKE_ID = 12;
 
     /*CLIMB MOTOR IDS */
 
@@ -24,10 +25,18 @@ public class Constants {
     public static final double SHOOTER_LEFT_FLYWHEEL_SPEED = 1.0;
     public static final double SHOOTER_RIGHT_FLYWHEEL_SPEED = 1.0;
     /*The amount of seconds that the feeder should wait before turning off after shooting */
-
     public static final double FEEDER_MOTOR_SHUTOFF_TIME = 1.5;
 
+    //TODO configure speed based on thingys
+    /**The motor percentOutput that the shooter hood will move at */
+    public static final double SHOOTER_HOOD_ADJUSTMENT_SPEED = 0.6;
+    /**The amount of rotations of accuracy that the the hood needs to be to be considered in place */
+    public static final double SHOOTER_HOOD_ADJUSTMENT_ERROR_ROTATIONS = 0.5;
+
     public static final double SHOOTING_VELOCITY_RPM = 4000;
+    //TODO configure these correctly
+    public static final double HOOD_INTAKE_POSITION_ROTATIONS = 3.1415926;
+    public static final double HOOD_SHOOTING_POSITION_ROTATIONS = 2.7;
 
     /*CLIMB CONFIG */
     public static final double CLIMB_EXTENDED_ENCODER_POSITION = 5;
@@ -38,7 +47,7 @@ public class Constants {
     public static final double CLIMB_RETRACTION_SPEED = -.25;
 
     /*INTAKE CONFIG */
-    public static final double INTAKE_SPEED = 0;
+    public static final double INTAKE_SPEED = 1.00;
 
     public static final int INTAKE_BEAM_BREAK_ID = 9;
 

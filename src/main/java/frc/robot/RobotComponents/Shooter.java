@@ -2,6 +2,8 @@ package frc.robot.robotcomponents;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.auton.AutonMoveHoodToPosition;
+import frc.robot.auton.AutonMoveHoodToPosition.HoodPosition;
 import frc.robot.auton.AutonShoot;
 import frc.robot.auton.AutonShooterFeed;
 
@@ -34,5 +36,15 @@ public class Shooter {
     public static void autoShootIntoSpeaker() {
         Robot.getTeleopActionRunner().removeActionsOfType(AutonShoot.class);
         Robot.getTeleopActionRunner().addActionToRun(new AutonShoot());
+    }
+
+    public static void moveHoodToIntakePosition() {
+        Robot.getTeleopActionRunner().removeActionsOfType(AutonMoveHoodToPosition.class);
+        Robot.getTeleopActionRunner().addActionToRun(new AutonMoveHoodToPosition(HoodPosition.INTAKING));
+    }
+
+    public static void moveHoodToShootingPosition() {
+        Robot.getTeleopActionRunner().removeActionsOfType(AutonMoveHoodToPosition.class);
+        Robot.getTeleopActionRunner().addActionToRun(new AutonMoveHoodToPosition(HoodPosition.SHOOTING_DEFAULT));
     }
 }
