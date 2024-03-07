@@ -20,8 +20,6 @@ import frc.robot.auton.ParallelActionRunner;
 import frc.robot.auton.SequentialActionRunner;
 import frc.robot.motor.MotorController;
 import frc.robot.motor.MotorControllerFactory;
-import frc.robot.vision.Vision;
-// import frc.robot.vision.AprilTagHighlighter;
 import java.util.ArrayDeque;
 
 /**
@@ -104,7 +102,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        Vision vision = new Vision();
         initializeSmartMotion(driveLeftParent, Constants.NORMAL_ROBOT_GAINS);
         initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
 
