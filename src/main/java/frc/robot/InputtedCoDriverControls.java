@@ -34,7 +34,6 @@ public class InputtedCoDriverControls {
         }
 
         if (controller.getBButton()) {
-
             Intake.startFloorIntake();
         }
         if (controller.getBButtonReleased()) {

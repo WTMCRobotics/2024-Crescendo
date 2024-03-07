@@ -112,10 +112,10 @@ public class Robot extends TimedRobot {
         autonRouteChooser.addOption("backup turn backup", AutonRoutes.BACKUP_TURN_BACKUP);
         autonRouteChooser.addOption("shoot and back up", AutonRoutes.SHOOT_AND_BACK_UP);
 
-        autonRouteChooser.addOption("Test old rotation PID", AutonRoutes.TEST_ROTATION);
-        autonRouteChooser.addOption("Test new rotation PID", AutonRoutes.TEST_ROTATION_WITH_PID_COMMAND);
-        autonRouteChooser.addOption("Test SmartMotion movement", AutonRoutes.TEST_SMART_MOTION_MOVEMENT);
-        autonRouteChooser.addOption("Test Manual PID movement", AutonRoutes.TEST_PID_MOVEMENT);
+        // autonRouteChooser.addOption("Test old rotation PID", AutonRoutes.TEST_ROTATION);
+        // autonRouteChooser.addOption("Test new rotation PID", AutonRoutes.TEST_ROTATION_WITH_PID_COMMAND);
+        // autonRouteChooser.addOption("Test SmartMotion movement", AutonRoutes.TEST_SMART_MOTION_MOVEMENT);
+        // autonRouteChooser.addOption("Test Manual PID movement", AutonRoutes.TEST_PID_MOVEMENT);
 
         SmartDashboard.putData("Auton Routes", autonRouteChooser);
 
