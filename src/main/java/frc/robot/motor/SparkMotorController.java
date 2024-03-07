@@ -1,5 +1,6 @@
 package frc.robot.motor;
 
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
@@ -57,7 +58,7 @@ public class SparkMotorController implements MotorController {
     public void setDistance(double inches) {
         pid.setReference(
             (inches / Constants.WHEEL_CIRCUMFERENCE_INCHES) * Constants.DRIVE_GEARBOX_RATIO,
-            CANSparkMax.ControlType.kSmartMotion
+            CANSparkBase.ControlType.kSmartMotion
         );
     }
 
