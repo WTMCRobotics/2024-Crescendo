@@ -13,6 +13,13 @@ public class InputtedCoDriverControls {
         controller = xboxController;
     }
 
+    public static void onTeleopInit() {
+        hasGoneUp = false;
+    }
+
+    /**Prevents the codriver from accidentally moving the arms down */
+    static boolean hasGoneUp = false;
+
     public static void onEveryFrame() {
         if (controller.getYButtonPressed()) {
             Shooter.startFeedMotors();
@@ -26,7 +33,7 @@ public class InputtedCoDriverControls {
             Shooter.stopShooterMotors();
         }
 
-        if (controller.getLeftBumperPressed()) {
+        if (controller.getLeftBumper()) {
             Intake.startFloorIntake();
         }
         if (controller.getLeftBumperReleased()) {
@@ -35,7 +42,8 @@ public class InputtedCoDriverControls {
 
         if (controller.getStartButton()) {
             Climber.manualExtendArms();
-        } else if (controller.getBackButton()) {
+            hasGoneUp = true;
+        } else if (controller.getBackButton() && hasGoneUp) {
             Climber.manualRetractArms();
         } else {
             Climber.stopClimbMotors();
