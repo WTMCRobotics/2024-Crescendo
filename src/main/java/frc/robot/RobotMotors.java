@@ -4,16 +4,21 @@ import frc.robot.motor.MotorController;
 
 public class RobotMotors {
 
-    MotorController driveLeftParent;
-    MotorController driveLeftChild;
-    MotorController driveRightParent;
-    MotorController driveRightChild;
-    MotorController feeder;
-    MotorController leftFlywheel;
-    MotorController rightFlywheel;
-    MotorController leftClimb;
-    MotorController rightClimb;
-    MotorController intake;
+    private MotorController driveLeftChild;
+    private MotorController driveLeftParent;
+    private MotorController driveRightParent;
+    private MotorController driveRightChild;
+    private MotorController feeder;
+    private MotorController leftFlywheel;
+    private MotorController rightFlywheel;
+    private MotorController leftClimb;
+    private MotorController rightClimb;
+    private MotorController intake;
+    private MotorController hoodAdjuster;
+
+    public MotorController getHoodAdjuster() {
+        return hoodAdjuster;
+    }
 
     public MotorController getIntake() {
         return intake;
@@ -104,6 +109,11 @@ public class RobotMotors {
 
     public RobotMotors rightClimb(MotorController rightClimb) {
         this.rightClimb = rightClimb;
+        return this;
+    }
+
+    public RobotMotors hoodAdjuster(MotorController hoodAdjuster) {
+        this.hoodAdjuster = hoodAdjuster;
         return this;
     }
 }
