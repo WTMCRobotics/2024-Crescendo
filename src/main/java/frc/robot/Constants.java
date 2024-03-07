@@ -62,7 +62,11 @@ public class Constants {
     public static final double ROTATION_DEGREE_TOLERANCE = 3;
     public static final double ROTATION_DEGREE_PER_SECOND_TOLERANCE = 30;
     public static final Gains NORMAL_ROBOT_GAINS = new Gains(0.0005, 0.0, 0, 0, 0, 1.);
+    public static final Gains NON_SMART_MOTION_MOVEMENT_PID_ROBOT_GAINS = new Gains(0.0005, 0.0, 0, 0, 0, 1.);
     public static final double ROTATION_ERROR_DEGREES = 5.0;
+
+    public static final double MOVEMENT_PID_INCH_TOLERANCE = 3;
+    public static final double MOVEMENT_PID_INCH_PER_SECOND_TOLERANCE = 30;
 
     /*PHYSICAL ROBOT CONSTANTS */
     public static final double WHEEL_CIRCUMFERENCE_INCHES = 8 * Math.PI;

@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
         Constants.RIGHT_CLIMB_ID,
         MotorController.Type.SparkMaxBrushed
     );
+
     // MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMaxBrushless);
 
     XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
@@ -83,7 +84,7 @@ public class Robot extends TimedRobot {
         return teleopActionRunner;
     }
 
-    private final SendableChooser<String> autonRouteChooser = new SendableChooser<>();
+    private final SendableChooser<ArrayDeque<AutonAction>> autonRouteChooser = new SendableChooser<>();
 
     public static AHRS getGyroscope() {
         return navX;
@@ -99,13 +100,19 @@ public class Robot extends TimedRobot {
         initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
 
         // aprilTagHighlighter = new AprilTagHighlighter();
-        autonRouteChooser.setDefaultOption("move forward", "moveforward");
-        autonRouteChooser.addOption("move forward", "moveforward");
-        autonRouteChooser.addOption("move backwards", "movebackwards");
-        autonRouteChooser.addOption("explode hidden bomb", "explodehiddenbomb");
-        autonRouteChooser.addOption("shoot backup intake forward shoot", "shootbackupintakeforwardshoot");
-        autonRouteChooser.addOption("backup turn backup", "backupturnbackup");
-        autonRouteChooser.addOption("shoot and back up", "shootandbackup");
+        autonRouteChooser.setDefaultOption("move forward", AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
+        autonRouteChooser.addOption("move forward", AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
+        autonRouteChooser.addOption("move backwards", AutonRoutes.GO_BACKWARD_OUT_OF_STARTING_ZONE);
+        autonRouteChooser.addOption("explode hidden bomb", AutonRoutes.BOOM);
+        autonRouteChooser.addOption("shoot backup intake forward shoot", AutonRoutes.SHOOT_BACKUP_INTAKE_FORWARD_SHOOT);
+        autonRouteChooser.addOption("backup turn backup", AutonRoutes.BACKUP_TURN_BACKUP);
+        autonRouteChooser.addOption("shoot and back up", AutonRoutes.SHOOT_AND_BACK_UP);
+
+        autonRouteChooser.addOption("Test old rotation PID", AutonRoutes.TEST_ROTATION);
+        autonRouteChooser.addOption("Test new rotation PID", AutonRoutes.TEST_ROTATION_WITH_PID_COMMAND);
+        autonRouteChooser.addOption("Test SmartMotion movement", AutonRoutes.TEST_SMART_MOTION_MOVEMENT);
+        autonRouteChooser.addOption("Test Manual PID movement", AutonRoutes.TEST_PID_MOVEMENT);
+
         SmartDashboard.putData("Auton Routes", autonRouteChooser);
 
         driveLeftChild.follow(driveLeftParent);
@@ -196,16 +203,7 @@ public class Robot extends TimedRobot {
         navX.resetDisplacement();
         navX.reset();
 
-        ArrayDeque<AutonAction> route =
-            switch (autonRouteChooser.getSelected()) {
-                case "moveforward" -> new ArrayDeque<>(AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
-                case "movebackwards" -> new ArrayDeque<>(AutonRoutes.GO_BACKWARD_OUT_OF_STARTING_ZONE);
-                case "shootandbackup" -> new ArrayDeque<>(AutonRoutes.SHOOT_AND_BACK_UP);
-                case "backupturnbackup" -> new ArrayDeque<>(AutonRoutes.BACKUP_TURN_BACKUP);
-                case "shootbackupintakeforwardshoot" -> new ArrayDeque<>(AutonRoutes.SHOOT_BACKUP_INTAKE_FORWARD_SHOOT);
-                case "explodehiddenbomb" -> new ArrayDeque<>(AutonRoutes.BOOM);
-                default -> new ArrayDeque<AutonAction>();
-            };
+        ArrayDeque<AutonAction> route = autonRouteChooser.getSelected();
         System.out.println("Selected auton route: " + route);
         auton = new SequentialActionRunner(route);
         auton.initiateAuton();
