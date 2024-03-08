@@ -37,6 +37,10 @@ public class AutonRoutes {
         List.of(new AutonShoot(), new AutonMoveInches(-40), new AutonRotate(45), new AutonMoveInches(-65))
     );
 
+    public static final ArrayDeque<AutonAction> SHOOT_AND_BACK_UP_SKETCHILY = new ArrayDeque<AutonAction>(
+        List.of(new AutonShoot(), new MovePercentOutput())
+    );
+
     public static final ArrayDeque<AutonAction> SHOOT_AND_BACK_UP_FROM_CENTER = new ArrayDeque<AutonAction>(
         List.of(new AutonShoot(), new AutonMoveInches(-84))
     );

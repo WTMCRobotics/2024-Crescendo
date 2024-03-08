@@ -116,8 +116,6 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         initializeSmartMotion(driveLeftParent, Constants.NORMAL_ROBOT_GAINS);
         initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
-        initializeSmartMotion(driveLeftChild, Constants.NORMAL_ROBOT_GAINS);
-        initializeSmartMotion(driveRightChild, Constants.NORMAL_ROBOT_GAINS);
 
         // aprilTagHighlighter = new AprilTagHighlighter();
         autonRouteChooser.setDefaultOption("move forward", AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
@@ -126,6 +124,8 @@ public class Robot extends TimedRobot {
         autonRouteChooser.addOption("just shoot", AutonRoutes.JUST_SHOOT);
 
         autonRouteChooser.addOption("shoot and back up", AutonRoutes.SHOOT_AND_BACK_UP_FROM_CENTER);
+        autonRouteChooser.addOption("shoot and back up forever", AutonRoutes.SHOOT_AND_BACK_UP_SKETCHILY);
+
         autonRouteChooser.addOption("backup turn backup", AutonRoutes.BACKUP_TURN_BACKUP);
         autonRouteChooser.addOption("explode hidden bomb", AutonRoutes.BOOM);
         autonRouteChooser.addOption("shoot backup intake forward shoot", AutonRoutes.SHOOT_BACKUP_INTAKE_FORWARD_SHOOT);
@@ -146,6 +146,7 @@ public class Robot extends TimedRobot {
             new Command() {
                 @Override
                 public void initialize() {
+                    setName("Execute");
                     System.out.println("We have switched thy controllers");
                     int driverPort = driverController.getPort();
                     int coDriverPort = coDriverController.getPort();

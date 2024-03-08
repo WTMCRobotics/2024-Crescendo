@@ -55,12 +55,10 @@ public class QuickActions {
 
     public static void setLeft(double percent) {
         Robot.motors.getDriveLeftParent().setPercentOutput(percent);
-        Robot.motors.getDriveLeftChild().setPercentOutput(percent);
     }
 
     public static void setRight(double percent) {
         Robot.motors.getDriveRightParent().setPercentOutput(percent);
-        Robot.motors.getDriveRightChild().setPercentOutput(percent);
     }
 
     public enum TurnDirection {
