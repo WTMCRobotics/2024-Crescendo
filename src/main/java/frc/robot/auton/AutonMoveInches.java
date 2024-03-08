@@ -11,9 +11,7 @@ public class AutonMoveInches extends AutonAction {
     @Override
     public boolean isDone() {
         Robot.motors.getDriveLeftParent().setDistance(distance);
-        Robot.motors.getDriveLeftChild().setDistance(distance);
         Robot.motors.getDriveRightParent().setDistance(distance);
-        Robot.motors.getDriveRightChild().setDistance(distance);
         if (getMaxTrajectoryVelocity() < 0.05) {
             isDoneDebounceTime += 0.02;
         } else {
