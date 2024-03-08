@@ -166,8 +166,8 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putData("Auton Routes", autonRouteChooser);
 
-        // driveLeftChild.follow(driveLeftParent);
-        // driveRightChild.follow(driveRightParent);
+        driveLeftChild.follow(driveLeftParent);
+        driveRightChild.follow(driveRightParent);
 
         driveLeftParent.setInverted(true);
         driveRightParent.setInverted(false);
@@ -359,13 +359,13 @@ public class Robot extends TimedRobot {
                 Thread.sleep(5000);
                 driveLeftParent.set(0.0);
 
-                QuickActions.setRight(-0.5);
+                Robot.motors.getDriveRightParent().set(-0.5);
                 System.out.println("Left is no longer spinning and Right is spinning backwards");
                 SmartDashboard.putString("Test Status", "Left is no longer spinning and Right is spinning backwards");
 
                 // wait for 5 seconds pt 2 electric boogaloo
                 Thread.sleep(5000);
-                QuickActions.setRight(0.0);
+                Robot.motors.getDriveRightParent().set(0.0);
 
                 System.out.println("Right is no longer spinning");
                 SmartDashboard.putString("Test Status", "Right is no longer spinning");

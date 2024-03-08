@@ -8,16 +8,16 @@ public class QuickActions {
     }
 
     public static void stopDriveMotors() {
-        QuickActions.setLeft(0);
-        QuickActions.setRight(0);
+        Robot.motors.getDriveLeftParent().set(0);
+        Robot.motors.getDriveRightParent().set(0);
     }
 
     public static void stopLeftMotors() {
-        QuickActions.setLeft(0);
+        Robot.motors.getDriveLeftParent().set(0);
     }
 
     public static void stopRightMotors() {
-        QuickActions.setRight(0);
+        Robot.motors.getDriveRightParent().set(0);
     }
 
     public static void turn(double percent) {
