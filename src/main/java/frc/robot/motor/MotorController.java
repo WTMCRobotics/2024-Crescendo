@@ -60,6 +60,8 @@ public interface MotorController extends edu.wpi.first.wpilibj.motorcontrol.Moto
 
     // Encoder functions
 
+    public void burnFlash();
+
     /**
      * Set the sensor source for the motor.
      */

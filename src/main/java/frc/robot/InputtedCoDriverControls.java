@@ -7,12 +7,6 @@ import frc.robot.robotcomponents.Shooter;
 
 public class InputtedCoDriverControls {
 
-    static XboxController controller;
-
-    public static void setCoDriverController(XboxController xboxController) {
-        controller = xboxController;
-    }
-
     public static void onTeleopInit() {
         hasGoneUp = false;
     }
@@ -21,6 +15,7 @@ public class InputtedCoDriverControls {
     static boolean hasGoneUp = false;
 
     public static void onEveryFrame() {
+        XboxController controller = Robot.getCoDriverController();
         if (controller.getXButtonPressed()) {
             Shooter.startFeedMotors();
         }
@@ -42,10 +37,10 @@ public class InputtedCoDriverControls {
             Shooter.stopShooterMotors();
         }
 
-        if (controller.getStartButton()) {
+        if (controller.getBackButton()) {
             Climber.manualExtendArms();
             hasGoneUp = true;
-        } else if (controller.getBackButton() && hasGoneUp) {
+        } else if (controller.getStartButton() && hasGoneUp) {
             Climber.manualRetractArms();
         } else {
             Climber.stopClimbMotors();

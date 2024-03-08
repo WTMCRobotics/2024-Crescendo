@@ -11,19 +11,16 @@ public class AutonMoveInches extends AutonAction {
     @Override
     public boolean isDone() {
         Robot.motors.getDriveLeftParent().setDistance(distance);
+        Robot.motors.getDriveLeftChild().setDistance(distance);
         Robot.motors.getDriveRightParent().setDistance(distance);
-        System.out.println(
-            Robot.motors.getDriveLeftParent().get() +
-            " veL: " +
-            Robot.motors.getDriveLeftParent().getActiveTrajectoryVelocity()
-        );
+        Robot.motors.getDriveRightChild().setDistance(distance);
         if (getMaxTrajectoryVelocity() < 0.05) {
             isDoneDebounceTime += 0.02;
         } else {
             isDoneDebounceTime = 0;
         }
 
-        if (isDoneDebounceTime > 3) {
+        if (isDoneDebounceTime > 1.5) {
             System.out.println("We moved the correct amount of inches!");
             return true;
         }
@@ -34,6 +31,7 @@ public class AutonMoveInches extends AutonAction {
     @Override
     public void initiate() {
         QuickActions.resetDriveTrainEncoders();
+        isDoneDebounceTime = -2;
     }
 
     private double getMaxTrajectoryVelocity() {

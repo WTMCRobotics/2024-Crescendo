@@ -15,7 +15,7 @@ public class AutonShooterFeed extends AutonAction {
 
     @Override
     public void initiate() {
-        Robot.motors.getFeeder().set(0.75);
+        Robot.motors.getFeeder().set(Constants.FEEDER_MOTOR_SPEED);
         revFinishedTime = Timer.getFPGATimestamp() + Constants.FEEDER_MOTOR_SHUTOFF_TIME;
     }
 

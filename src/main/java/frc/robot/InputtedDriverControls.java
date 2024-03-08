@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.robotcomponents.DriveTrain;
@@ -7,13 +8,8 @@ import frc.robot.robotcomponents.Intake;
 
 public class InputtedDriverControls {
 
-    static XboxController controller;
-
-    public static void setDriverController(XboxController xboxController) {
-        controller = xboxController;
-    }
-
     public static void onEveryFrame() {
+        XboxController controller = Robot.getDriverController();
         DriveTrain.driveTank(controller.getLeftY(), controller.getRightY());
         if (controller.getBButtonPressed()) {
             stopAtFeedingDistance();
