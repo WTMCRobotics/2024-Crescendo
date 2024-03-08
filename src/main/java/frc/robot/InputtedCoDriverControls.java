@@ -34,10 +34,12 @@ public class InputtedCoDriverControls {
         }
 
         if (controller.getBButton()) {
+            Shooter.startShooterIntake();
             Intake.startFloorIntake();
         }
         if (controller.getBButtonReleased()) {
             Intake.stopFloorIntake();
+            Shooter.stopShooterMotors();
         }
 
         if (controller.getStartButton()) {

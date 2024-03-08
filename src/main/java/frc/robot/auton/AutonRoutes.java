@@ -29,11 +29,30 @@ public class AutonRoutes {
         List.of(new AutonMoveInches(-24), new AutonRotate(135), new AutonMoveInches(36))
     );
 
-    static {
+    public static ArrayDeque<AutonAction> MESS_UP_CENTER_RINGS_FROM_AMP_SIDE;
+
+    public static ArrayDeque<AutonAction> MESS_UP_CENTER_RINGS_FROM_TERMINAL_SIDE;
+
+    private static final ArrayDeque<AutonAction> MESS_UP_CENTER_RINGS_TURN_LEFT = new ArrayDeque<AutonAction>(
+        List.of(new AutonMoveInches(312), new AutonRotate(-90), new AutonMoveInches(252))
+    );
+
+    private static final ArrayDeque<AutonAction> MESS_UP_CENTER_RINGS_TURN_RIGHT = new ArrayDeque<AutonAction>(
+        List.of(new AutonMoveInches(312), new AutonRotate(90), new AutonMoveInches(252))
+    );
+
+    /**Paths will slightly differ based on what team we're on, so these will correct them. */
+    public static void setupCorrectAutonPaths() {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
             BACKUP_TURN_BACKUP = RED_BACKUP_TURN_BACKUP;
+            MESS_UP_CENTER_RINGS_FROM_AMP_SIDE = MESS_UP_CENTER_RINGS_TURN_LEFT;
+            MESS_UP_CENTER_RINGS_FROM_TERMINAL_SIDE = MESS_UP_CENTER_RINGS_TURN_RIGHT;
+            System.out.println("Configuring auton routes for RED team");
         } else {
             BACKUP_TURN_BACKUP = BLUE_BACKUP_TURN_BACKUP;
+            MESS_UP_CENTER_RINGS_FROM_AMP_SIDE = MESS_UP_CENTER_RINGS_TURN_RIGHT;
+            MESS_UP_CENTER_RINGS_FROM_TERMINAL_SIDE = MESS_UP_CENTER_RINGS_TURN_LEFT;
+            System.out.println("Configuring auton routes for BLUE team");
         }
     }
 
@@ -45,6 +64,7 @@ public class AutonRoutes {
             new AutonShoot()
         )
     );
+
     public static final ArrayDeque<AutonAction> BOOM = new ArrayDeque<AutonAction>(List.of(new explodeDaBomb()));
 
     public static ArrayDeque<AutonAction> TEST_ROTATION_WITH_PID_COMMAND = new ArrayDeque<AutonAction>(

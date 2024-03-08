@@ -6,22 +6,22 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.auton.AutonAction;
 import frc.robot.auton.AutonRoutes;
 import frc.robot.auton.ParallelActionRunner;
 import frc.robot.auton.SequentialActionRunner;
 import frc.robot.motor.MotorController;
 import frc.robot.motor.MotorControllerFactory;
-import frc.robot.vision.Vision;
-// import frc.robot.vision.AprilTagHighlighter;
+import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 
 /**
@@ -104,7 +104,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        Vision vision = new Vision();
         initializeSmartMotion(driveLeftParent, Constants.NORMAL_ROBOT_GAINS);
         initializeSmartMotion(driveRightParent, Constants.NORMAL_ROBOT_GAINS);
 
@@ -122,6 +121,23 @@ public class Robot extends TimedRobot {
         autonRouteChooser.addOption("Test SmartMotion movement", AutonRoutes.TEST_SMART_MOTION_MOVEMENT);
         autonRouteChooser.addOption("Test Manual PID movement", AutonRoutes.TEST_PID_MOVEMENT);
 
+        //This is an emergency button for switching controllers mid match
+        SmartDashboard.putData(
+            "SWITCH CONTROLLERS",
+            new Command() {
+                @Override
+                public void initialize() {
+                    System.out.println("We have switched thy controllers");
+                    int driverPort = driverController.getPort();
+                    int coDriverPort = coDriverController.getPort();
+                    driverController = new XboxController(coDriverPort);
+                    coDriverController = new XboxController(driverPort);
+                }
+            }
+        );
+
+        SmartDashboard.putNumber("Time Remaining", Timer.getMatchTime());
+
         SmartDashboard.putData("Auton Routes", autonRouteChooser);
 
         driveLeftChild.follow(driveLeftParent);
@@ -133,6 +149,9 @@ public class Robot extends TimedRobot {
         feederMotor.setInverted(true);
         //This false is required
         feederMotor.setBrakeMode(false);
+
+        rightFlywheel.setBrakeMode(false);
+        leftFlywheel.setBrakeMode(false);
 
         rightFlywheel.setInverted(true);
         leftFlywheel.setInverted(false);
@@ -180,11 +199,10 @@ public class Robot extends TimedRobot {
         // Set the resolution
         camera.setResolution(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
 
-        // Get a CvSink. This will capture Mats from the camera
-        CvSink cvSink = CameraServer.getVideo();
-
         InputtedCoDriverControls.setCoDriverController(coDriverController);
         InputtedDriverControls.setDriverController(driverController);
+
+        SmartDashboard.putBoolean("Estimated Controller Status", true);
     }
 
     /**
@@ -194,8 +212,13 @@ public class Robot extends TimedRobot {
      * <p>This runs after the mode specific periodic functions, but before LiveWindow and
      * SmartDashboard integrated updating.
      */
+
+    private static final DecimalFormat prettyDecimalMaker = new DecimalFormat("#.#");
+
     @Override
     public void robotPeriodic() {
+        SmartDashboard.putString("Time Remaining", prettyDecimalMaker.format(Timer.getMatchTime()));
+
         // aprilTagHighlighter.doEveryFrame();
         SmartDashboard.putNumber("Gyro Reading", getGyroscope().getAngle());
         SmartDashboard.putNumber("left encoder", driveLeftParent.getEncoderPosition());
@@ -222,6 +245,7 @@ public class Robot extends TimedRobot {
         navX.resetDisplacement();
         navX.reset();
 
+        AutonRoutes.setupCorrectAutonPaths();
         ArrayDeque<AutonAction> route = autonRouteChooser.getSelected();
         System.out.println("Selected auton route: " + route);
         auton = new SequentialActionRunner(route);
@@ -261,7 +285,9 @@ public class Robot extends TimedRobot {
 
     /** This function is called once when teleop is enabled. */
     @Override
-    public void teleopInit() {}
+    public void teleopInit() {
+        InputtedCoDriverControls.onTeleopInit();
+    }
 
     /** This function is called periodically during operator control. */
     @Override

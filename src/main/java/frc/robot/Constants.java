@@ -21,11 +21,14 @@ public class Constants {
 
     /*SHOOTER CONFIG*/
     /**the amount of time we let the wheels rev up when shooting in seconds */
-    public static final double SHOOTER_FLYWHEEL_STARTUP_TIME = 0.5;
+    public static final double SHOOTER_FLYWHEEL_STARTUP_TIME = 1;
     public static final double SHOOTER_LEFT_FLYWHEEL_SPEED = 1.0;
     public static final double SHOOTER_RIGHT_FLYWHEEL_SPEED = 1.0;
+
+    public static final double SHOOTER_INTAKE_PERCENT = -0.25;
+
     /*The amount of seconds that the feeder should wait before turning off after shooting */
-    public static final double FEEDER_MOTOR_SHUTOFF_TIME = 1.5;
+    public static final double FEEDER_MOTOR_SHUTOFF_TIME = 2;
 
     //TODO configure speed based on thingys
     /**The motor percentOutput that the shooter hood will move at */
