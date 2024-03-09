@@ -45,6 +45,11 @@ public class SparkMotorController implements MotorController {
     }
 
     @Override
+    public CANSparkMax asCANSparkMax() {
+        return controller;
+    }
+
+    @Override
     public void burnFlash() {
         controller.burnFlash();
     }

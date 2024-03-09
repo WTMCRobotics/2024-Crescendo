@@ -397,7 +397,9 @@ public class Robot extends TimedRobot {
      */
     public void initializeSmartMotion(MotorController motorController, Gains gains) {
         /* Factory default hardware to prevent unexpected behavior */
-        // motorController.reset();
+        motorController.reset();
+
+        motorController.asCANSparkMax().setSmartCurrentLimit(55);
 
         /* Configure Sensor Source for Primary PID */
         motorController.setSensorSource();

@@ -21,31 +21,8 @@ public class QuickActions {
     }
 
     public static void turn(double percent) {
-        if (percent > 0) {
-            turn(TurnDirection.RIGHT, percent);
-        } else {
-            turn(TurnDirection.LEFT, percent);
-        }
-    }
-
-    public static void turn(TurnDirection direction, double percent) {
-        if (direction == TurnDirection.LEFT) {
-            setLeft(-percent);
-            setRight(percent);
-        } else if (direction == TurnDirection.RIGHT) {
-            setLeft(percent);
-            setRight(-percent);
-        }
-    }
-
-    public static void turnVelocity(TurnDirection direction, double percent) {
-        if (direction == TurnDirection.LEFT) {
-            Robot.motors.getDriveLeftParent().setVelocity(-percent);
-            Robot.motors.getDriveRightParent().setVelocity(percent);
-        } else if (direction == TurnDirection.RIGHT) {
-            Robot.motors.getDriveLeftParent().setVelocity(percent);
-            Robot.motors.getDriveRightParent().setVelocity(-percent);
-        }
+        setLeft(percent);
+        setRight(-percent);
     }
 
     public static void resetDriveTrainEncoders() {
@@ -59,10 +36,5 @@ public class QuickActions {
 
     public static void setRight(double percent) {
         Robot.motors.getDriveRightParent().set(percent);
-    }
-
-    public enum TurnDirection {
-        LEFT,
-        RIGHT,
     }
 }

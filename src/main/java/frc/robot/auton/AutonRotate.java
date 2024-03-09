@@ -5,14 +5,12 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.QuickActions;
-import frc.robot.QuickActions.TurnDirection;
 import frc.robot.Robot;
 
 public class AutonRotate extends AutonAction {
 
     private double targetTurnDegrees;
     private ProfiledPIDController rotationPID;
-    private TurnDirection turnDirection;
 
     public AutonRotate(double targetTurnDegrees) {
         this.targetTurnDegrees = targetTurnDegrees;
@@ -26,7 +24,7 @@ public class AutonRotate extends AutonAction {
         SmartDashboard.putNumber("Position Error", rotationPID.getPositionError());
         SmartDashboard.putNumber("Velocity Error", rotationPID.getVelocityError());
 
-        QuickActions.turn(turnDirection, calculatedValue);
+        QuickActions.turn(calculatedValue);
 
         if (rotationPID.atGoal()) {
             double rotation = Math.abs(Robot.getGyroscope().getAngle() - targetTurnDegrees);
@@ -49,12 +47,7 @@ public class AutonRotate extends AutonAction {
             );
         rotationPID.setGoal(targetTurnDegrees);
         rotationPID.reset(0);
-        if (targetTurnDegrees > 0) {
-            turnDirection = TurnDirection.RIGHT;
-        } else {
-            turnDirection = TurnDirection.LEFT;
-        }
-        System.out.println("We will be turning " + turnDirection);
+
         SmartDashboard.putNumber("target degree", targetTurnDegrees);
         Robot.getGyroscope().reset();
     }

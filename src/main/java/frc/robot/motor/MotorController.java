@@ -1,5 +1,6 @@
 package frc.robot.motor;
 
+import com.revrobotics.CANSparkMax;
 import frc.robot.Gains;
 
 /**
@@ -172,6 +173,10 @@ public interface MotorController extends edu.wpi.first.wpilibj.motorcontrol.Moto
      * @return Whether the reverse limit switch is pressed
      */
     public boolean getReverseLimit();
+
+    public default CANSparkMax asCANSparkMax() {
+        return null;
+    }
 
     /**
      * Type of motor controller, for MotorControllerFactory
