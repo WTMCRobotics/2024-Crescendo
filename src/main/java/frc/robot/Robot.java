@@ -7,6 +7,7 @@ package frc.robot;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -197,6 +198,8 @@ public class Robot extends TimedRobot {
 
         leftClimb.setBrakeMode(true);
         rightClimb.setBrakeMode(true);
+
+        // System.out.println("GYOR ROEADING: " + gyro.getAngle());
 
         // driveLeftParent.burnFlash();
         // driveRightParent.burnFlash();

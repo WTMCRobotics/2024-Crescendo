@@ -9,7 +9,15 @@ public class InputtedDriverControls {
 
     public static void onEveryFrame() {
         XboxController controller = Robot.getDriverController();
-        DriveTrain.driveTank(controller.getLeftY(), controller.getRightY());
+
+        boolean squaredInputs = !controller.getRightBumper();
+        double leftPower = squaredInputs
+            ? controller.getLeftY() * Math.abs(controller.getLeftY())
+            : controller.getLeftY();
+        double rightPower = squaredInputs
+            ? controller.getRightY() * Math.abs(controller.getRightY())
+            : controller.getRightY();
+        DriveTrain.driveTank(leftPower, rightPower);
         if (controller.getBButtonPressed()) {
             stopAtFeedingDistance();
         }
