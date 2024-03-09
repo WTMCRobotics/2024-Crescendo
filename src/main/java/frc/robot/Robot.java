@@ -166,6 +166,8 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putData("Auton Routes", autonRouteChooser);
 
+        SmartDashboard.putBoolean("Is AutoShooting?", false);
+
         driveLeftChild.follow(driveLeftParent);
         driveRightChild.follow(driveRightParent);
 
@@ -256,6 +258,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Gyro Reading", gyro.getAngle());
         SmartDashboard.putNumber("left encoder", driveLeftParent.getEncoderPosition());
         SmartDashboard.putNumber("right encoder", driveRightParent.getEncoderPosition());
+        // SmartDashboard.putNumber("Wheel encoder", driveRightParent.getEncoderPosition());
         // SmartDashboard.putNumber("Left motor controller encoder", driveLeftParent.getEncoderPosition());
         // SmartDashboard.putNumber("right motor controller encoder", driveRightParent.getEncoderPosition());
         // Constants.ROTATION_GAINS.P = SmartDashboard.getNumber("rotationGainsP", kDefaultPeriod);
