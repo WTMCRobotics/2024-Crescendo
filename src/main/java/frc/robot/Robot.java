@@ -4,12 +4,10 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
@@ -95,7 +93,7 @@ public class Robot extends TimedRobot {
         return coDriverController;
     }
 
-    static AHRS navX = new AHRS(SPI.Port.kMXP);
+    static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
     SequentialActionRunner auton;
     static ParallelActionRunner teleopActionRunner = new ParallelActionRunner();
 
@@ -105,8 +103,8 @@ public class Robot extends TimedRobot {
 
     private final SendableChooser<ArrayDeque<AutonAction>> autonRouteChooser = new SendableChooser<>();
 
-    public static AHRS getGyroscope() {
-        return navX;
+    public static ADXRS450_Gyro getGyroscope() {
+        return gyro;
     }
 
     /**
@@ -186,8 +184,6 @@ public class Robot extends TimedRobot {
 
         System.out.println("Is drive right parent inverted? " + driveRightParent.getInverted());
 
-        System.out.println("Gyro angle: " + getGyroscope().getAngle() + " or " + navX.getPitch());
-
         driveLeftChild.setBrakeMode(true);
         driveLeftParent.setBrakeMode(true);
         driveRightChild.setBrakeMode(true);
@@ -238,13 +234,11 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putBoolean("Estimated Controller Status", true);
 
-        System.out.println("Is gyroscope connected???????? " + navX.isConnected());
-        System.out.println("gyro calibrating? :" + navX.isCalibrating());
-
-        System.out.println("Again Gyro angle: " + navX.getAngle() + " or " + navX.getPitch());
+        gyro.calibrate();
+        System.out.println("OTHER GYRO: " + gyro.getAngle());
     }
 
-    /**
+    /*
      * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
      * that you want ran during disabled, autonomous, teleoperated and test.
      *
@@ -259,7 +253,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putString("Time Remaining", prettyDecimalMaker.format(Timer.getMatchTime()));
 
         // aprilTagHighlighter.doEveryFrame();
-        SmartDashboard.putNumber("Gyro Reading", getGyroscope().getAngle());
+        SmartDashboard.putNumber("Gyro Reading", gyro.getAngle());
         SmartDashboard.putNumber("left encoder", driveLeftParent.getEncoderPosition());
         SmartDashboard.putNumber("right encoder", driveRightParent.getEncoderPosition());
         // SmartDashboard.putNumber("Left motor controller encoder", driveLeftParent.getEncoderPosition());
@@ -281,9 +275,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        navX.resetDisplacement();
-        navX.reset();
-
         AutonRoutes.setupCorrectAutonPaths();
         ArrayDeque<AutonAction> route = new ArrayDeque<>(autonRouteChooser.getSelected());
         double delayAmount = SmartDashboard.getNumber("Auton Delay (sec)", 0.0);

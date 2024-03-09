@@ -1,6 +1,5 @@
 package frc.robot.auton;
 
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,7 +13,6 @@ public class AutonRotate extends AutonAction {
     private double targetTurnDegrees;
     private ProfiledPIDController rotationPID;
     private TurnDirection turnDirection;
-    private AHRS gyro;
 
     public AutonRotate(double targetTurnDegrees) {
         this.targetTurnDegrees = targetTurnDegrees;
@@ -22,7 +20,7 @@ public class AutonRotate extends AutonAction {
 
     @Override
     public boolean isDone() {
-        double angle = gyro.getAngle() - targetTurnDegrees;
+        double angle = Robot.getGyroscope().getAngle() - targetTurnDegrees;
         double calculatedValue = rotationPID.calculate(angle, targetTurnDegrees);
         SmartDashboard.putNumber("Rotation PID", calculatedValue);
         SmartDashboard.putNumber("Position Error", rotationPID.getPositionError());
@@ -31,7 +29,7 @@ public class AutonRotate extends AutonAction {
         QuickActions.turn(turnDirection, calculatedValue);
 
         if (rotationPID.atGoal()) {
-            double rotation = Math.abs(gyro.getAngle() - targetTurnDegrees);
+            double rotation = Math.abs(Robot.getGyroscope().getAngle() - targetTurnDegrees);
             System.out.println(
                 "THE ROTATION IS DONE BECAUSE " + rotation + " is less than " + Constants.ROTATION_ERROR_DEGREES
             );
@@ -42,7 +40,6 @@ public class AutonRotate extends AutonAction {
 
     @Override
     public void initiate() {
-        this.gyro = Robot.getGyroscope();
         rotationPID =
             new ProfiledPIDController(
                 Constants.ROTATION_GAINS.P,
@@ -59,7 +56,7 @@ public class AutonRotate extends AutonAction {
         }
         System.out.println("We will be turning " + turnDirection);
         SmartDashboard.putNumber("target degree", targetTurnDegrees);
-        gyro.reset();
+        Robot.getGyroscope().reset();
     }
 
     @Override
