@@ -18,8 +18,7 @@ public class RotatePID extends PIDCommand {
             Robot.getGyroscope().getAngle() + relativeTurnDegree,
             // This uses the output
             output -> {
-                QuickActions.turn(-output);
-                System.out.println("error is:" + output);
+                QuickActions.turn(output);
             }
         );
         // Use addRequirements() here to declare subsystem dependencies.

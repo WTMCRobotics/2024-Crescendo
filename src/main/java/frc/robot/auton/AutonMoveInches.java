@@ -44,7 +44,7 @@ public class AutonMoveInches extends AutonAction {
      * @param distance The distance in inches
      */
     public AutonMoveInches(double distance) {
-        this.distance = -distance;
+        this.distance = distance;
     }
 
     @Override

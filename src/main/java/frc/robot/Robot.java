@@ -143,9 +143,12 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData(
             "SWITCH CONTROLLERS",
             new Command() {
+                {
+                    setName("Execute");
+                }
+
                 @Override
                 public void initialize() {
-                    setName("Execute");
                     System.out.println("We have switched thy controllers");
                     int driverPort = driverController.getPort();
                     int coDriverPort = coDriverController.getPort();
@@ -171,8 +174,8 @@ public class Robot extends TimedRobot {
         driveLeftChild.follow(driveLeftParent);
         driveRightChild.follow(driveRightParent);
 
-        driveLeftParent.setInverted(true);
-        driveRightParent.setInverted(false);
+        driveLeftParent.setInverted(false);
+        driveRightParent.setInverted(true);
 
         feederMotor.setInverted(true);
         //This false is required
