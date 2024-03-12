@@ -100,4 +100,6 @@ public class Constants {
 
     /*OTHER CONFIG */
     public static final double MOTOR_BACKTRACK_SPEED_PERCENT = -0.5;
+    public static final double CLIMBER_RIGHT_ARM_MAX_EXTENSION_ROTATIONS = 10;
+    public static final double CLIMBER_LEFT_ARM_MAX_EXTENSION_ROTATIONS = 10;
 }
