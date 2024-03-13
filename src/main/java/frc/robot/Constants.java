@@ -27,6 +27,15 @@ public class Constants {
 
     public static final double SHOOTER_INTAKE_PERCENT = -0.25;
 
+    public static final double MOVEMENT_TIME_AFTER_FLOOR_INTAKE_BEAMBREAK_TRIGGER = 1;
+    //The 2 below is unused for now
+    public static final double FEEDER_MOVEMENT_SPEED_AFTER_FLOOR_INTAKE_BEAMBREAK_TRIGGER = 0.25;
+    public static final double FLYWHEEL_MOVEMENT_SPEED_AFTER_FLOOR_INTAKE_BEAMBREAK_TRIGGER = -0.1;
+
+    public static final double MOVEMENT_TIME_AFTER_SOURCE_INTAKE_BEAMBREAK_TRIGGER = 0.25;
+    public static final double FEEDER_MOVEMENT_SPEED_AFTER_SOURCE_INTAKE_BEAMBREAK_TRIGGER = 0.25;
+    public static final double FLYWHEEL_MOVEMENT_SPEED_AFTER_SOURCE_INTAKE_BEAMBREAK_TRIGGER = -0.1;
+
     /*The amount of seconds that the feeder should wait before turning off after shooting */
     public static final double FEEDER_MOTOR_SHUTOFF_TIME = 2;
 

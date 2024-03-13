@@ -89,7 +89,7 @@ public class AutonRoutes {
     public static final ArrayDeque<AutonAction> SHOOT_BACKUP_INTAKE_FORWARD_SHOOT = new ArrayDeque<AutonAction>(
         List.of(
             new AutonShoot(),
-            new AutonParallelAction(new AutonIntake(), new AutonMoveInches(-84)),
+            new AutonParallelAction(new AutonFloorIntake(), new AutonMoveInches(-84)),
             new AutonMoveInches(84),
             new AutonShoot()
         )
