@@ -266,11 +266,11 @@ public class Robot extends TimedRobot {
 
         // aprilTagHighlighter.doEveryFrame();
         SmartDashboard.putNumber("Gyro Reading", gyro.getAngle());
-        SmartDashboard.putNumber("left encoder", driveLeftParent.getEncoderPosition());
-        SmartDashboard.putNumber("right encoder", driveRightParent.getEncoderPosition());
+        SmartDashboard.putNumber("left Arm encoder", leftClimb.getEncoderPosition());
+        SmartDashboard.putNumber("right Arm encoder", rightClimb.getEncoderPosition());
         // SmartDashboard.putNumber("Wheel encoder", driveRightParent.getEncoderPosition());
-        // SmartDashboard.putNumber("Left motor controller encoder", driveLeftParent.getEncoderPosition());
-        // SmartDashboard.putNumber("right motor controller encoder", driveRightParent.getEncoderPosition());
+        SmartDashboard.putNumber("Left motor controller encoder", driveLeftParent.getEncoderPosition());
+        SmartDashboard.putNumber("right motor controller encoder", driveRightParent.getEncoderPosition());
         // Constants.ROTATION_GAINS.P = SmartDashboard.getNumber("rotationGainsP", kDefaultPeriod);
         // Constants.ROTATION_GAINS.I = SmartDashboard.getNumber("rotationGainsI", kDefaultPeriod);
         // Constants.ROTATION_GAINS.D = SmartDashboard.getNumber("rotationGainsD", kDefaultPeriod);

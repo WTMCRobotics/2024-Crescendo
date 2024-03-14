@@ -60,6 +60,9 @@ public class Constants {
     /**the % of max power we give to the arm motors while retracting */
     public static final double CLIMB_RETRACTION_SPEED = -1.;
 
+    public static final double CLIMBER_RIGHT_ARM_MAX_EXTENSION_ROTATIONS = 80;
+    public static final double CLIMBER_LEFT_ARM_MAX_EXTENSION_ROTATIONS = 80;
+
     /*INTAKE CONFIG */
     public static final double INTAKE_SPEED = 1.00;
 
@@ -109,6 +112,4 @@ public class Constants {
 
     /*OTHER CONFIG */
     public static final double MOTOR_BACKTRACK_SPEED_PERCENT = -0.5;
-    public static final double CLIMBER_RIGHT_ARM_MAX_EXTENSION_ROTATIONS = 10;
-    public static final double CLIMBER_LEFT_ARM_MAX_EXTENSION_ROTATIONS = 10;
 }

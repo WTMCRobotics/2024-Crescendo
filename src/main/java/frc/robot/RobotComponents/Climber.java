@@ -24,7 +24,8 @@ public class Climber {
             Robot.motors.getLeftClimb().stopMotor();
         }
 
-        if (Robot.motors.getRightClimb().getEncoderPosition() < Constants.CLIMBER_RIGHT_ARM_MAX_EXTENSION_ROTATIONS) {
+        //For some reason, this encoder gives negative values, and inverted it didn't do anything
+        if (-Robot.motors.getRightClimb().getEncoderPosition() < Constants.CLIMBER_RIGHT_ARM_MAX_EXTENSION_ROTATIONS) {
             Robot.motors.getRightClimb().set(Constants.CLIMB_EXTENSION_SPEED);
         } else {
             Robot.motors.getRightClimb().stopMotor();
