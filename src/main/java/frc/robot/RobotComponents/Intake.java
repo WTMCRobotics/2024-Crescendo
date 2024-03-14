@@ -1,6 +1,5 @@
 package frc.robot.robotcomponents;
 
-import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.auton.AutonIntake;
 
@@ -13,8 +12,6 @@ public class Intake {
 
     public static void startFloorIntake() {
         // Robot.motors.getIntake().set(Constants.INTAKE_SPEED);
-        Robot.motors.getLeftFlywheel().set(-0.25);
-        Robot.motors.getRightFlywheel().set(-0.25);
     }
 
     /* This will spin the motor backwards in an attempt to eject a stuck note*/

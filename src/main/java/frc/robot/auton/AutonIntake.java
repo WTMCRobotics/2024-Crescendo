@@ -2,7 +2,6 @@ package frc.robot.auton;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants;
-import frc.robot.Robot;
 
 public class AutonIntake extends AutonAction {
 

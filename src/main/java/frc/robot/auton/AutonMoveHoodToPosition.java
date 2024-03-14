@@ -1,7 +1,6 @@
 package frc.robot.auton;
 
 import frc.robot.Constants;
-import frc.robot.Robot;
 
 public class AutonMoveHoodToPosition extends AutonAction {
 

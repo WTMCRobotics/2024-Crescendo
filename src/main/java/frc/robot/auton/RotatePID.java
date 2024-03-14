@@ -15,14 +15,14 @@ public class RotatePID extends PIDCommand {
             // This should return the measurement
             () -> Robot.getGyroscope().getAngle(),
             // This should return the setpoint (can also be a constant)
-            () -> Robot.getGyroscope().getAngle() + relativeTurnDegree,
+            Robot.getGyroscope().getAngle() + relativeTurnDegree,
             // This uses the output
             output -> {
                 QuickActions.turn(output);
             }
         );
         // Use addRequirements() here to declare subsystem dependencies.
-        getController().enableContinuousInput(-180, 180);
+        // getController().enableContinuousInput(-180, 180);
         // Configure additional PID options by calling `getController` here.
         getController()
             .setTolerance(Constants.ROTATION_DEGREE_TOLERANCE, Constants.ROTATION_DEGREE_PER_SECOND_TOLERANCE);

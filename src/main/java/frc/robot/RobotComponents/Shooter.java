@@ -15,6 +15,7 @@ public class Shooter {
     }
 
     public static void stopShooterMotors() {
+        Robot.getTeleopActionRunner().removeActionsOfType(AutonShooterFeed.class, AutonShoot.class);
         Robot.motors.getLeftFlywheel().stopMotor();
         Robot.motors.getRightFlywheel().stopMotor();
         Robot.motors.getFeeder().stopMotor();
@@ -46,5 +47,10 @@ public class Shooter {
     public static void moveHoodToShootingPosition() {
         Robot.getTeleopActionRunner().removeActionsOfType(AutonMoveHoodToPosition.class);
         Robot.getTeleopActionRunner().addActionToRun(new AutonMoveHoodToPosition(HoodPosition.SHOOTING_DEFAULT));
+    }
+
+    public static void startShooterIntake() {
+        Robot.motors.getLeftFlywheel().set(Constants.SHOOTER_INTAKE_PERCENT);
+        Robot.motors.getRightFlywheel().set(Constants.SHOOTER_INTAKE_PERCENT);
     }
 }

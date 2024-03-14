@@ -44,6 +44,16 @@ public class SparkMotorController implements MotorController {
         controller.set(speed);
     }
 
+    @Override
+    public CANSparkMax asCANSparkMax() {
+        return controller;
+    }
+
+    @Override
+    public void burnFlash() {
+        controller.burnFlash();
+    }
+
     // idk
     public SparkPIDController getPID() {
         return pid;

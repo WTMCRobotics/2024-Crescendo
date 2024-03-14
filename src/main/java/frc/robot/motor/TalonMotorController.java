@@ -169,4 +169,10 @@ public class TalonMotorController implements MotorController {
     public void stopMotor() {
         setPercentOutput(0);
     }
+
+    @Override
+    public void burnFlash() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'burnFlash'");
+    }
 }

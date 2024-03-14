@@ -7,7 +7,7 @@ public class Constants {
     public static final int DRIVE_LEFT_CHILD_ID = 8;
     public static final int DRIVE_RIGHT_PARENT_ID = 14;
     public static final int DRIVE_RIGHT_CHILD_ID = 3;
-    public static final int SHOOTER_LEFT_FLYWHEEL_ID = 9;
+    public static final int SHOOTER_LEFT_FLYWHEEL_ID = 11;
     public static final int SHOOTER_RIGHT_FLYWHEEL_ID = 7;
     public static final int SHOOTER_FEEDER_ID = 10;
     public static final int SHOOTER_HOOD_ADJUSTERER_ID = 13;
@@ -21,11 +21,16 @@ public class Constants {
 
     /*SHOOTER CONFIG*/
     /**the amount of time we let the wheels rev up when shooting in seconds */
-    public static final double SHOOTER_FLYWHEEL_STARTUP_TIME = 0.5;
+    public static final double SHOOTER_FLYWHEEL_STARTUP_TIME = 1.5;
     public static final double SHOOTER_LEFT_FLYWHEEL_SPEED = 1.0;
     public static final double SHOOTER_RIGHT_FLYWHEEL_SPEED = 1.0;
+
+    public static final double SHOOTER_INTAKE_PERCENT = -0.25;
+
     /*The amount of seconds that the feeder should wait before turning off after shooting */
-    public static final double FEEDER_MOTOR_SHUTOFF_TIME = 1.5;
+    public static final double FEEDER_MOTOR_SHUTOFF_TIME = 2;
+
+    public static final double FEEDER_MOTOR_SPEED = 1;
 
     //TODO configure speed based on thingys
     /**The motor percentOutput that the shooter hood will move at */
@@ -42,9 +47,9 @@ public class Constants {
     public static final double CLIMB_EXTENDED_ENCODER_POSITION = 5;
     public static final double CLIMB_RETRACTED_ENCODER_POSITION = 0.5;
     /**the % of max power we give to the arm motors while extending */
-    public static final double CLIMB_EXTENSION_SPEED = .5;
+    public static final double CLIMB_EXTENSION_SPEED = .75;
     /**the % of max power we give to the arm motors while retracting */
-    public static final double CLIMB_RETRACTION_SPEED = -.25;
+    public static final double CLIMB_RETRACTION_SPEED = -1.;
 
     /*INTAKE CONFIG */
     public static final double INTAKE_SPEED = 1.00;
