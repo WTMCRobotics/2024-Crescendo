@@ -18,8 +18,18 @@ public class Climber {
     }
 
     public static void manualExtendArms() {
-        Robot.motors.getLeftClimb().set(Constants.CLIMB_EXTENSION_SPEED);
-        Robot.motors.getRightClimb().set(Constants.CLIMB_EXTENSION_SPEED);
+        if (Robot.motors.getLeftClimb().getEncoderPosition() < Constants.CLIMBER_LEFT_ARM_MAX_EXTENSION_ROTATIONS) {
+            Robot.motors.getLeftClimb().set(Constants.CLIMB_EXTENSION_SPEED);
+        } else {
+            Robot.motors.getLeftClimb().stopMotor();
+        }
+
+        //For some reason, this encoder gives negative values, and inverted it didn't do anything
+        if (-Robot.motors.getRightClimb().getEncoderPosition() < Constants.CLIMBER_RIGHT_ARM_MAX_EXTENSION_ROTATIONS) {
+            Robot.motors.getRightClimb().set(Constants.CLIMB_EXTENSION_SPEED);
+        } else {
+            Robot.motors.getRightClimb().stopMotor();
+        }
     }
 
     public static void manualRetractArms() {

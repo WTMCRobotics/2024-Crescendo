@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -99,6 +100,12 @@ public class Robot extends TimedRobot {
 
     public static ParallelActionRunner getTeleopActionRunner() {
         return teleopActionRunner;
+    }
+
+    private static final DigitalInput shooterBeamBreakSensor = new DigitalInput(Constants.INTAKE_BEAM_BREAK_ID);
+
+    public static DigitalInput getShooterBeambreakSensor() {
+        return shooterBeamBreakSensor;
     }
 
     private final SendableChooser<ArrayDeque<AutonAction>> autonRouteChooser = new SendableChooser<>();
@@ -259,11 +266,11 @@ public class Robot extends TimedRobot {
 
         // aprilTagHighlighter.doEveryFrame();
         SmartDashboard.putNumber("Gyro Reading", gyro.getAngle());
-        SmartDashboard.putNumber("left encoder", driveLeftParent.getEncoderPosition());
-        SmartDashboard.putNumber("right encoder", driveRightParent.getEncoderPosition());
+        SmartDashboard.putNumber("left Arm encoder", leftClimb.getEncoderPosition());
+        SmartDashboard.putNumber("right Arm encoder", rightClimb.getEncoderPosition());
         // SmartDashboard.putNumber("Wheel encoder", driveRightParent.getEncoderPosition());
-        // SmartDashboard.putNumber("Left motor controller encoder", driveLeftParent.getEncoderPosition());
-        // SmartDashboard.putNumber("right motor controller encoder", driveRightParent.getEncoderPosition());
+        SmartDashboard.putNumber("Left motor controller encoder", driveLeftParent.getEncoderPosition());
+        SmartDashboard.putNumber("right motor controller encoder", driveRightParent.getEncoderPosition());
         // Constants.ROTATION_GAINS.P = SmartDashboard.getNumber("rotationGainsP", kDefaultPeriod);
         // Constants.ROTATION_GAINS.I = SmartDashboard.getNumber("rotationGainsI", kDefaultPeriod);
         // Constants.ROTATION_GAINS.D = SmartDashboard.getNumber("rotationGainsD", kDefaultPeriod);

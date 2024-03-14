@@ -27,6 +27,15 @@ public class Constants {
 
     public static final double SHOOTER_INTAKE_PERCENT = -0.25;
 
+    public static final double MOVEMENT_TIME_AFTER_FLOOR_INTAKE_BEAMBREAK_TRIGGER = 1;
+    //The 2 below is unused for now
+    public static final double FEEDER_MOVEMENT_SPEED_AFTER_FLOOR_INTAKE_BEAMBREAK_TRIGGER = 0.25;
+    public static final double FLYWHEEL_MOVEMENT_SPEED_AFTER_FLOOR_INTAKE_BEAMBREAK_TRIGGER = -0.1;
+
+    public static final double MOVEMENT_TIME_AFTER_SOURCE_INTAKE_BEAMBREAK_TRIGGER = 0.25;
+    public static final double FEEDER_MOVEMENT_SPEED_AFTER_SOURCE_INTAKE_BEAMBREAK_TRIGGER = 0.25;
+    public static final double FLYWHEEL_MOVEMENT_SPEED_AFTER_SOURCE_INTAKE_BEAMBREAK_TRIGGER = -0.1;
+
     /*The amount of seconds that the feeder should wait before turning off after shooting */
     public static final double FEEDER_MOTOR_SHUTOFF_TIME = 2;
 
@@ -50,6 +59,9 @@ public class Constants {
     public static final double CLIMB_EXTENSION_SPEED = .75;
     /**the % of max power we give to the arm motors while retracting */
     public static final double CLIMB_RETRACTION_SPEED = -1.;
+
+    public static final double CLIMBER_RIGHT_ARM_MAX_EXTENSION_ROTATIONS = 80;
+    public static final double CLIMBER_LEFT_ARM_MAX_EXTENSION_ROTATIONS = 80;
 
     /*INTAKE CONFIG */
     public static final double INTAKE_SPEED = 1.00;

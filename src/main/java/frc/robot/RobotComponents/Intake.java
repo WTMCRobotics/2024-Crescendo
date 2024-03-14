@@ -1,17 +1,22 @@
 package frc.robot.robotcomponents;
 
 import frc.robot.Robot;
-import frc.robot.auton.AutonIntake;
+import frc.robot.auton.AutonFloorIntake;
+import frc.robot.auton.AutonSourceIntake;
 
 public class Intake {
 
     public static void autoIntake() {
-        Robot.getTeleopActionRunner().removeActionsOfType(AutonIntake.class);
+        Robot.getTeleopActionRunner().removeActionsOfType(AutonFloorIntake.class);
         // Robot.getTeleopActionRunner().addActionToRun(new AutonIntake());
     }
 
     public static void startFloorIntake() {
-        // Robot.motors.getIntake().set(Constants.INTAKE_SPEED);
+        Robot.getTeleopActionRunner().addActionToRun(new AutonFloorIntake());
+    }
+
+    public static void startSourceIntake() {
+        Robot.getTeleopActionRunner().addActionToRun(new AutonSourceIntake());
     }
 
     /* This will spin the motor backwards in an attempt to eject a stuck note*/
@@ -19,10 +24,11 @@ public class Intake {
         // Robot.motors.getIntake().set(Constants.MOTOR_BACKTRACK_SPEED_PERCENT);
     }
 
+    public static void stopSourceIntake() {
+        Robot.getTeleopActionRunner().removeActionsOfType(AutonSourceIntake.class);
+    }
+
     public static void stopFloorIntake() {
-        Robot.getTeleopActionRunner().removeActionsOfType(AutonIntake.class);
-        // Robot.motors.getIntake().stopMotor();
-        Robot.motors.getLeftFlywheel().set(0);
-        Robot.motors.getRightFlywheel().set(0);
+        Robot.getTeleopActionRunner().removeActionsOfType(AutonFloorIntake.class);
     }
 }

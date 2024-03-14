@@ -13,6 +13,7 @@ public class InputtedCoDriverControls {
 
     /**Prevents the codriver from accidentally moving the arms down */
     static boolean hasGoneUp = false;
+    static int lastPOV = -1;
 
     public static void onEveryFrame() {
         XboxController controller = Robot.getCoDriverController();
@@ -28,13 +29,11 @@ public class InputtedCoDriverControls {
             Shooter.stopShooterMotors();
         }
 
-        if (controller.getBButton()) {
-            Shooter.startShooterIntake();
-            Intake.startFloorIntake();
+        if (controller.getAButtonPressed()) {
+            Intake.startSourceIntake();
         }
-        if (controller.getBButtonReleased()) {
-            Intake.stopFloorIntake();
-            Shooter.stopShooterMotors();
+        if (controller.getAButtonReleased()) {
+            Intake.stopSourceIntake();
         }
 
         if (controller.getBackButton()) {
@@ -51,12 +50,18 @@ public class InputtedCoDriverControls {
         } else if (controller.getLeftTriggerAxis() >= 0.29 && controller.getLeftTriggerAxis() <= 0.71) {
             Shooter.moveHoodToShootingPosition();
         }
-        if (controller.getAButtonPressed()) {
+        if (controller.getBButtonPressed()) {
+            Intake.startFloorIntake();
+        } else if (controller.getBButtonReleased()) {
+            Intake.stopFloorIntake();
+        }
+        if (controller.getPOV() == 0) {
             Intake.backtrack();
             Shooter.backtrack();
-        } else if (controller.getAButtonReleased()) {
+        } else if (controller.getPOV() == -1 && lastPOV != -1) {
             Intake.stopFloorIntake();
             Shooter.stopShooterMotors();
         }
+        lastPOV = controller.getPOV();
     }
 }
