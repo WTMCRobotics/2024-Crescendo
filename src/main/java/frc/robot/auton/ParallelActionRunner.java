@@ -24,6 +24,12 @@ public class ParallelActionRunner {
         }
     }
 
+    /**@param clazz The type of class to check
+     * @return Whether the action queue contains a class of the given type */
+    public boolean containsAction(Class<?> clazz) {
+        return actions.stream().anyMatch(action -> action.getClass().equals(clazz));
+    }
+
     /**This method is important if you have code that could add two of the same action with opposite goals.
      *That would mean they would fight each other and never finish, which is bad news bears if you ask me.
      * @param clazzez A singular class or a array of classes*/
