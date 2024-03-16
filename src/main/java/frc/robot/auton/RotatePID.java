@@ -8,6 +8,8 @@ import frc.robot.Robot;
 
 public class RotatePID extends PIDCommand {
 
+    double targetDegree;
+
     public RotatePID(double relativeTurnDegree) {
         super(
             // The controller that the command will use
@@ -21,16 +23,29 @@ public class RotatePID extends PIDCommand {
                 QuickActions.turn(output);
             }
         );
+        targetDegree = Robot.getGyroscope().getAngle() + relativeTurnDegree;
         // Use addRequirements() here to declare subsystem dependencies.
         // getController().enableContinuousInput(-180, 180);
         // Configure additional PID options by calling `getController` here.
         getController()
             .setTolerance(Constants.ROTATION_DEGREE_TOLERANCE, Constants.ROTATION_DEGREE_PER_SECOND_TOLERANCE);
+
+        System.out.println("Current degree: " + Robot.getGyroscope().getAngle() + " target: " + targetDegree);
     }
+
+    int doneDebounceTime = 0;
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return getController().atSetpoint();
+        System.out.println(
+            "current: " + Robot.getGyroscope().getAngle() + " target:" + targetDegree + " debounce: " + doneDebounceTime
+        );
+        if (Math.abs(Robot.getGyroscope().getAngle() - targetDegree) < Constants.ROTATION_DEGREE_TOLERANCE) {
+            doneDebounceTime++;
+        } else {
+            doneDebounceTime = 0;
+        }
+        return doneDebounceTime > 25;
     }
 }

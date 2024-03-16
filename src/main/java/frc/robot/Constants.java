@@ -87,7 +87,7 @@ public class Constants {
     public static final double APRIL_TAG_ROTATION_ZONE = 5;
 
     /*PID GAINS *///0.00001, 100
-    public static final Gains ROTATION_GAINS = new Gains(0.011, 0.0001, 0.000935, 0, 0, 0.3);
+    public static final Gains ROTATION_GAINS = new Gains(0.015, 0.0001, 0.000935, 0, 0, 0.3);
     public static final double ROTATION_DEGREE_TOLERANCE = 3;
     public static final double ROTATION_DEGREE_PER_SECOND_TOLERANCE = 30;
     public static final Gains NORMAL_ROBOT_GAINS = new Gains(0.0005, 0.0, 0, 0, 0, 1.);

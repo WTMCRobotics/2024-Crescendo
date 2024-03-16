@@ -18,7 +18,7 @@ public class AutonMoveInches extends AutonAction {
             isDoneDebounceTime = 0;
         }
 
-        if (isDoneDebounceTime > 1.5) {
+        if (isDoneDebounceTime > 0.5) {
             System.out.println("We moved the correct amount of inches!");
             return true;
         }

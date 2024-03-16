@@ -17,16 +17,21 @@ public class AutonRoutes {
 
     public static final ArrayDeque<AutonAction> JUST_SHOOT = new ArrayDeque<AutonAction>(List.of(new AutonShoot()));
 
-    public static ArrayDeque<AutonAction> SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE;
+    public static ArrayDeque<AutonAction> SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE = new ArrayDeque<>();
 
-    public static ArrayDeque<AutonAction> SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE;
+    public static ArrayDeque<AutonAction> SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE = new ArrayDeque<>();
 
     public static final ArrayDeque<AutonAction> SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE_RED = new ArrayDeque<
         AutonAction
     >(List.of(new AutonShoot(), new AutonMoveInches(-84)));
 
     public static final ArrayDeque<AutonAction> SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE_RED = new ArrayDeque<AutonAction>(
-        List.of(new AutonShoot(), new AutonMoveInches(-40), new AutonRotate(-45), new AutonMoveInches(-65))
+        List.of(
+            new AutonShoot(),
+            new AutonMoveInches(-40),
+            new AutonRotateWithPIDCommand(-45),
+            new AutonMoveInches(-65)
+        )
     );
 
     public static final ArrayDeque<AutonAction> SHOOT_ROTATE_BACK_UP_FROM_TERMINAL_SIDE_BLUE = new ArrayDeque<
@@ -45,7 +50,7 @@ public class AutonRoutes {
         List.of(new AutonShoot(), new AutonMoveInches(-84))
     );
 
-    public static ArrayDeque<AutonAction> BACKUP_TURN_BACKUP;
+    public static ArrayDeque<AutonAction> BACKUP_TURN_BACKUP = new ArrayDeque<>();
 
     private static final ArrayDeque<AutonAction> BLUE_BACKUP_TURN_BACKUP = new ArrayDeque<AutonAction>(
         List.of(new AutonMoveInches(-24), new AutonRotate(-135), new AutonMoveInches(36))
@@ -55,9 +60,9 @@ public class AutonRoutes {
         List.of(new AutonMoveInches(-24), new AutonRotate(135), new AutonMoveInches(36))
     );
 
-    public static ArrayDeque<AutonAction> MESS_UP_CENTER_RINGS_FROM_AMP_SIDE;
+    public static ArrayDeque<AutonAction> MESS_UP_CENTER_RINGS_FROM_AMP_SIDE = new ArrayDeque<>();
 
-    public static ArrayDeque<AutonAction> MESS_UP_CENTER_RINGS_FROM_TERMINAL_SIDE;
+    public static ArrayDeque<AutonAction> MESS_UP_CENTER_RINGS_FROM_TERMINAL_SIDE = new ArrayDeque<>();
 
     private static final ArrayDeque<AutonAction> MESS_UP_CENTER_RINGS_TURN_LEFT = new ArrayDeque<AutonAction>(
         List.of(new AutonMoveInches(312), new AutonRotate(-90), new AutonMoveInches(252))
@@ -70,18 +75,18 @@ public class AutonRoutes {
     /**Paths will slightly differ based on what team we're on, so these will correct them. */
     public static void setupCorrectAutonPaths() {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
-            BACKUP_TURN_BACKUP = RED_BACKUP_TURN_BACKUP;
-            MESS_UP_CENTER_RINGS_FROM_AMP_SIDE = MESS_UP_CENTER_RINGS_TURN_LEFT;
-            MESS_UP_CENTER_RINGS_FROM_TERMINAL_SIDE = MESS_UP_CENTER_RINGS_TURN_RIGHT;
-            SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE = SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE_RED;
-            SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE = SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE_RED;
+            BACKUP_TURN_BACKUP.addAll(RED_BACKUP_TURN_BACKUP);
+            MESS_UP_CENTER_RINGS_FROM_AMP_SIDE.addAll(MESS_UP_CENTER_RINGS_TURN_LEFT);
+            MESS_UP_CENTER_RINGS_FROM_TERMINAL_SIDE.addAll(MESS_UP_CENTER_RINGS_TURN_RIGHT);
+            SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE.addAll(SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE_RED);
+            SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE.addAll(SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE_RED);
             System.out.println("Configuring auton routes for RED team");
         } else {
             BACKUP_TURN_BACKUP = BLUE_BACKUP_TURN_BACKUP;
-            MESS_UP_CENTER_RINGS_FROM_AMP_SIDE = MESS_UP_CENTER_RINGS_TURN_RIGHT;
-            MESS_UP_CENTER_RINGS_FROM_TERMINAL_SIDE = MESS_UP_CENTER_RINGS_TURN_LEFT;
-            SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE = SHOOT_ROTATE_BACK_UP_FROM_TERMINAL_SIDE_BLUE;
-            SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE = SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE_BLUE;
+            MESS_UP_CENTER_RINGS_FROM_AMP_SIDE.addAll(MESS_UP_CENTER_RINGS_TURN_RIGHT);
+            MESS_UP_CENTER_RINGS_FROM_TERMINAL_SIDE.addAll(MESS_UP_CENTER_RINGS_TURN_LEFT);
+            SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE.addAll(SHOOT_ROTATE_BACK_UP_FROM_TERMINAL_SIDE_BLUE);
+            SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE.addAll(SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE_BLUE);
             System.out.println("Configuring auton routes for BLUE team");
         }
     }

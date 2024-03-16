@@ -126,36 +126,7 @@ public class Robot extends TimedRobot {
 
         // aprilTagHighlighter = new AprilTagHighlighter();
         autonRouteChooser.setDefaultOption("move forward", AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
-        autonRouteChooser.addOption("move forward", AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
-        autonRouteChooser.addOption("move backwards", AutonRoutes.GO_BACKWARD_OUT_OF_STARTING_ZONE);
-        autonRouteChooser.addOption("just shoot", AutonRoutes.JUST_SHOOT);
-
-        autonRouteChooser.addOption("shoot and back up", AutonRoutes.SHOOT_AND_BACK_UP_FROM_CENTER);
-        autonRouteChooser.addOption("shoot and back up forever", AutonRoutes.SHOOT_AND_BACK_UP_SKETCHILY);
-
-        autonRouteChooser.addOption(
-            "shoot backup rotate backup from amp side",
-            AutonRoutes.SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE
-        );
-        autonRouteChooser.addOption(
-            "shoot backup rotate backup from source side",
-            AutonRoutes.SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE
-        );
-
-        autonRouteChooser.addOption("backup turn backup", AutonRoutes.BACKUP_TURN_BACKUP);
-        autonRouteChooser.addOption("explode hidden bomb", AutonRoutes.BOOM);
-        autonRouteChooser.addOption("shoot backup intake forward shoot", AutonRoutes.SHOOT_BACKUP_INTAKE_FORWARD_SHOOT);
-
-        autonRouteChooser.addOption("Test old rotation PID", AutonRoutes.TEST_ROTATION);
-        autonRouteChooser.addOption("Test new rotation PID", AutonRoutes.TEST_ROTATION_WITH_PID_COMMAND);
-        autonRouteChooser.addOption("Test SmartMotion movement", AutonRoutes.TEST_SMART_MOTION_MOVEMENT);
-        autonRouteChooser.addOption(
-            "Test SmartMotion backward movement",
-            AutonRoutes.TEST_SMART_MOTION_BACKWARD_MOVEMENT
-        );
-        autonRouteChooser.addOption("Test Manual PID movement", AutonRoutes.TEST_PID_MOVEMENT);
-        autonRouteChooser.addOption("Test Manual Backward PID movement", AutonRoutes.TEST_PID_BACKWARD_MOVEMENT);
-
+        setupAutonRoutes();
         //This is an emergency button for switching controllers mid match
         SmartDashboard.putData(
             "SWITCH CONTROLLERS",
@@ -258,6 +229,38 @@ public class Robot extends TimedRobot {
 
         gyro.calibrate();
         System.out.println("OTHER GYRO: " + gyro.getAngle());
+    }
+
+    public void setupAutonRoutes() {
+        autonRouteChooser.addOption("move forward", AutonRoutes.GO_FORWARD_OUT_OF_STARTING_ZONE);
+        autonRouteChooser.addOption("move backwards", AutonRoutes.GO_BACKWARD_OUT_OF_STARTING_ZONE);
+        autonRouteChooser.addOption("just shoot", AutonRoutes.JUST_SHOOT);
+
+        autonRouteChooser.addOption("shoot and back up", AutonRoutes.SHOOT_AND_BACK_UP_FROM_CENTER);
+        autonRouteChooser.addOption("shoot and back up forever", AutonRoutes.SHOOT_AND_BACK_UP_SKETCHILY);
+
+        autonRouteChooser.addOption(
+            "shoot backup rotate backup from amp side",
+            AutonRoutes.SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE
+        );
+        autonRouteChooser.addOption(
+            "shoot backup rotate backup from source side",
+            AutonRoutes.SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE
+        );
+
+        autonRouteChooser.addOption("backup turn backup", AutonRoutes.BACKUP_TURN_BACKUP);
+        autonRouteChooser.addOption("explode hidden bomb", AutonRoutes.BOOM);
+        autonRouteChooser.addOption("shoot backup intake forward shoot", AutonRoutes.SHOOT_BACKUP_INTAKE_FORWARD_SHOOT);
+
+        autonRouteChooser.addOption("Test old rotation PID", AutonRoutes.TEST_ROTATION);
+        autonRouteChooser.addOption("Test new rotation PID", AutonRoutes.TEST_ROTATION_WITH_PID_COMMAND);
+        autonRouteChooser.addOption("Test SmartMotion movement", AutonRoutes.TEST_SMART_MOTION_MOVEMENT);
+        autonRouteChooser.addOption(
+            "Test SmartMotion backward movement",
+            AutonRoutes.TEST_SMART_MOTION_BACKWARD_MOVEMENT
+        );
+        autonRouteChooser.addOption("Test Manual PID movement", AutonRoutes.TEST_PID_MOVEMENT);
+        autonRouteChooser.addOption("Test Manual Backward PID movement", AutonRoutes.TEST_PID_BACKWARD_MOVEMENT);
     }
 
     /*
