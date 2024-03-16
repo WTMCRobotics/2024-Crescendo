@@ -9,6 +9,26 @@ import frc.robot.auton.AutonShooterFeed;
 
 public class Shooter {
 
+    private static HoodPosition currentHoodPosition;
+
+    public static void setCurrentHoodPosition(HoodPosition currentHoodPosition) {
+        Shooter.currentHoodPosition = currentHoodPosition;
+    }
+
+    public static HoodPosition getCurrentHoodPosition() {
+        return currentHoodPosition;
+    }
+
+    private static boolean currentlyPosititionRing = false;
+
+    public static void setCurrentlyPositioningRing(boolean isCurrentlyPosititionRing) {
+        Shooter.currentlyPosititionRing = isCurrentlyPosititionRing;
+    }
+
+    public static boolean isCurrentlyPosititionRing() {
+        return currentlyPosititionRing;
+    }
+
     public static void startShooterMotors() {
         Robot.motors.getLeftFlywheel().set(Constants.SHOOTER_LEFT_FLYWHEEL_SPEED);
         Robot.motors.getRightFlywheel().set(Constants.SHOOTER_RIGHT_FLYWHEEL_SPEED);
@@ -47,10 +67,5 @@ public class Shooter {
     public static void moveHoodToShootingPosition() {
         Robot.getTeleopActionRunner().removeActionsOfType(AutonMoveHoodToPosition.class);
         Robot.getTeleopActionRunner().addActionToRun(new AutonMoveHoodToPosition(HoodPosition.SHOOTING_DEFAULT));
-    }
-
-    public static void startShooterIntake() {
-        Robot.motors.getLeftFlywheel().set(Constants.SHOOTER_INTAKE_PERCENT);
-        Robot.motors.getRightFlywheel().set(Constants.SHOOTER_INTAKE_PERCENT);
     }
 }
