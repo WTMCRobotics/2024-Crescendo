@@ -18,7 +18,10 @@ public class Climber {
     }
 
     public static void manualExtendArms() {
-        if (Robot.motors.getLeftClimb().getEncoderPosition() < Constants.CLIMBER_LEFT_ARM_MAX_EXTENSION_ROTATIONS) {
+        if (
+            Robot.motors.getLeftClimb().getEncoderPosition() < Constants.CLIMBER_LEFT_ARM_MAX_EXTENSION_ROTATIONS ||
+            Robot.getDriverController().getAButton()
+        ) {
             Robot.motors.getLeftClimb().set(Constants.CLIMB_EXTENSION_SPEED);
         } else {
             Robot.motors.getLeftClimb().stopMotor();

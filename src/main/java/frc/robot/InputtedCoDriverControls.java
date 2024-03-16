@@ -47,13 +47,15 @@ public class InputtedCoDriverControls {
             Climber.stopClimbMotors();
         }
 
-        if (Double.compare(controller.getLeftTriggerAxis(), 0.90) == 0) {
-            Shooter.moveHoodToIntakePosition();
-        } else if (controller.getLeftTriggerAxis() >= 0.29 && controller.getLeftTriggerAxis() <= 0.71) {
-            Shooter.moveHoodToShootingPosition();
-        } else if (Double.compare(controller.getLeftTriggerAxis(), 0.10) == 0) {
-            // TODO add 3rd position if needed
-        }
+        // if (Double.compare(controller.getPOV(), 0.90) == 0) {
+        //     Shooter.moveHoodToIntakePosition();
+        // } else if (controller.getPOV() >= 0.29 && controller.getPOV() <= 0.71) {
+        //     // Shooter.moveHoodToShootingPosition();
+        //     Shooter.stopHoodMotors();
+        // } else if (Double.compare(controller.getPOV(), 0.10) == 0) {
+        //     Shooter.moveHoodToIntakePosition();
+        //     // TODO add 3rd position if needed
+        // }
         if (controller.getBButton()) {
             Intake.startFloorIntake();
             // TODO add this: && !Shooter.isPositioningRing() when mechanics adds a breambreak sensor (never)

@@ -18,7 +18,7 @@ public class InputtedDriverControls {
         double rightPower = squaredInputs
             ? controller.getRightY() * Math.abs(controller.getRightY())
             : controller.getRightY();
-        DriveTrain.driveTank(leftPower, rightPower);
+        DriveTrain.driveTank(-leftPower, -rightPower);
         if (controller.getBButtonPressed()) {
             stopAtFeedingDistance();
         }

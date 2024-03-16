@@ -11,7 +11,7 @@ public class MovePercentOutput extends AutonAction {
 
     @Override
     public void initiate() {
-        QuickActions.setDriveMotors(0.25);
+        QuickActions.setDriveMotors(-0.25);
     }
 
     @Override

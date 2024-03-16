@@ -14,13 +14,13 @@ public class Intake {
     }
 
     public static void startFloorIntake() {
-        if (Shooter.getCurrentHoodPosition() != HoodPosition.INTAKING) {
-            if (!Robot.getTeleopActionRunner().containsAction(AutonMoveHoodToPosition.class)) {
-                Robot.getTeleopActionRunner().addActionToRun(new AutonMoveHoodToPosition(HoodPosition.INTAKING));
-            }
-            stopFloorIntake();
-            return;
-        }
+        // if (Shooter.getCurrentHoodPosition() != HoodPosition.INTAKING) {
+        //     if (!Robot.getTeleopActionRunner().containsAction(AutonMoveHoodToPosition.class)) {
+        //         Robot.getTeleopActionRunner().addActionToRun(new AutonMoveHoodToPosition(HoodPosition.INTAKING));
+        //     }
+        //     stopFloorIntake();
+        //     return;
+        // }
         // if (!Robot.getTeleopActionRunner().containsAction(AutonFloorIntake.class)) {
         //     Robot.getTeleopActionRunner().addActionToRun(new AutonFloorIntake());
         // }

@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
         Constants.RIGHT_CLIMB_ID,
         MotorController.Type.SparkMaxBrushed
     );
-    // MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMaxBrushed);
+    MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMaxBrushed);
     MotorController hoodAdjuster = MotorControllerFactory.create(
         Constants.SHOOTER_HOOD_ADJUSTERER_ID,
         MotorController.Type.SparkMaxBrushed
@@ -235,9 +235,9 @@ public class Robot extends TimedRobot {
                 .leftFlywheel(leftFlywheel)
                 .rightFlywheel(rightFlywheel)
                 .leftClimb(leftClimb)
-                .rightClimb(rightClimb);
-        // .intake(intake)
-        // .hoodAdjuster(hoodAdjuster);
+                .rightClimb(rightClimb)
+                .intake(intake)
+                .hoodAdjuster(hoodAdjuster);
         // getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
         SmartDashboard.putNumber("rotationGainsP", Constants.ROTATION_GAINS.P);
@@ -403,7 +403,7 @@ public class Robot extends TimedRobot {
         /* Factory default hardware to prevent unexpected behavior */
         motorController.reset();
 
-        motorController.asCANSparkMax().setSmartCurrentLimit(55);
+        motorController.asCANSparkMax().setSmartCurrentLimit(40);
 
         /* Configure Sensor Source for Primary PID */
         motorController.setSensorSource();

@@ -32,9 +32,9 @@ public class AutonMoveHoodToPosition extends AutonAction {
 
         int multiplier = 1;
         if (Robot.motors.getHoodAdjuster().getEncoderPosition() > targetPosition.getTargetRotations()) {
-            multiplier = -1;
-        } else {
             multiplier = 1;
+        } else {
+            multiplier = -1;
         }
         Robot.motors.getHoodAdjuster().set(Constants.SHOOTER_HOOD_ADJUSTMENT_SPEED * multiplier);
     }

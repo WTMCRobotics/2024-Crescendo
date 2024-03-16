@@ -60,12 +60,18 @@ public class Shooter {
     }
 
     public static void moveHoodToIntakePosition() {
-        Robot.getTeleopActionRunner().removeActionsOfType(AutonMoveHoodToPosition.class);
-        Robot.getTeleopActionRunner().addActionToRun(new AutonMoveHoodToPosition(HoodPosition.INTAKING));
+        Robot.motors.getHoodAdjuster().set(Constants.SHOOTER_HOOD_ADJUSTMENT_SPEED);
+        // Robot.getTeleopActionRunner().removeActionsOfType(AutonMoveHoodToPosition.class);
+        // Robot.getTeleopActionRunner().addActionToRun(new AutonMoveHoodToPosition(HoodPosition.INTAKING));
     }
 
     public static void moveHoodToShootingPosition() {
-        Robot.getTeleopActionRunner().removeActionsOfType(AutonMoveHoodToPosition.class);
-        Robot.getTeleopActionRunner().addActionToRun(new AutonMoveHoodToPosition(HoodPosition.SHOOTING_DEFAULT));
+        Robot.motors.getHoodAdjuster().set(-Constants.SHOOTER_HOOD_ADJUSTMENT_SPEED);
+        // Robot.getTeleopActionRunner().removeActionsOfType(AutonMoveHoodToPosition.class);
+        // Robot.getTeleopActionRunner().addActionToRun(new AutonMoveHoodToPosition(HoodPosition.SHOOTING_DEFAULT));
+    }
+
+    public static void stopHoodMotors() {
+        Robot.motors.getHoodAdjuster().stopMotor();
     }
 }

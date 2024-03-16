@@ -43,20 +43,21 @@ public class Constants {
 
     //TODO configure speed based on thingys
     /**The motor percentOutput that the shooter hood will move at */
-    public static final double SHOOTER_HOOD_ADJUSTMENT_SPEED = 0.6;
+    public static final double SHOOTER_HOOD_ADJUSTMENT_SPEED = 1.0;
     /**The amount of rotations of accuracy that the the hood needs to be to be considered in place */
     public static final double SHOOTER_HOOD_ADJUSTMENT_ERROR_ROTATIONS = 0.5;
 
     public static final double SHOOTING_VELOCITY_RPM = 4000;
     //TODO configure these correctl
-    public static final double HOOD_INTAKE_POSITION_ROTATIONS = 3.14159265358;
-    public static final double HOOD_SHOOTING_POSITION_ROTATIONS = 2.7;
+    public static final double HOOD_INTAKE_POSITION_ROTATIONS = -77;
+    //Good hood shooting angle degrees = 64
+    public static final double HOOD_SHOOTING_POSITION_ROTATIONS = 0;
 
     /*CLIMB CONFIG */
     public static final double CLIMB_EXTENDED_ENCODER_POSITION = 5;
     public static final double CLIMB_RETRACTED_ENCODER_POSITION = 0.5;
     /**the % of max power we give to the arm motors while extending */
-    public static final double CLIMB_EXTENSION_SPEED = .75;
+    public static final double CLIMB_EXTENSION_SPEED = .45;
     /**the % of max power we give to the arm motors while retracting */
     public static final double CLIMB_RETRACTION_SPEED = -1.;
 
@@ -64,8 +65,8 @@ public class Constants {
     public static final double CLIMBER_LEFT_ARM_MAX_EXTENSION_ROTATIONS = 80;
 
     /*INTAKE CONFIG */
-    public static final double FLOOR_INTAKE_SPEED = 0.50;
-    public static final double SOURCE_INTAKE_SPEED = -0.25;
+    public static final double FLOOR_INTAKE_SPEED = 1.00;
+    public static final double SOURCE_INTAKE_SPEED = -0.50;
 
     public static final int INTAKE_BEAM_BREAK_ID = 0;
 
