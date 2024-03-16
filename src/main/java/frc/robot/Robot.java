@@ -77,11 +77,10 @@ public class Robot extends TimedRobot {
         MotorController.Type.SparkMaxBrushed
     );
     // MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMaxBrushed);
-    MotorController hoodAdjuster = null;
-    // = MotorControllerFactory.create(
-    //     Constants.SHOOTER_HOOD_ADJUSTERER_ID,
-    //     MotorController.Type.SparkMaxBrushed
-    // );
+    MotorController hoodAdjuster = MotorControllerFactory.create(
+        Constants.SHOOTER_HOOD_ADJUSTERER_ID,
+        MotorController.Type.SparkMaxBrushed
+    );
 
     static XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     static XboxController coDriverController = new XboxController(Constants.CODRIVER_CONTROLLER_ID);
@@ -104,8 +103,10 @@ public class Robot extends TimedRobot {
 
     private static final DigitalInput shooterBeamBreakSensor = new DigitalInput(Constants.INTAKE_BEAM_BREAK_ID);
 
-    public static DigitalInput getShooterBeambreakSensor() {
-        return shooterBeamBreakSensor;
+    static int beambreakConfidenceFrames = 0;
+
+    public static boolean getBeambreakSensorConfidentlyTriggered() {
+        return beambreakConfidenceFrames > Constants.REQUIRED_BEAM_BREAK_CONFIDENCE_FRAMES;
     }
 
     private final SendableChooser<ArrayDeque<AutonAction>> autonRouteChooser = new SendableChooser<>();
@@ -131,6 +132,15 @@ public class Robot extends TimedRobot {
 
         autonRouteChooser.addOption("shoot and back up", AutonRoutes.SHOOT_AND_BACK_UP_FROM_CENTER);
         autonRouteChooser.addOption("shoot and back up forever", AutonRoutes.SHOOT_AND_BACK_UP_SKETCHILY);
+
+        autonRouteChooser.addOption(
+            "shoot backup rotate backup from amp side",
+            AutonRoutes.SHOOT_BACK_UP_ROTATE_FROM_AMP_SIDE
+        );
+        autonRouteChooser.addOption(
+            "shoot backup rotate backup from source side",
+            AutonRoutes.SHOOT_BACK_UP_ROTATE_FROM_TERMINAL_SIDE
+        );
 
         autonRouteChooser.addOption("backup turn backup", AutonRoutes.BACKUP_TURN_BACKUP);
         autonRouteChooser.addOption("explode hidden bomb", AutonRoutes.BOOM);
@@ -271,6 +281,18 @@ public class Robot extends TimedRobot {
         // SmartDashboard.putNumber("Wheel encoder", driveRightParent.getEncoderPosition());
         SmartDashboard.putNumber("Left motor controller encoder", driveLeftParent.getEncoderPosition());
         SmartDashboard.putNumber("right motor controller encoder", driveRightParent.getEncoderPosition());
+
+        SmartDashboard.putNumber("Hood controller encoder", hoodAdjuster.getEncoderPosition());
+
+        if (shooterBeamBreakSensor.get()) {
+            if (beambreakConfidenceFrames < Constants.REQUIRED_BEAM_BREAK_CONFIDENCE_FRAMES + 10) {
+                beambreakConfidenceFrames++;
+            }
+        } else {
+            if (beambreakConfidenceFrames != 0) {
+                beambreakConfidenceFrames -= 2;
+            }
+        }
         // Constants.ROTATION_GAINS.P = SmartDashboard.getNumber("rotationGainsP", kDefaultPeriod);
         // Constants.ROTATION_GAINS.I = SmartDashboard.getNumber("rotationGainsI", kDefaultPeriod);
         // Constants.ROTATION_GAINS.D = SmartDashboard.getNumber("rotationGainsD", kDefaultPeriod);
@@ -356,35 +378,7 @@ public class Robot extends TimedRobot {
 
     /** This function is called once when test mode is enabled. */
     @Override
-    public void testInit() {
-        Thread testThread = new Thread(() -> {
-            try {
-                driveLeftParent.set(-0.5);
-                System.out.println("Left is spinning backwards");
-                SmartDashboard.putString("Test Status", "Left is spinning backwards");
-
-                // wait for 5 seconds
-                Thread.sleep(5000);
-                driveLeftParent.set(0.0);
-
-                Robot.motors.getDriveRightParent().set(-0.5);
-                System.out.println("Left is no longer spinning and Right is spinning backwards");
-                SmartDashboard.putString("Test Status", "Left is no longer spinning and Right is spinning backwards");
-
-                // wait for 5 seconds pt 2 electric boogaloo
-                Thread.sleep(5000);
-                Robot.motors.getDriveRightParent().set(0.0);
-
-                System.out.println("Right is no longer spinning");
-                SmartDashboard.putString("Test Status", "Right is no longer spinning");
-            } catch (InterruptedException e) {
-                // If an error occurs, this code will be ran:
-                e.printStackTrace();
-            }
-        });
-
-        testThread.start();
-    }
+    public void testInit() {}
 
     /** This function is called periodically during test mode. */
     @Override
