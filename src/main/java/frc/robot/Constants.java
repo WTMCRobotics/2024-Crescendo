@@ -10,7 +10,7 @@ public class Constants {
     public static final int SHOOTER_LEFT_FLYWHEEL_ID = 11;
     public static final int SHOOTER_RIGHT_FLYWHEEL_ID = 7;
     public static final int SHOOTER_FEEDER_ID = 10;
-    public static final int SHOOTER_HOOD_ADJUSTERER_ID = 13;
+    public static final int SHOOTER_HOOD_ADJUSTERER_ID = 9;
 
     public static final int INTAKE_ID = 12;
 
@@ -24,8 +24,6 @@ public class Constants {
     public static final double SHOOTER_FLYWHEEL_STARTUP_TIME = 1.5;
     public static final double SHOOTER_LEFT_FLYWHEEL_SPEED = 1.0;
     public static final double SHOOTER_RIGHT_FLYWHEEL_SPEED = 1.0;
-
-    public static final double SHOOTER_INTAKE_PERCENT = -0.25;
 
     public static final double MOVEMENT_TIME_AFTER_FLOOR_INTAKE_BEAMBREAK_TRIGGER = 1;
     //The 2 below is unused for now
@@ -41,6 +39,8 @@ public class Constants {
 
     public static final double FEEDER_MOTOR_SPEED = 1;
 
+    public static final int REQUIRED_BEAM_BREAK_CONFIDENCE_FRAMES = 12;
+
     //TODO configure speed based on thingys
     /**The motor percentOutput that the shooter hood will move at */
     public static final double SHOOTER_HOOD_ADJUSTMENT_SPEED = 0.6;
@@ -48,8 +48,8 @@ public class Constants {
     public static final double SHOOTER_HOOD_ADJUSTMENT_ERROR_ROTATIONS = 0.5;
 
     public static final double SHOOTING_VELOCITY_RPM = 4000;
-    //TODO configure these correctly
-    public static final double HOOD_INTAKE_POSITION_ROTATIONS = 3.1415926;
+    //TODO configure these correctl
+    public static final double HOOD_INTAKE_POSITION_ROTATIONS = 3.14159265358;
     public static final double HOOD_SHOOTING_POSITION_ROTATIONS = 2.7;
 
     /*CLIMB CONFIG */
@@ -64,9 +64,10 @@ public class Constants {
     public static final double CLIMBER_LEFT_ARM_MAX_EXTENSION_ROTATIONS = 80;
 
     /*INTAKE CONFIG */
-    public static final double INTAKE_SPEED = 1.00;
+    public static final double FLOOR_INTAKE_SPEED = 0.50;
+    public static final double SOURCE_INTAKE_SPEED = -0.25;
 
-    public static final int INTAKE_BEAM_BREAK_ID = 9;
+    public static final int INTAKE_BEAM_BREAK_ID = 0;
 
     /*DRIVE TRAIN CONFIG */
     public static final double CONTROLLER_DEADZONE = 0.06;

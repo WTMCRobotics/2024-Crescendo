@@ -21,5 +21,15 @@ public class RobotTestControls {
         ) {
             Robot.motors.getRightClimb().stopMotor();
         }
+        if (Robot.getCoDriverController().getStartButtonPressed()) {
+            Robot.motors.getHoodAdjuster().set(Constants.SHOOTER_HOOD_ADJUSTMENT_SPEED);
+        } else if (Robot.getCoDriverController().getBackButtonPressed()) {
+            Robot.motors.getHoodAdjuster().set(-Constants.SHOOTER_HOOD_ADJUSTMENT_SPEED);
+        } else if (
+            Robot.getCoDriverController().getStartButtonReleased() ||
+            Robot.getCoDriverController().getBackButtonReleased()
+        ) {
+            Robot.motors.getHoodAdjuster().stopMotor();
+        }
     }
 }

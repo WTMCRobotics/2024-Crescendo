@@ -1,8 +1,10 @@
 package frc.robot.robotcomponents;
 
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.auton.AutonFloorIntake;
-import frc.robot.auton.AutonSourceIntake;
+import frc.robot.auton.AutonMoveHoodToPosition;
+import frc.robot.auton.AutonMoveHoodToPosition.HoodPosition;
 
 public class Intake {
 
@@ -12,23 +14,40 @@ public class Intake {
     }
 
     public static void startFloorIntake() {
-        Robot.getTeleopActionRunner().addActionToRun(new AutonFloorIntake());
+        if (Shooter.getCurrentHoodPosition() != HoodPosition.INTAKING) {
+            if (!Robot.getTeleopActionRunner().containsAction(AutonMoveHoodToPosition.class)) {
+                Robot.getTeleopActionRunner().addActionToRun(new AutonMoveHoodToPosition(HoodPosition.INTAKING));
+            }
+            stopFloorIntake();
+            return;
+        }
+        // if (!Robot.getTeleopActionRunner().containsAction(AutonFloorIntake.class)) {
+        //     Robot.getTeleopActionRunner().addActionToRun(new AutonFloorIntake());
+        // }
+        Robot.motors.getIntake().set(Constants.FLOOR_INTAKE_SPEED);
+        Robot.motors.getFeeder().set(Constants.FLOOR_INTAKE_SPEED);
     }
 
     public static void startSourceIntake() {
-        Robot.getTeleopActionRunner().addActionToRun(new AutonSourceIntake());
+        // Robot.getTeleopActionRunner().addActionToRun(new AutonSourceIntake());
+        Robot.motors.getLeftFlywheel().set(Constants.SOURCE_INTAKE_SPEED);
+        Robot.motors.getRightFlywheel().set(Constants.SOURCE_INTAKE_SPEED);
     }
 
     /* This will spin the motor backwards in an attempt to eject a stuck note*/
     public static void backtrack() {
-        // Robot.motors.getIntake().set(Constants.MOTOR_BACKTRACK_SPEED_PERCENT);
+        Robot.motors.getIntake().set(Constants.MOTOR_BACKTRACK_SPEED_PERCENT);
     }
 
     public static void stopSourceIntake() {
-        Robot.getTeleopActionRunner().removeActionsOfType(AutonSourceIntake.class);
+        // Robot.getTeleopActionRunner().removeActionsOfType(AutonSourceIntake.class);
+        Robot.motors.getLeftFlywheel().stopMotor();
+        Robot.motors.getRightFlywheel().stopMotor();
     }
 
     public static void stopFloorIntake() {
-        Robot.getTeleopActionRunner().removeActionsOfType(AutonFloorIntake.class);
+        Robot.motors.getIntake().stopMotor();
+        Robot.motors.getFeeder().stopMotor();
+        // Robot.getTeleopActionRunner().removeActionsOfType(AutonFloorIntake.class);
     }
 }
