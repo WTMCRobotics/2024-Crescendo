@@ -21,7 +21,7 @@ public class Constants {
 
     /*SHOOTER CONFIG*/
     /**the amount of time we let the wheels rev up when shooting in seconds */
-    public static final double SHOOTER_FLYWHEEL_STARTUP_TIME = 1.5;
+    public static final double SHOOTER_FLYWHEEL_STARTUP_TIME = .55;
     public static final double SHOOTER_LEFT_FLYWHEEL_SPEED = 1.0;
     public static final double SHOOTER_RIGHT_FLYWHEEL_SPEED = 1.0;
 
