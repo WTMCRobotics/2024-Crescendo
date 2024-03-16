@@ -10,17 +10,11 @@ public class AutonSourceIntake extends AutonAction {
     double targetTime = -1;
     boolean seenRing;
 
-    private static boolean isCurrentlyPosititionRing = false;
-
-    public static boolean isCurrentlyPosititionRing() {
-        return isCurrentlyPosititionRing;
-    }
-
     @Override
     public boolean isDone() {
-        if (Robot.getShooterBeambreakSensor().get()) {
+        if (Robot.getBeambreakSensorConfidentlyTriggered()) {
             seenRing = true;
-            isCurrentlyPosititionRing = true;
+            Shooter.setCurrentlyPositioningRing(true);
         } else if (seenRing && targetTime == -1) {
             targetTime = Timer.getFPGATimestamp() + Constants.MOVEMENT_TIME_AFTER_SOURCE_INTAKE_BEAMBREAK_TRIGGER;
             Robot.motors.getFeeder().set(Constants.FEEDER_MOVEMENT_SPEED_AFTER_SOURCE_INTAKE_BEAMBREAK_TRIGGER);
@@ -38,12 +32,12 @@ public class AutonSourceIntake extends AutonAction {
     @Override
     public void initiate() {
         Robot.motors.getFeeder().set(Constants.FEEDER_MOTOR_SPEED);
-        isCurrentlyPosititionRing = false;
+        Shooter.setCurrentlyPositioningRing(false);
     }
 
     @Override
     public void shutdown() {
-        isCurrentlyPosititionRing = false;
+        Shooter.setCurrentlyPositioningRing(false);
         Shooter.stopShooterMotors();
     }
 }

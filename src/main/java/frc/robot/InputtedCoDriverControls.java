@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.auton.AutonMoveHoodToPosition.HoodPosition;
 import frc.robot.robotcomponents.Climber;
 import frc.robot.robotcomponents.Intake;
 import frc.robot.robotcomponents.Shooter;
@@ -32,6 +33,7 @@ public class InputtedCoDriverControls {
         if (controller.getAButtonPressed()) {
             Intake.startSourceIntake();
         }
+        // TODO add this: && !Shooter.isPositioningRing() when mechanics adds a breambreak sensor (never)
         if (controller.getAButtonReleased()) {
             Intake.stopSourceIntake();
         }
@@ -49,9 +51,12 @@ public class InputtedCoDriverControls {
             Shooter.moveHoodToIntakePosition();
         } else if (controller.getLeftTriggerAxis() >= 0.29 && controller.getLeftTriggerAxis() <= 0.71) {
             Shooter.moveHoodToShootingPosition();
+        } else if (Double.compare(controller.getLeftTriggerAxis(), 0.10) == 0) {
+            // TODO add 3rd position if needed
         }
-        if (controller.getBButtonPressed()) {
+        if (controller.getBButton()) {
             Intake.startFloorIntake();
+            // TODO add this: && !Shooter.isPositioningRing() when mechanics adds a breambreak sensor (never)
         } else if (controller.getBButtonReleased()) {
             Intake.stopFloorIntake();
         }

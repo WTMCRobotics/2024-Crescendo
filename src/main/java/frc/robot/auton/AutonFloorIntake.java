@@ -3,6 +3,7 @@ package frc.robot.auton;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.robotcomponents.Shooter;
 
 public class AutonFloorIntake extends AutonAction {
 
@@ -10,9 +11,10 @@ public class AutonFloorIntake extends AutonAction {
 
     @Override
     public boolean isDone() {
-        if (Robot.getShooterBeambreakSensor().get() && targetTime == -1) {
+        if (Robot.getBeambreakSensorConfidentlyTriggered() && targetTime == -1) {
             targetTime = Timer.getFPGATimestamp() + Constants.MOVEMENT_TIME_AFTER_FLOOR_INTAKE_BEAMBREAK_TRIGGER;
             Robot.motors.getFeeder().set(Constants.FEEDER_MOVEMENT_SPEED_AFTER_FLOOR_INTAKE_BEAMBREAK_TRIGGER);
+            Shooter.setCurrentlyPositioningRing(true);
         }
         if (targetTime != -1 && Timer.getFPGATimestamp() >= targetTime) {
             return true;
@@ -22,13 +24,15 @@ public class AutonFloorIntake extends AutonAction {
 
     @Override
     public void initiate() {
-        Robot.motors.getIntake().set(Constants.INTAKE_SPEED);
+        Robot.motors.getIntake().set(Constants.FLOOR_INTAKE_SPEED);
         Robot.motors.getFeeder().set(Constants.FEEDER_MOTOR_SPEED);
+        Shooter.setCurrentlyPositioningRing(false);
     }
 
     @Override
     public void shutdown() {
         Robot.motors.getIntake().stopMotor();
         Robot.motors.getFeeder().stopMotor();
+        Shooter.setCurrentlyPositioningRing(false);
     }
 }
