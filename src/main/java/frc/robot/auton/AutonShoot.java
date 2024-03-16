@@ -7,23 +7,34 @@ import frc.robot.Robot;
 
 public class AutonShoot extends AutonAction {
 
-    private double revFinishedTime;
+    private double revFinishedTime = -1;
 
     @Override
     public boolean isDone() {
-        if (Timer.getFPGATimestamp() >= revFinishedTime) {
+        if (
+            Robot.motors.getLeftFlywheel().getActiveTrajectoryVelocity() > Constants.REQUIRED_FLYWHEEL_RPM &&
+            Robot.motors.getRightFlywheel().getActiveTrajectoryVelocity() > Constants.REQUIRED_FLYWHEEL_RPM
+        ) {
             Robot.motors.getFeeder().set(Constants.FEEDER_MOTOR_SPEED);
-            // Robot.motors.getIntake().set(0.2);
+            if (revFinishedTime == -1) {
+                revFinishedTime = Timer.getFPGATimestamp() + 1.2;
+            }
         }
 
-        return Timer.getFPGATimestamp() >= revFinishedTime + 1.0;
+        return (revFinishedTime != -1 && Timer.getFPGATimestamp() >= revFinishedTime);
+        // if (Timer.getFPGATimestamp() >= revFinishedTime) {
+        //     Robot.motors.getFeeder().set(Constants.FEEDER_MOTOR_SPEED);
+        //     // Robot.motors.getIntake().set(0.2);
+        // }
+
+        // return Timer.getFPGATimestamp() >= revFinishedTime + 1.0;
     }
 
     @Override
     public void initiate() {
         Robot.motors.getLeftFlywheel().set(Constants.SHOOTER_LEFT_FLYWHEEL_SPEED);
         Robot.motors.getRightFlywheel().set(Constants.SHOOTER_RIGHT_FLYWHEEL_SPEED);
-        revFinishedTime = Timer.getFPGATimestamp() + Constants.SHOOTER_FLYWHEEL_STARTUP_TIME;
+        // revFinishedTime = Timer.getFPGATimestamp() + Constants.SHOOTER_FLYWHEEL_STARTUP_TIME;
         SmartDashboard.putBoolean("Is AutoShooting?", true);
     }
 

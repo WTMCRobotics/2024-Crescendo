@@ -77,10 +77,10 @@ public class Robot extends TimedRobot {
         MotorController.Type.SparkMaxBrushed
     );
     MotorController intake = MotorControllerFactory.create(Constants.INTAKE_ID, MotorController.Type.SparkMaxBrushed);
-    MotorController hoodAdjuster = MotorControllerFactory.create(
-        Constants.SHOOTER_HOOD_ADJUSTERER_ID,
-        MotorController.Type.SparkMaxBrushed
-    );
+    // MotorController hoodAdjuster = MotorControllerFactory.create(
+    //     Constants.SHOOTER_HOOD_ADJUSTERER_ID,
+    //     MotorController.Type.SparkMaxBrushed
+    // );
 
     static XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_ID);
     static XboxController coDriverController = new XboxController(Constants.CODRIVER_CONTROLLER_ID);
@@ -236,8 +236,8 @@ public class Robot extends TimedRobot {
                 .rightFlywheel(rightFlywheel)
                 .leftClimb(leftClimb)
                 .rightClimb(rightClimb)
-                .intake(intake)
-                .hoodAdjuster(hoodAdjuster);
+                .intake(intake);
+        // .hoodAdjuster(hoodAdjuster);
         // getGyroscope().reset();
         System.out.println(Constants.APRIL_TAG_CONFIDENCE_FRAMES);
         SmartDashboard.putNumber("rotationGainsP", Constants.ROTATION_GAINS.P);
@@ -274,6 +274,9 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         SmartDashboard.putString("Time Remaining", prettyDecimalMaker.format(Timer.getMatchTime()));
 
+        SmartDashboard.putNumber("left Shooter velocity", leftFlywheel.getActiveTrajectoryVelocity());
+        SmartDashboard.putNumber("right Shooter velocity", rightFlywheel.getActiveTrajectoryVelocity());
+
         // aprilTagHighlighter.doEveryFrame();
         SmartDashboard.putNumber("Gyro Reading", gyro.getAngle());
         SmartDashboard.putNumber("left Arm encoder", leftClimb.getEncoderPosition());
@@ -282,7 +285,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Left motor controller encoder", driveLeftParent.getEncoderPosition());
         SmartDashboard.putNumber("right motor controller encoder", driveRightParent.getEncoderPosition());
 
-        SmartDashboard.putNumber("Hood controller encoder", hoodAdjuster.getEncoderPosition());
+        // SmartDashboard.putNumber("Hood controller encoder", hoodAdjuster.getEncoderPosition());
 
         if (shooterBeamBreakSensor.get()) {
             if (beambreakConfidenceFrames < Constants.REQUIRED_BEAM_BREAK_CONFIDENCE_FRAMES + 10) {
@@ -356,6 +359,10 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         InputtedCoDriverControls.onTeleopInit();
+        coDriverController.getAButtonPressed();
+        coDriverController.getBButtonPressed();
+        coDriverController.getXButtonPressed();
+        coDriverController.getYButtonPressed();
     }
 
     /** This function is called periodically during operator control. */

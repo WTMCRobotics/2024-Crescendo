@@ -10,7 +10,6 @@ public class Constants {
     public static final int SHOOTER_LEFT_FLYWHEEL_ID = 11;
     public static final int SHOOTER_RIGHT_FLYWHEEL_ID = 7;
     public static final int SHOOTER_FEEDER_ID = 10;
-    public static final int SHOOTER_HOOD_ADJUSTERER_ID = 9;
 
     public static final int INTAKE_ID = 12;
 
@@ -52,6 +51,8 @@ public class Constants {
     public static final double HOOD_INTAKE_POSITION_ROTATIONS = -77;
     //Good hood shooting angle degrees = 64
     public static final double HOOD_SHOOTING_POSITION_ROTATIONS = 0;
+
+    public static final double REQUIRED_FLYWHEEL_RPM = 6300;
 
     /*CLIMB CONFIG */
     public static final double CLIMB_EXTENDED_ENCODER_POSITION = 5;
