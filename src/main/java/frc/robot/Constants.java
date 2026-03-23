@@ -7,15 +7,17 @@ public class Constants {
     public static final int DRIVE_LEFT_CHILD_ID = 8;
     public static final int DRIVE_RIGHT_PARENT_ID = 14;
     public static final int DRIVE_RIGHT_CHILD_ID = 3;
+
+    /*SHOOTER MOTOR IDs */
     public static final int SHOOTER_LEFT_FLYWHEEL_ID = 11;
     public static final int SHOOTER_RIGHT_FLYWHEEL_ID = 7;
     public static final int SHOOTER_FEEDER_ID = 10;
     public static final int SHOOTER_HOOD_ADJUSTERER_ID = 13;
 
+    /*INTAKE MOTOR ID */
     public static final int INTAKE_ID = 12;
 
-    /*CLIMB MOTOR IDS */
-
+    /*CLIMB MOTOR IDs */
     public static final int LEFT_CLIMB_ID = 6;
     public static final int RIGHT_CLIMB_ID = 5;
 
