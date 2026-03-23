@@ -2,9 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import frc.robot.robotcomponents.DriveTrain;
-//import frc.robot.robotcomponents.Intake;
-import frc.robot.RobotComponents.*;
+import frc.robot.robotcomponents.DriveTrain;
+import frc.robot.robotcomponents.Intake;
 
 public class InputtedDriverControls {
 
