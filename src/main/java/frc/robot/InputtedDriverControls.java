@@ -22,7 +22,7 @@ public class InputtedDriverControls {
 
     public static void onEveryFrame() {
         XboxController controller = Robot.getDriverController();
-
+/* 
         drivemode mode;
         drivespeed speed;
 
@@ -75,9 +75,11 @@ public class InputtedDriverControls {
             rightPower = -leftPower;
         }
         DriveTrain.driveTank(-leftPower, -rightPower);
+        */
 
-        SmartDashboard.putString("Drive Mode", mode.toString());
-        SmartDashboard.putString("Drive Speed Type", speed.toString());
-        SmartDashboard.putString("Rough Speed Percentage",((int)(((mode==drivemode.ROTATE)?leftPower:(leftPower+rightPower)/2)*100)+ "% Speed"));
+        DriveTrain.driveTank(-controller.getRightY(), controller.getLeftY());
+       // SmartDashboard.putString("Drive Mode", mode.toString());
+        //SmartDashboard.putString("Drive Speed Type", speed.toString());
+        //SmartDashboard.putString("Rough Speed Percentage",((int)(((mode==drivemode.ROTATE)?leftPower:(leftPower+rightPower)/2)*100)+ "% Speed"));
     }
 }
